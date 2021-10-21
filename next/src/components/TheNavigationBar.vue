@@ -24,26 +24,26 @@
 
         <router-link to="/about" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">ABOUT</router-link> 
         
-        <router-link to="/profile" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
+        <router-link to="/profile" class="block mt-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-export default {
-  name: 'navigation',
-  data() {
-    return {
-      showMenu: false 
-    }
-  },
-  methods : {
-    toggleNavBar() {
-      this.showMenu = !this.showMenu
+  export default {
+    name: 'navigation',
+    data() {
+      return {
+        showMenu: false 
+      }
+    },
+    methods : {
+      toggleNavBar() {
+        this.showMenu = !this.showMenu
+      }
     }
   }
-}
 </script>
 
 <style>

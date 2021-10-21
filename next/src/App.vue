@@ -4,13 +4,13 @@
 </template>
 
 <script>
-import Navigation from './components/Navigation.vue'
+  import Navigation from './components/TheNavigationBar.vue'
 
-export default {
-  name: 'app',
-  components: {Navigation}
+  export default {
+    name: 'app',
+    components: {Navigation}
 
-}
+  }
 </script>
 
 <style>
