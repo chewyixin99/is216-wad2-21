@@ -9,6 +9,7 @@
 
 
 <script>
+
 import Navigation from './components/Navigation.vue';
 import firebase from 'firebase/compat/app';
 
@@ -42,6 +43,7 @@ export default {
     }
   }, 
 }
+
 
 </script>
 
