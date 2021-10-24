@@ -6,6 +6,7 @@ import Profile from '../views/Profile.vue'
 import LogIn from '../views/LogIn.vue'
 import ForgotPW from '../views/ForgotPW.vue'
 import SignUp from '../views/SignUp.vue'
+import Onboarding from '../views/Onboarding.vue'
 
 const routes = [
   {
@@ -43,6 +44,12 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: SignUp,
+    meta: { requiresUnauth: true }
+  },
+  {
+    path: '/onboarding',
+    name: 'Onboarding',
+    component: Onboarding,
     meta: { requiresUnauth: true }
   }
 ]
