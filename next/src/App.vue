@@ -1,5 +1,5 @@
 <template>
-<Navigation v-if="!navigation"/>
+<TheNavigationBar v-if="!navigation"/>
 
   <div>
     <router-view/>
@@ -10,7 +10,7 @@
 
 <script>
 
-import Navigation from './components/Navigation.vue';
+import TheNavigationBar from './components/TheNavigationBar.vue';
 import firebase from 'firebase/compat/app';
 
   // the code below is to prevent navigation bar from appearing in the route names
@@ -18,7 +18,7 @@ import firebase from 'firebase/compat/app';
 export default {
 
   name: 'app',
-  components: {Navigation},
+  components: {TheNavigationBar},
   data() {
     return {
       navigation: null,
