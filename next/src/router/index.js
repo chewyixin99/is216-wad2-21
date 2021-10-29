@@ -50,7 +50,7 @@ const routes = [
     path: '/onboarding',
     name: 'Onboarding',
     component: Onboarding,
-    meta: { requiresUnauth: true }
+    meta: { requiresAuth: true }
   }
 ]
 
