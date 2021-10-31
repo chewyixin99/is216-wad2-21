@@ -1,0 +1,65 @@
+<!-- 
+--- Court Team Cards ---
+Team cards take in a single team's info and populates the card.
+Team card spans the entire width of its container, so it requries container divs to format responsiveness.
+
+Example Implementation: 
+<div class="w-full">
+    <div class="mx-auto px-4 py-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
+            <court-card/>
+        </div>
+    </div>
+</div>
+-->
+
+<template>
+    <div class="w-full bg-gray-800 rounded-lg p-10 flex flex-col justify-between items-center">
+        <div class="mb-10">
+            <div class="text-center mb-5">
+                <p class="text-2xl text-yellow-500 font-bold">TEAM 1</p>
+            </div>
+
+            <div class="font-bold flex justify-center items-center mb-5">
+                <the-profile-icon initials="BL"/>
+                <div class="text-white text-center ml-5">USERNAME</div>
+            </div>
+            <div class="font-bold flex justify-center items-center mb-5">
+                <the-profile-icon initials="BL"/>
+                <div class="text-white text-center ml-5">USERNAME</div>
+            </div>
+            <div class="font-bold flex justify-center items-center mb-5">
+                <the-profile-icon initials="BL"/>
+                <div class="text-white text-center ml-5">USERNAME</div>
+            </div>
+        </div>
+
+        <div>
+            <the-button class="bg-yellow-500 text-white" button-type="form-md" button-name="JOIN"/>
+        </div>
+    </div>
+
+</template>
+
+<script>
+import TheButton from './TheButton.vue'
+import TheProfileIcon from './TheProfileIcon.vue'
+
+
+export default {
+    name: "CourtTeamCard",
+    components: { 
+        TheProfileIcon,
+        TheButton    
+    },
+    props: {
+        teamMembers: {type: Object}
+    }
+
+}
+</script>
+
+        TheButton
+<style>
+
+</style>

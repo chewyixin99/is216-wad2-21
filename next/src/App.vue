@@ -1,5 +1,5 @@
 <template>
-<TheNavigationBar v-if="!navigation"/>
+  <TheNavigationBar v-if="!navigation"/>
 
   <div>
     <router-view/>
