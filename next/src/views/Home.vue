@@ -1,3 +1,21 @@
+<script>
+import { computed } from 'vue'
+import { useGeolocation } from '../components/googleMaps/useGeolocation'
+
+export default {
+  name: 'app',
+  setup() {
+    const { coords } = useGeolocation()
+    const currPos = computed(() => ({
+      lat: coords.value.latitude,
+      lng: coords.value.longitude
+    }))
+    return { currPos }
+  },
+}
+</script>
+
+
 <template>
 
 <div class="container mx-auto my-3 flex items-center justify-center">
@@ -92,6 +110,10 @@
         Near You
       </div>
       <div class="near-you"></div>
+      <div>
+        lat : {{ currPos.lat.toFixed(2 )}}
+        lng: {{ currPos.lng.toFixed(2) }}
+      </div>
     
     </div>
 
