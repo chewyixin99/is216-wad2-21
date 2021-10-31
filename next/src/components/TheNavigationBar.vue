@@ -19,31 +19,39 @@
     </div>
 
     <div :class="showMenu ? 'block' : 'hidden'" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-      <div class="text-md lg:flex-grow lg:flex justify-end">
+      <div class="text-md lg:flex-grow lg:flex justify-end items-center">
         <router-link to="/" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">HOME</router-link>
 
         <router-link to="/about" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">ABOUT</router-link> 
         
-        <router-link to="/profile" class="block mt-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
+        <router-link to="/profile" class="block mt-4 lg:hidden text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
+        
+        <router-link to="/profile" class="hidden mt-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">
+          <the-profile-icon initials="BL"/>
+        </router-link>
       </div>
     </div>
   </nav>
 </template>
 
 <script>
-  export default {
-    name: 'navigation',
-    data() {
-      return {
-        showMenu: false 
-      }
-    },
-    methods : {
-      toggleNavBar() {
-        this.showMenu = !this.showMenu
-      }
+import TheProfileIcon from './TheProfileIcon.vue'
+
+export default {
+  name: 'TheNavigationBar',
+  components: {TheProfileIcon},
+
+  data() {
+    return {
+      showMenu: false 
+    }
+  },
+  methods : {
+    toggleNavBar() {
+      this.showMenu = !this.showMenu
     }
   }
+}
 </script>
 
 <style>
