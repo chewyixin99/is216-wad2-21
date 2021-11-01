@@ -13,15 +13,15 @@
         </div>
     </div>
 
-    <!-- <court-team/> -->
+    <court-team/>
 
 </template>
 
 <script>
-// import CourtTeam from "../components/CourtTeam.vue"
+import CourtTeam from "../components/CourtTeam.vue"
 
 export default {
-  // components: {CourtTeam}
+  components: {CourtTeam}
 }
 </script>
 

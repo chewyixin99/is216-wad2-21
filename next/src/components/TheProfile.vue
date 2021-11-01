@@ -2,7 +2,7 @@
 
     <div class="container max-w-3xl mx-auto">
 
-        <div class="grid grid-cols-1 mx-6">
+        <div class="mx-6">
             <form>
                 <div class="bg-white shadow-md rounded px-8 py-6 my-6">
                     

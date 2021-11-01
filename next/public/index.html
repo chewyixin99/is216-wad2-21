@@ -7,10 +7,16 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
   </head>
-  <body class="bg-purple-700">
+  <body class="bg-purple-700 bg-image">
     <noscript>
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
   </body>
 </html>
+
+<style>
+  .bg-image {
+    background-image: url("../src/assets/wallpaper.png");
+  }
+</style>
