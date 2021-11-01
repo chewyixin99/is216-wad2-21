@@ -1,7 +1,7 @@
 <template>
-  <TheNavigationBar v-if="!navigation"/>
-
   <div>
+    <TheNavigationBar v-if="!navigation"/>
+
     <router-view/>
   </div>
 
