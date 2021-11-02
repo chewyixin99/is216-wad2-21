@@ -24,17 +24,22 @@
 
           <!-- PROFILE DETAILS -->
           <div class="col-span-4 md:col-span-3">
-            <div class="primary-gold-title">
-              {{firstName}} {{lastName}}
+            <div class="primary-gold-title mb-4">
+              {{firstName.toUpperCase()}} {{lastName.toUpperCase()}}
             </div>
-            <div class="secondary-white-title">
-              EXPERIENCE:<br>{{experience}}
+            <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
+              <span style="color: #FEB842">EXPERIENCE</span>
+              <span>{{experience.toUpperCase()}}</span>
             </div>
-            <div class="secondary-white-title">
-              FAVOURITE PLAYER:<br>{{favPlayer}}
+            <!-- <hr> -->
+            <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
+              <span style="color: #FEB842">FAVOURITE PLAYER</span>
+              <span>{{favPlayer.toUpperCase()}}</span>
             </div>
-            <div class="secondary-white-title">
-              FAVOURITE TEAM<br>{{favTeam}}
+            <!-- <hr> -->
+            <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
+              <span style="color: #FEB842">FAVOURITE TEAM</span>
+              <span>{{favTeam.toUpperCase()}}</span>
             </div>
             
           </div>
@@ -42,8 +47,16 @@
         </div>
       </div>
 
-      <div class="secondary-gold-title px-8">
-        GROUPS
+      <!-- GROUPS -->
+      <div class="flex flex-wrap justify-between mx-6">
+        <div class="secondary-gold-title">
+          GROUPS
+        </div>
+        <div>
+          <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded" @click="toCreateGroup">
+            ADD GROUP
+          </button>
+        </div>
       </div>
 
       <!-- INSERT V-SHOW IF GROUPS.LENGTH = 0 -->
@@ -103,6 +116,11 @@ export default {
         // ROUTE TO EDIT PROFILE
         toEditProfile(){
           this.$router.replace({name: "EditProfile"});
+        },
+
+        // ROUTE TO CREATE GROUP
+        toCreateGroup(){
+          this.$router.replace({name: "CreateGroup"});
         },
 
       },
