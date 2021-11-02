@@ -7,6 +7,7 @@ import LogIn from '../views/LogIn.vue'
 import ForgotPW from '../views/ForgotPW.vue'
 import SignUp from '../views/SignUp.vue'
 import Onboarding from '../views/Onboarding.vue'
+import EditProfile from '../views/EditProfile.vue'
 
 const routes = [
   {
@@ -51,7 +52,13 @@ const routes = [
     name: 'Onboarding',
     component: Onboarding,
     meta: { requiresAuth: true }
-  }
+  },
+  {
+    path: '/editprofile',
+    name: 'EditProfile',
+    component: EditProfile,
+    meta: { requiresAuth: true }
+  },
 ]
 
 const router = createRouter({
@@ -59,7 +66,7 @@ const router = createRouter({
   routes
 })
 
-// The code below is the router guard
+// The code below is for router guard
 
 router.beforeEach(async (to, from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)

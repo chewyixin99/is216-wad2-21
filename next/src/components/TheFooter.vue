@@ -1,14 +1,15 @@
 <template>
-  <div if="footer" class="flex items-center justify-between flex-wrap p-6 bg-purple-900 bottom-0">
-    <p class="text-center text-gray-500 text-xs">
+  <!-- unable to fix to bottom // fixed => fixed upon scrolling -->
+  <footer class="flex mt-6 p-6 header-bg bottom-0 w-full ">
+    <p class="text-white text-center mx-auto text-xs">
       &copy;Project Next. All rights reserved.
     </p>
-  </div>
+  </footer>
 </template>
 
 <script>
 export default {
-    name: "footer"
+    name: "TheFooter"
 
 }
 </script>

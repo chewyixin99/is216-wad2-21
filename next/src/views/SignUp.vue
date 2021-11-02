@@ -1,55 +1,57 @@
 <template>
 
-<div class="grid md:grid-cols-3">
-<div class="px-8 pt-6 text-gray-700 text-lg font-bold mb-2 justify-items-center">Sign Up</div>
-  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 mt-4">
+<div class="container max-w-md mx-auto">
+  <div class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 m-6">
+  <form>
+    <!-- FIRST NAME -->
     <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="firstname">
-        First Name
+      <label class="block text-white text-sm font-bold mb-2" for="firstname">
+        FIRST NAME
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" v-model="firstName">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" v-model="firstName" placeholder="First Name">
     </div>
      
+    <!-- LAST NAME -->
     <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="lastname">
-        Last Name
+      <label class="block text-white text-sm font-bold mb-2" for="lastname">
+        LAST NAME
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" v-model="lastName">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" v-model="lastName" placeholder="Last Name">
     </div>
 
+    <!-- EMAIL -->
     <div class="mb-4">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
-        Email
+      <label class="block text-white text-sm font-bold mb-2" for="email">
+        EMAIL
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email" placeholder="Email">
     </div>
 
-
-    <div class="mb-1">
-      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-        Password
+    <!-- PASSWORD -->
+    <div class="mb-4">
+      <label class="block text-white text-sm font-bold mb-2" for="password">
+        PASSWORD
       </label>
-      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password" v-model="password">
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password" v-model="password" placeholder="Password">
     </div>
 
-
-    <div class="flex items-center justify-between">
-
+    <!-- BUTTON -->
+    <div class="mb-4">
       <div class="error" v-show="error">{{this.errorMsg}}</div>
 
-      <button @click.prevent="signup" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+      <button @click.prevent="signup" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full" type="button">
         Sign Up
       </button>
+    </div>
 
+    <!-- LOG IN LINK -->
+    <div class="text-center text-white">
       <router-link class="router-link" :to="{name: 'Login'}">
-      Already have an account?</router-link>
-
+      Already have an account? <span class="text-yellow-500">Log in</span></router-link>
     </div>
 
   </form>
-  <p class="text-center text-gray-500 text-xs">
-    &copy;Project Next. All rights reserved.
-  </p>
+  </div>
 </div>
 </template>
 
