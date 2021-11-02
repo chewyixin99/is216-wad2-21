@@ -89,7 +89,7 @@
 
 
     <!-- Near You -->
-    <!-- <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2">
+    <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2">
 
       <div class="primary-title">
         Near You
@@ -111,7 +111,7 @@
       </div>
       <div class="mapDiv" ref="mapDiv" ></div> 
     
-    </div> -->
+    </div>
 
 
     <!-- Recently Played -->
