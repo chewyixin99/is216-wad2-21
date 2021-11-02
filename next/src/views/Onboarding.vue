@@ -12,13 +12,13 @@
                                 <label class="block text-white text-sm font-bold mb-2" for="firstName">
                                 FIRST NAME
                                 </label>
-                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" v-model="firstName">
+                                <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="firstName" type="text" v-model="firstName">
                             </div>
                             <div>
                                 <label class="block text-white text-sm font-bold mb-2" for="lastName">
                                 LAST NAME
                                 </label>
-                                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" v-model="lastName">
+                                <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="lastName" type="text" v-model="lastName">
                             </div>
                         </div>
 
@@ -27,7 +27,7 @@
                             <label class="block text-white text-sm font-bold mb-2" for="email">
                                 EMAIL
                             </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
+                            <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
                         </div>
 
                         <!-- EXPERIENCE -->
@@ -49,6 +49,7 @@
                                 FAVOURITE PLAYERS
                             </label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer" placeholder="Favourite Players">
+
                         </div>
 
                         <!-- FAVOURITE TEAM -->
@@ -57,6 +58,7 @@
                                 FAVOURITE TEAMS
                             </label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam" placeholder="Favourite Teams">
+
                         </div>
 
                 </div>
@@ -82,17 +84,17 @@ import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import db from "../firebase/firebaseInit";
-
+import firebase from 'firebase/compat/app';
 
 export default {
     name: "Onboarding",
 data(){
     return{
         // retrieve first, last name and email from firestore
-        firstName: this.firstName,
-        lastName: this.lastName,
-        email: this.email,
-        experience: this.experience,
+        firstName: "",
+        lastName: "",
+        email: "",
+        experience: "",
         favTeam: "",
         favPlayer: "",
         errorMsg : "",
@@ -120,6 +122,24 @@ data(){
         })
         }
     },
+    created(){
+        
+        const auth = getAuth()
+        const userInfo = auth.currentUser
+        const uid = userInfo.uid
+        this.email = userInfo.email
+
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(uid)
+          .get()
+          .then((docRef) => {
+            this.firstName = docRef.data().firstName
+            this.lastName = docRef.data().lastName
+          })
+      }
+    
 
 }
 
