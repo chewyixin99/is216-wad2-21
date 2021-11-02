@@ -3,7 +3,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useGeolocation } from './useGeolocation'
 import { Loader } from '@googlemaps/js-api-loader'
-import axios from 'axios'
+// import axios from 'axios'
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyB0y4bi5X2uc_EZGF8yE-GIc_09jd9rwRg'
 
@@ -28,6 +28,7 @@ export default {
         center: currPos.value,
         zoom: 15,
       })
+
 
       // the following code below is the currPos latlng
       // console.log(currPos.value)
@@ -55,19 +56,59 @@ export default {
   
   methods: {
     findNearbyCourts(lat, lng) {
-      let baseUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?`
-      let location = `${lat}%2c${lng}`
-      let radius = `1500`
-      let keyword = `basketball courts`
-      let API_KEY = `AIzaSyB0y4bi5X2uc_EZGF8yE-GIc_09jd9rwRg`
+      // Async Places API imported @index.html
+      
+      // Create latlong coordinate object
+      var currPostLatLng = new google.maps.LatLng(lat,lng);
+      
+      // Pass latlong object and zoom to create map
+      var map = new google.maps.Map(this.$refs.mapDiv, {
+        center: currPostLatLng,
+        zoom: 15
+      });
+
+      // Prepare request for area around current latlong object w/ radius and keywords
+      var request = {
+        location: currPostLatLng,
+        radius: '1500',
+        keyword: ['basketball courts']
+      };
+      
+      // Places API service object to retrieve nearby spots
+      var service = new google.maps.places.PlacesService(map);
+
+      // Search nearby spots using service and taking in request, uses callback to push markers to map
+      service.nearbySearch(request, placesCallback);
+
+
+      // Callback functions
+      function placesCallback(results, status) {
+        if (status == google.maps.places.PlacesServiceStatus.OK) {
+          for (var i = 0; i < results.length; i++) {
+            createMarker(results[i]);
+            console.log(i);
+          }
+        }
+      }
+  
+      function createMarker(place) {
+        if (!place.geometry || !place.geometry.location) return;
+      
+        const marker = new google.maps.Marker({
+          map,
+          position: place.geometry.location,
+        });
+      
+        google.maps.event.addListener(marker, "click", () => {
+          infowindow.setContent(place.name || "");
+          infowindow.open(this.map);
+        });
+      }
     
-      let final_url = `${baseUrl}location=${location}&radius=${radius}&keyword=${keyword}&key=${API_KEY}/`
-    
-      axios.post(final_url).then(r => {
-        console.log(r.data)
-      })
-    
-    }
+    },
+
+
+
   }
 }
 
