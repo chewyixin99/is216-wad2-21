@@ -7,6 +7,7 @@ import LogIn from '../views/LogIn.vue'
 import ForgotPW from '../views/ForgotPW.vue'
 import SignUp from '../views/SignUp.vue'
 import Onboarding from '../views/Onboarding.vue'
+import Court from '../views/Court.vue'
 
 const routes = [
   {
@@ -50,6 +51,12 @@ const routes = [
     path: '/onboarding',
     name: 'Onboarding',
     component: Onboarding,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/court',
+    name: 'Court',
+    component: Court,
     meta: { requiresAuth: true }
   }
 ]

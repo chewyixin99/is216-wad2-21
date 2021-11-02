@@ -18,7 +18,9 @@ Example Implementation:
         </div>
 
         <div class="my-5">
-            <the-button class="text-2xl text-center text-gray-700 bg-yellow-500 " button-type="add" button-name="+"/>
+            <the-button class="text-2xl text-center text-gray-700 bg-yellow-500 " button-type="add">
+                <slot>+</slot>
+            </the-button>
         </div>
 
         <div class="mb-10">

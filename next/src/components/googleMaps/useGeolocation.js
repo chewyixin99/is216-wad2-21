@@ -1,4 +1,4 @@
-import { onUnmounted, onMounted, ref } from "vue";
+  import { onUnmounted, onMounted, ref } from "vue";
 
 export function useGeolocation() {
     const coords = ref({latitude: 0, longitude: 0})

@@ -8,7 +8,7 @@
 export default {
     name: "TheProfileIcon",
 
-    props: {
+    props: { // span should be changed to button and redirect user to profile
         id: {type: String},
         initials: {type: String} // test
     }

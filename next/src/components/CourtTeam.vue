@@ -1,10 +1,8 @@
 <template>
-    <div class="w-full">
-        <div class="mx-auto px-4 py-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4">
-                <court-team-card v-for="(a_team, index) in this.mockTeams" :teamMembers="a_team" :key="index"/>
-                <court-new-team-card/>
-            </div>
+    <div class="w-full p-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <court-team-card v-for="(a_team, index) in this.mockTeams" :teamMembers="a_team" :key="index"/>
+            <court-new-team-card/>
         </div>
     </div>
 </template>
@@ -19,6 +17,8 @@ export default {
         CourtTeamCard,
         CourtNewTeamCard
     },
+
+    props: {}, // Props should take in court data later on
 
     data() {
         return {

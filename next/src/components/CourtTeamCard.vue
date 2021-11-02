@@ -35,7 +35,9 @@ Example Implementation:
         </div>
 
         <div>
-            <the-button class="bg-yellow-500 text-white" button-type="form-md" button-name="JOIN"/>
+            <the-button class="bg-yellow-500 text-white" button-type="form-md">
+                <slot>JOIN</slot>
+            </the-button>
         </div>
     </div>
 

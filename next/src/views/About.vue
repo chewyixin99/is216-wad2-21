@@ -12,7 +12,6 @@
             </p>
         </div>
 
-    <court-team/>
         
     </div>
 
@@ -21,10 +20,8 @@
 </template>
 
 <script>
-import CourtTeam from "../components/CourtTeam.vue"
 
 export default {
-  components: {CourtTeam}
 }
 </script>
 

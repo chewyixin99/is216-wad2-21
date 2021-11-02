@@ -1,6 +1,6 @@
 <template>
     <button :class="getButtonType()" class="font-bold inline-flex items-center justify-center">
-        {{this.buttonName}}
+        <slot>BUTTON</slot>
     </button>
 </template>
 
@@ -8,7 +8,7 @@
 export default {
     name: "TheButton",
     props: {
-        buttonName: {type: String},
+        onClick: {type: Function},
         buttonType: {type: String},
     },
 
