@@ -1,5 +1,8 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+// import firebase from 'firebase/compat/app';
+// import firebaseConfig from './firebaseConfig'
+import 'firebase/compat/firestore';
 
 export const getUserState = () =>
 new Promise((resolve, reject) =>
@@ -28,7 +31,8 @@ return { user, error, isAuthenticated }
 
 // Reference to Youtube Video
 
-// const firebaseApp = firebase.initializeApp(config)
+
+// const firebaseApp = firebase.initializeApp(firebaseConfig)
 
 // const db = firebaseApp.firestore()
 // const usersCollection = db.collection('users')
