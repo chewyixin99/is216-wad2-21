@@ -1,7 +1,6 @@
 <script src="../components/googleMaps/googleMaps">
 </script>
 
-
 <template>
 
 <div class="container mx-auto my-3 flex items-center justify-center">
@@ -89,7 +88,7 @@
 
 
     <!-- Near You -->
-    <!-- <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2">
+    <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2">
 
       <div class="primary-title">
         Near You
@@ -110,8 +109,10 @@
         </span>
       </div>
       <div class="mapDiv" ref="mapDiv" ></div> 
+
+      <button v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"> onclick button </button>
     
-    </div> -->
+    </div>
 
 
     <!-- Recently Played -->
