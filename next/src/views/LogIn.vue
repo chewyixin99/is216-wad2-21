@@ -14,7 +14,7 @@
           PASSWORD
         </label>
         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" name ="password" id="password" type="password" placeholder="Password">
-        <div class="text-white text-right">
+        <div class="text-gray-400 text-right">
           <router-link class="forgot-password" :to="{name: 'ForgotPassword'}">
           Forgot Password?</router-link>
         </div>
@@ -24,7 +24,7 @@
       <!-- sIGN IN BUTTON -->
       <div class="items-center justify-between text-center mb-4">
         <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-full" >
-          SIGN IN
+          LOG IN
         </button>
 
         <div class="error" v-show="error">{{this.errorMsg}}</div>
