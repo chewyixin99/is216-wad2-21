@@ -2,7 +2,7 @@
   <div>
 
   <div class="container max-w-3xl mx-auto">
-      <div class="container-bg shadow-md rounded px-8 py-6 my-6 mx-6">
+      <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6">
         <div class="grid grid-cols-4 md:space-x-2">
 
           <!-- PROFILE IMAGE AND EDIT BUTTON -->
@@ -47,7 +47,7 @@
       </div>
 
       <!-- INSERT V-SHOW IF GROUPS.LENGTH = 0 -->
-      <div class="container-bg shadow-md rounded px-8 py-6 my-3 mx-6 text-center">
+      <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-3 mx-6 text-center">
         <div class="text-center secondary-white-title">
           NO GROUPS YET
         </div>
