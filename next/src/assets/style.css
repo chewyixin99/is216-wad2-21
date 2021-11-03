@@ -1,10 +1,20 @@
 /* unable to show wallpaper */
 body {
     background-image: url("wallpaper.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 .header-bg {
     background-color: #30205B;
+}
+
+.footer-bg {
+    background-color: #30205B;
+    position: relative;
+    bottom: 0;
+    margin-top: 100px;
 }
 
 .container-bg {

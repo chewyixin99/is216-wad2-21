@@ -104,7 +104,7 @@ export default {
         update(){
 
             const dataBase = db.collection("users").doc(this.uid);
-            this.$router.replace({name: "Home"});
+            this.$router.replace({name: "Profile"});
             dataBase.set({
                 firstName: this.firstName,
                 lastName: this.lastName,
