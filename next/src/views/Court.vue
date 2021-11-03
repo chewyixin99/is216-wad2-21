@@ -11,17 +11,17 @@
             </div>
         </div>
         
-        <div>
+        <div class="grid grid-cols-12 gap-4">
             <!-- [Non-Mobile] Left Section -->
             <!-- Maps and Check In Options -->
-            <div>
-    
+            <div class="col-start-3 col-span-2">
+                <court-mini-map-section/>
             </div>
     
             <!-- [Non-Mobile] Right Section -->
-            <div>
+            <div class="col-span-6">
                 <!-- Current Players Section -->
-                <div class="">
+                <div>
                     <div class="text-2xl text-yellow-500 font-bold mx-4">
                         <h1>CURRENT PLAYERS</h1>
                     </div>
@@ -41,12 +41,13 @@
 </template>
 
 <script>
+import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
 
 export default {
-  name: "court",
-  components: { CourtTeam, CourtCurrentPlayers },
+  name: "Court",
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
 
   data() {
     return {
