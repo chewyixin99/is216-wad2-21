@@ -38,7 +38,6 @@ export default {
         'click',
         ({ latLng: { lat, lng }}) => {  
           otherPos.value = { lat: lat(), lng: lng() }
-          // currPosMarker.setMap(null)
         }
       )
     })
@@ -81,7 +80,6 @@ export default {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
             createMarker(results[i])
-            nearbyCourtsObject.push(results[i])
           }
         }
       }
@@ -110,6 +108,7 @@ export default {
             shouldFocus: true,
           })
         })
+        nearbyCourtsObject.push(place)
       }
 
       console.log(`this.nearbyCourts`)
@@ -118,7 +117,6 @@ export default {
       console.log(nearbyCourtsObject)
 
       this.nearbyCourts = nearbyCourtsObject
-    
     },
 
     viewCourtDetails() {

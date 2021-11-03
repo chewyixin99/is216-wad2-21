@@ -112,13 +112,15 @@
 
       <button v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"> onclick button </button>
 
+      <!-- <h1>Number of nearby courts: {{ nearbyCourts.length }} </h1>
+
       <div v-if="nearbyCourts.length > 0" id="nearbyCourts">
         <ul v-for="court in nearbyCourts" :key="court">
           <li>
             {{ court.vicinity }}, {{ court.name }}
           </li>
         </ul>
-      </div>
+      </div> -->
     
     </div>
 
