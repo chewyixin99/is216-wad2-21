@@ -3,18 +3,23 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useGeolocation } from './useGeolocation'
 import { Loader } from '@googlemaps/js-api-loader'
-// import axios from 'axios'
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyB0y4bi5X2uc_EZGF8yE-GIc_09jd9rwRg'
 
 export default {
   name: 'app',
+  data() {
+    return {
+      nearbyCourts: [],
+    }
+  },
   setup() {
     const { coords } = useGeolocation()
     const currPos = computed(() => ({
       lat: coords.value.latitude,
       lng: coords.value.longitude
     }))
+
     const otherPos = ref(null)
 
     const loader = new Loader({apiKey: GOOGLE_MAPS_API_KEY})
@@ -29,33 +34,23 @@ export default {
         zoom: 15,
       })
 
-
-      // the following code below is the currPos latlng
-      // console.log(currPos.value)
-
-      var currPosMarker = new google.maps.Marker ({
-        position: currPos.value,
-        map: map.value,
-        icon: ''
-      })
-
       map.value.addListener(
         'click',
         ({ latLng: { lat, lng }}) => {  
           otherPos.value = { lat: lat(), lng: lng() }
-          currPosMarker.setMap(null)
         }
       )
     })
     onUnmounted( async () => {
       if (clickListener) clickListener.remove()
     })
-
+    
     return { currPos, otherPos, mapDiv }
   },
   
   methods: {
     findNearbyCourts(lat, lng) {
+      let nearbyCourtsObject = []
       // Async Places API imported @index.html
       
       // Create latlong coordinate object
@@ -64,7 +59,7 @@ export default {
       // Pass latlong object and zoom to create map
       var map = new google.maps.Map(this.$refs.mapDiv, {
         center: currPostLatLng,
-        zoom: 15
+        zoom: 14,
       });
 
       // Prepare request for area around current latlong object w/ radius and keywords
@@ -80,13 +75,11 @@ export default {
       // Search nearby spots using service and taking in request, uses callback to push markers to map
       service.nearbySearch(request, placesCallback);
 
-
       // Callback functions
       function placesCallback(results, status) {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
-            createMarker(results[i]);
-            console.log(i);
+            createMarker(results[i])
           }
         }
       }
@@ -97,19 +90,40 @@ export default {
         const marker = new google.maps.Marker({
           map,
           position: place.geometry.location,
-        });
-      
-        google.maps.event.addListener(marker, "click", () => {
-          infowindow.setContent(place.name || "");
-          infowindow.open(this.map);
-        });
+        })
+
+        
+
+        let contentString = `<p>${place.vicinity} ${place.name}<p>
+                            <br/><p>Business Status: ${place.business_status}</p>
+                            <br><button v-on:click="viewCourtDetails()">View Court</button>`
+        const infoWindow = new google.maps.InfoWindow({
+          content: contentString
+        })
+
+        marker.addListener('click', () => {
+          infoWindow.open({
+            anchor: marker,
+            map,
+            shouldFocus: true,
+          })
+        })
+        nearbyCourtsObject.push(place)
       }
-    
+
+      console.log(`this.nearbyCourts`)
+      console.log(this.nearbyCourts)
+      console.log(`nearbyCourtsObject`)
+      console.log(nearbyCourtsObject)
+
+      this.nearbyCourts = nearbyCourtsObject
     },
 
-
-
+    viewCourtDetails() {
+      console.log(`=== view court details ===`)
+    },
   }
+  
 }
 
 

@@ -1,6 +1,6 @@
   import { onUnmounted, onMounted, ref } from "vue";
 
-export function useGeolocation() {
+export function useGeolocation ()  {
 
     const coords = ref({latitude: 1.353, longitude: 103.867})
     const isSupported = 'navigator' in window && 'geolocation' in navigator
@@ -20,7 +20,6 @@ export function useGeolocation() {
         if (watcher) 
             navigator.geolocation.clearWatch(watcher)
     })
-
 
     return { coords, isSupported }
 

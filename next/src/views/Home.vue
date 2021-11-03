@@ -88,7 +88,7 @@
 
 
     <!-- Near You -->
-    <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2">
+    <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2" >
 
       <div class="primary-title">
         Near You
@@ -108,9 +108,19 @@
           Click the map to select a position
         </span>
       </div>
-      <div class="mapDiv" ref="mapDiv" ></div> 
+      <div id="mapDiv" class="mapDiv" ref="mapDiv" ></div> 
 
       <button v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"> onclick button </button>
+
+      <!-- <h1>Number of nearby courts: {{ nearbyCourts.length }} </h1>
+
+      <div v-if="nearbyCourts.length > 0" id="nearbyCourts">
+        <ul v-for="court in nearbyCourts" :key="court">
+          <li>
+            {{ court.vicinity }}, {{ court.name }}
+          </li>
+        </ul>
+      </div> -->
     
     </div>
 
