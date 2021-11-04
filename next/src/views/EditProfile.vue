@@ -98,11 +98,8 @@ export default {
 
             this.$store.dispatch("updateUserSettings");
 
-
-            })
-
-
         },
+
         // ROUTE BACK TO PROFILE
         toProfile(){
 
@@ -110,6 +107,7 @@ export default {
 
         },
     },
+
     computed: {
 
         firstName: {

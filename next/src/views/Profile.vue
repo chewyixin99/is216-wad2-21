@@ -51,21 +51,10 @@
         This is for activity level
       </div>
 
-      <!-- GROUPS -->
-      <div class="flex flex-wrap justify-between mx-6">
-        <div class="secondary-gold-title">
-          GROUPS
-        </div>
-        <div>
-          <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded" @click="toCreateGroup">
-            CREATE GROUP
-          </button>
-        </div>
-      </div>
 
       <!-- INSERT V-SHOW IF GROUPS.LENGTH = 0 -->
 
-      <div v-if="groupID != []">
+      <!-- <div v-if="groupID != []">
         <div v-for="id in compiledgroupID" :key=id class="bg-gray-800 shadow-md rounded px-8 py-6 my-3 mx-6 text-center">
           <div class="text-center secondary-white-title">
             Group Name: {{id[0]}}
@@ -89,8 +78,8 @@
           <div class="text-center secondary-white-title">
             NO GROUPS YET
           </div>
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
 
 
 
