@@ -35,6 +35,8 @@
                     </div>
                     <court-team/>
                 </div>
+
+                <court-pop-up :hidden="isHidden"/>
             </div>
         </div>
     </div>
@@ -44,21 +46,28 @@
 import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
+import CourtPopUp from "../components/CourtPopUp.vue"
 
 export default {
   name: "Court",
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtPopUp },
 
   data() {
     return {
-      //   Hardcoded
-      courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
-      courtAddress: "11 Bedok North Street 1, Singapore 469662",
+        isHidden: false,
+
+        //   Hardcoded
+        courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
+        courtAddress: "11 Bedok North Street 1, Singapore 469662",
 
     };
   },
 
-  methods: {},
+  methods: {
+      logStatus(status){
+          console.log(status);
+      }
+  },
 };
 </script>
 

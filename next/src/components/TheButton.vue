@@ -1,5 +1,5 @@
 <template>
-    <button :class="getButtonType()" class="font-bold inline-flex items-center justify-center">
+    <button @click="onClick" :class="getButtonType()" class="font-bold inline-flex items-center justify-center">
         <slot>BUTTON</slot>
     </button>
 </template>
