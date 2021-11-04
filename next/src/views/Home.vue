@@ -3,7 +3,7 @@
 
 <template>
 
-<div class="container mx-auto my-3 flex items-center justify-center">
+<div class="container max-w-5xl mx-auto">
 
   <div class="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
 
@@ -11,8 +11,8 @@
     <div class="col-span-2" > 
 
       <form class="m-5" action="">
-        <input type="text" class="shadow appearance-none border rounded w-10/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="court-search" placeholder="Search for a court">
-        <button class="search-button hover:bg-yellow-300 text-gray-700 font-bold mx-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+        <input type="text" class="shadow appearance-none border rounded w-10/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="court-search" placeholder="Search for a location, i.e., Serangoon Nex, Pasir Ris block 134  " v-model="searchInput">
+        <button v-on:click="searchForNearbyCourts()" class="search-button bg-yellow-400 hover:bg-yellow-300 text-gray-700 font-bold mx-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
           Search
         </button>
       </form>
@@ -25,62 +25,29 @@
       <div class="primary-title">
         Bookmarks
       </div>
-      <div class="bookmarks bg-gray-800 text-white rounded-md py-2 px-4 mr-10">
-        <ul>
-          <li>
-            <div class="venue-name">
-              Heartbeat @ Bedok ActiveSG Swimming Complex
-            </div>
-            <div class="venue-address">
-              3 Bedok North Street 2, Singapore 469643
-            </div>
-          </li>
 
-          <li>
-            <div class="venue-name">
-              Heartbeat @ Bedok ActiveSG Swimming Complex
-            </div>
-            <div class="venue-address">
-              3 Bedok North Street 2, Singapore 469643
-            </div>
-          </li>
+      <div v-if="currentBookmarks.length < 1" >
+        <span class="secondary-title">You currently have no bookmarks!</span><br/>
+        <button 
+        class="search-button bg-yellow-400 hover:bg-yellow-300 text-gray-700 font-bold my-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+        v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"
+        > Find A Court Near Me
+        </button>
+      </div>
 
-          <li>
-            <div class="venue-name">
-              Heartbeat @ Bedok ActiveSG Swimming Complex
-            </div>
-            <div class="venue-address">
-              3 Bedok North Street 2, Singapore 469643
-            </div>
-          </li>
+      <div v-else class="bookmarks bg-gray-800 text-white rounded-md py-2 px-4 mr-10">
 
+        <ul v-for="b in currentBookmarks" :key="b">
           <li>
             <div class="venue-name">
-              Heartbeat @ Bedok ActiveSG Swimming Complex
+              <a href="/court">
+                {{ b.name }}
+              </a>
             </div>
             <div class="venue-address">
-              3 Bedok North Street 2, Singapore 469643
+              {{ b.vicinity }}
             </div>
           </li>
-
-          <li>
-            <div class="venue-name">
-              Heartbeat @ Bedok ActiveSG Swimming Complex
-            </div>
-            <div class="venue-address">
-              3 Bedok North Street 2, Singapore 469643
-            </div>
-          </li>
-
-          <li>
-            <div class="venue-name">
-              Heartbeat @ Bedok ActiveSG Swimming Complex
-            </div>
-            <div class="venue-address">
-              3 Bedok North Street 2, Singapore 469643
-            </div>
-          </li>
-          
         </ul>
       </div>
 
@@ -93,7 +60,16 @@
       <div class="primary-title">
         Near You
       </div>
-      <div>
+      <div id="mapDiv" class="mapDiv" ref="mapDiv" ></div> 
+
+      <button 
+      class="search-button bg-yellow-400 hover:bg-yellow-300 text-gray-700 font-bold my-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+      v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"
+      > Courts Near Me
+      </button>
+
+      
+      <!-- <div>
         <h4>Your position</h4>
         lat : {{ currPos.lat }}
         lng: {{ currPos.lng }}
@@ -107,19 +83,6 @@
         <span v-else> 
           Click the map to select a position
         </span>
-      </div>
-      <div id="mapDiv" class="mapDiv" ref="mapDiv" ></div> 
-
-      <button v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"> onclick button </button>
-
-      <!-- <h1>Number of nearby courts: {{ nearbyCourts.length }} </h1>
-
-      <div v-if="nearbyCourts.length > 0" id="nearbyCourts">
-        <ul v-for="court in nearbyCourts" :key="court">
-          <li>
-            {{ court.vicinity }}, {{ court.name }}
-          </li>
-        </ul>
       </div> -->
     
     </div>
@@ -131,33 +94,34 @@
         Recently Played
       </div>
       <div class="recently-played">
-        <div class="player-image">
-          <img src="https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg" alt="">
-        </div>
 
-        <div class="player-no-image">
-          YX
-        </div>
+        <!-- <span v-for="p in recentlyPlayed" v-bind:key="p">
+          <div v-if="p.profilePicture.length > 0" class="player-image">
+            <a href="/profile"><img v-bind:src="p.profilePicture" alt=""></a>
+          </div>
 
-        <div class="player-image">
-          <img src="https://www.w3schools.com/css/paris.jpg" alt="">
-        </div>
+          <div v-else class="player-no-image">
+            <a href="/profile">{{ p.firstName.charAt(0) }}{{ p.lastName.charAt(0) }}</a>
+          </div>
+        </span> -->
+        <ul class="recently-played mr-4">
+          <li v-for="p in  recentlyPlayed" :key="p">
+            <a href="/profile">
+              <span v-if="p.profilePicture.length > 0" >
+                <div class="player-image">
+                  <img v-bind:src="p.profilePicture" alt="">
+                </div>
+              </span>
 
-        <div class="player-image">
-          <img src="https://t3.ftcdn.net/jpg/04/40/13/28/240_F_440132822_ZdGM5QYX399ieufL0D0T0r0ILXdHiSv7.jpg" alt="">
-        </div>
+              <span v-else>
+                <div class="player-no-image">
+                  {{p.firstName.charAt(0)}}{{p.lastName.charAt(0)}}
+                </div>
+              </span>
+            </a>
+          </li>          
+        </ul>
         
-        <div class="player-image">
-          <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
-        </div>
-
-        <div class="player-no-image">
-          KW
-        </div>
-
-        <div class="player-no-image">
-          JL
-        </div>
 
       </div>
 
@@ -186,8 +150,11 @@
   text-shadow: 2px 1px black;
 }
 
-.search-button {
-  background-color: #FEb842;
+.secondary-title {
+  color: white;
+  font-size: 16px;
+  margin-left: 5px;
+  margin-bottom: 5px;
 }
 
 .mapDiv {
@@ -197,6 +164,8 @@
 
 .recently-played {
   display: flex;
+  flex-wrap: wrap;
+  
 }
 
 .player-image img{

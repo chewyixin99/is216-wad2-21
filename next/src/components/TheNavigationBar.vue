@@ -23,6 +23,8 @@
         <router-link to="/" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">HOME</router-link>
 
         <router-link to="/about" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">ABOUT</router-link> 
+
+        <router-link to="/groups" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">MY GROUPS</router-link> 
         
         <router-link to="/profile" class="block mt-4 lg:hidden text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
         
