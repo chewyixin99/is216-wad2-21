@@ -9,6 +9,7 @@ import SignUp from '../views/SignUp.vue'
 import Onboarding from '../views/Onboarding.vue'
 import Court from '../views/Court.vue'
 import EditProfile from '../views/EditProfile.vue'
+import Groups from '../views/Groups.vue'
 import CreateGroup from '../views/CreateGroup.vue'
 
 const routes = [
@@ -65,6 +66,12 @@ const routes = [
     path: '/editprofile',
     name: 'EditProfile',
     component: EditProfile,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/groups',
+    name: 'Groups',
+    component: Groups,
     meta: { requiresAuth: true }
   },
   {

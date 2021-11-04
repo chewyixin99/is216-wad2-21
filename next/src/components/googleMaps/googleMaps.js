@@ -11,7 +11,98 @@ export default {
   data() {
     return {
       nearbyCourts: [],
+      currentBookmarks: [],
+      recentlyPlayed: [],
     }
+  },
+  created() {
+    console.log(`=== created ===`)
+    this.currentBookmarks = [
+      {
+        name: "Singapore Basketball Court",
+        vicinity: "134 Pasir Ris Street 21"
+
+      },
+      {
+        name: "Basketball Court",
+        vicinity: "Opp Unit 104"
+
+      },
+      {
+        name: "Basketball Court",
+        vicinity: "495 Tampines Street 43"
+
+      },
+      {
+        name: "Basketball Court",
+        vicinity: "604 Elias Rd, Block 604, Singapore"
+
+      },
+      {
+        name: "Pasir Ris Block 230 Basketball Court",
+        vicinity: "Blk, 230 Pasir Ris Street 11"
+
+      },
+      {
+        name: "Basketball court @ Sun Plaza Park",
+        vicinity: "407 Tampines Street 41, Singapore"
+
+      },
+    ]
+
+    this.recentlyPlayed = [
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: ``,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: ``,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: ``,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+      },
+      
+    ]
   },
   setup() {
     const { coords } = useGeolocation()
@@ -31,7 +122,7 @@ export default {
       await loader.load()
       map.value = new google.maps.Map(mapDiv.value, {
         center: currPos.value,
-        zoom: 15,
+        zoom: 13,
       })
 
       map.value.addListener(
@@ -40,10 +131,13 @@ export default {
           otherPos.value = { lat: lat(), lng: lng() }
         }
       )
+
+
     })
     onUnmounted( async () => {
       if (clickListener) clickListener.remove()
     })
+
     
     return { currPos, otherPos, mapDiv }
   },
@@ -80,6 +174,7 @@ export default {
         if (status == google.maps.places.PlacesServiceStatus.OK) {
           for (var i = 0; i < results.length; i++) {
             createMarker(results[i])
+            console.log(results[i])
           }
         }
       }
@@ -96,7 +191,7 @@ export default {
 
         let contentString = `<p>${place.vicinity} ${place.name}<p>
                             <br/><p>Business Status: ${place.business_status}</p>
-                            <br><button v-on:click="viewCourtDetails()">View Court</button>`
+                            <br><a href="/court"><strong>Click to View Court</strong></a>`
         const infoWindow = new google.maps.InfoWindow({
           content: contentString
         })
@@ -110,13 +205,6 @@ export default {
         })
         nearbyCourtsObject.push(place)
       }
-
-      console.log(`this.nearbyCourts`)
-      console.log(this.nearbyCourts)
-      console.log(`nearbyCourtsObject`)
-      console.log(nearbyCourtsObject)
-
-      this.nearbyCourts = nearbyCourtsObject
     },
 
     viewCourtDetails() {

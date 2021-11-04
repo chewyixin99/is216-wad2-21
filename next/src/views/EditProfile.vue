@@ -95,7 +95,12 @@ export default {
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
 
+
             this.$store.dispatch("updateUserSettings");
+
+
+            })
+
 
         },
         // ROUTE BACK TO PROFILE

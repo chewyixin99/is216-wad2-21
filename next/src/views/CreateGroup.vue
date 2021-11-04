@@ -1,88 +1,102 @@
 <template>
-<div class="container max-w-md mx-auto">
-    <!-- HEADER -->
-    <div class="secondary-gold-title text-center mt-6 mb-3 justify-items-center">
-        Temporary Group Creating Page
+
+
+    <div class="container max-w-3xl mx-auto">
+
+
+        <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6">
+            <form>
+                <div>
+
+
+                    <!-- GROUP NAME -->
+                    <div class="mb-4">
+                        <label class="block text-white text-sm font-bold mb-2" for="groupName">
+                            GROUP NAME
+                        </label>
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupName" type="text" name="groupName" v-model="groupName">
+                    </div>
+
+                    <!-- EXPERIENCE -->
+                    <div class="mb-4">
+                        <label class="block text-white text-sm font-bold mb-2" for="groupExp">
+                            EXPERIENCE
+                        </label>
+
+                        <select class="form-select mt-1 block w-full shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupExp" name="groupExp" v-model="groupExp">
+                            <option>Recreational</option>
+                            <option>Intermediate</option>
+                            <option>Competitive</option>
+                        </select>
+                    </div>
+
+                    <!-- BUTTONS -->
+                    <div class="text-center space-x-4">
+                        <!-- BACK BUTTON -->
+                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="toGroups">
+                            CANCEL
+                            </button>
+                        <!-- UPDATE BUTTON -->
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="update(); toGroups()">
+                            CREATE
+                            </button>
+                        
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    
     </div>
 
-    <div class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
-
-        <form>
-            <!-- EMAIL INPUT -->
-            <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="groupname">
-                    ENTER GROUP NAME
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupname" type="text" v-model="groupname">
-            </div>
-
-            <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="groupname">
-                    AGE GROUP
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupname" type="text" v-model="agegroup">
-            </div>
-
-            <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="groupname">
-                    SKILL LEVEL
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupname" type="text" v-model="skilllevel">
-            </div>
-
-            <div class="mb-6">
-                <label class="block text-white text-sm font-bold mb-2" for="groupname">
-                    NOTES
-                </label>
-                <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupname" type="textbox" v-model="notes">
-            </div>
-
-
-            <!-- SUBMIT BUTTON -->
-            <div class="text-center">
-                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36" @click.prevent="toProfile(); createGroup()">
-                SUBMIT
-            </button>
-            
-            </div>
-        </form>
-    </div>
-</div>
 </template>
 
-<!-- https://v1.tailwindcss.com/components/forms -->
-
-
 <script>
+
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
 import { getAuth } from "firebase/auth";
 import db from "../firebase/firebaseInit";
 import firebase from 'firebase/compat/app';
-// import { updateDoc, arrayUnion } from "firebase/firestore";
-// import { ref } from "vue"
+
 
 export default {
-    name: 'CreateGroup',
+    name: "CreateGroups",
     data(){
-        return {
-            groupname: "uaena",
-            agegroup: "uaena",
-            skilllevel: "uaena",
-            notes: "uaena",
-            firstName: "",
-            lastName: "",
-            fullName: "",
-            
+        return{
+            groupName: "",
+            groupExp: "",
+            errorMsg : "",
+            error: null,
 
         }
-        
     },
-    
-    created() {
-            
+    methods:{
+        // !!! IMPORTANT: UNABLE TO PUSH NEW DATA, IT WILL REPLACE BECAUSE OF SET
+        // CHANGE FIRESTORE DOCUMENT INFORMATION
+        update(){
+
+            const dataBase = db.collection("users").doc(this.uid);
+            this.$router.replace({name: "Groups"});
+            dataBase.set({
+                groupName: this.groupName,
+                groupExp: this.groupExp,
+            })
+
+        },
+        // ROUTE BACK TO GROUPS
+        toGroups(){
+          this.$router.replace({name: "Groups"});
+        },
+    },
+        // RETRIEVE DOCUMENT INFORMATION
+        created() {
+
             const auth = getAuth()
             const userInfo = auth.currentUser
             const uid = userInfo.uid
-            this.retrieved_uid = uid
+            this.uid = uid
 
             firebase
             .firestore()
@@ -90,6 +104,7 @@ export default {
             .doc(uid)
             .get()
             .then((docRef) => {
+
                 this.firstName = docRef.data().firstName
                 this.lastName = docRef.data().lastName
             })
@@ -151,4 +166,11 @@ export default {
 
     
 };
+
+                this.groups = docRef.data().groups
+            })
+        }
+
+}
+
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div>
 
-  <div class="container max-w-3xl mx-auto">
+  <div class="container max-w-5xl mx-auto">
       <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6">
         <div class="grid grid-cols-4 md:space-x-2">
 
@@ -47,6 +47,10 @@
         </div>
       </div>
 
+      <div class="bg-white border rounded h-60 mx-6 mb-6 text-center">
+        This is for activity level
+      </div>
+
       <!-- GROUPS -->
       <div class="flex flex-wrap justify-between mx-6">
         <div class="secondary-gold-title">
@@ -54,7 +58,7 @@
         </div>
         <div>
           <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded" @click="toCreateGroup">
-            ADD GROUP
+            CREATE GROUP
           </button>
         </div>
       </div>
