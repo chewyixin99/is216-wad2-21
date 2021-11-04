@@ -95,7 +95,7 @@
       </div>
       <div class="recently-played">
 
-        <span v-for="p in recentlyPlayed" v-bind:key="p">
+        <!-- <span v-for="p in recentlyPlayed" v-bind:key="p">
           <div v-if="p.profilePicture.length > 0" class="player-image">
             <a href="/profile"><img v-bind:src="p.profilePicture" alt=""></a>
           </div>
@@ -103,7 +103,25 @@
           <div v-else class="player-no-image">
             <a href="/profile">{{ p.firstName.charAt(0) }}{{ p.lastName.charAt(0) }}</a>
           </div>
-        </span>
+        </span> -->
+        <ul class="recently-played">
+          <li v-for="p in  recentlyPlayed" :key="p">
+            <a href="/profile">
+              <span v-if="p.profilePicture.length > 0" >
+                <div class="player-image">
+                  <img v-bind:src="p.profilePicture" alt="">
+                </div>
+              </span>
+
+              <span v-else>
+                <div class="player-no-image">
+                  {{p.firstName.charAt(0)}}{{p.lastName.charAt(0)}}
+                </div>
+              </span>
+            </a>
+          </li>          
+        </ul>
+        
 
       </div>
 
@@ -146,6 +164,7 @@
 
 .recently-played {
   display: flex;
+  flex-wrap: wrap;
   
 }
 
