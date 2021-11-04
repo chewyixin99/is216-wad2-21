@@ -14,6 +14,7 @@
 import TheNavigationBar from './components/TheNavigationBar.vue';
 import TheFooter from './components/TheFooter.vue'
 import firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
 
   // the code below is to prevent navigation bar from appearing in the route names
 
@@ -26,9 +27,18 @@ export default {
       navigation: null,
     };
   },
-  created() {
+  created() {           
+    
+    // WHEN USER LOGS IN, FIREBASE DATA WILL BE RETRIEVED AND KEPT IN STORE
+   
+    firebase.auth().onAuthStateChanged((user)=>{
+      this.$store.commit("updateUser", user);
+      if (user) {
+        this.$store.dispatch("getCurrentUser");
+        console.log(this.$store.state.profileEmail);
+      }
+    })
     this.checkRoute();
-    console.log(firebase.auth().currentUser);
   },
   methods: {
     checkRoute() {

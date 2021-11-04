@@ -1,10 +1,13 @@
 <template>
 
+
     <div class="container max-w-3xl mx-auto">
+
 
         <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6">
             <form>
                 <div>
+
 
                     <!-- GROUP NAME -->
                     <div class="mb-4">
@@ -53,9 +56,9 @@
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { getAuth } from "firebase/auth";
-import db from "../firebase/firebaseInit";
-import firebase from 'firebase/compat/app';
+// import { getAuth } from "firebase/auth";
+// import db from "../firebase/firebaseInit";
+// import firebase from 'firebase/compat/app';
 
 
 export default {
@@ -70,39 +73,105 @@ export default {
         }
     },
     methods:{
-        // !!! IMPORTANT: UNABLE TO PUSH NEW DATA, IT WILL REPLACE BECAUSE OF SET
-        // CHANGE FIRESTORE DOCUMENT INFORMATION
-        update(){
+    //     // !!! IMPORTANT: UNABLE TO PUSH NEW DATA, IT WILL REPLACE BECAUSE OF SET
+    //     // CHANGE FIRESTORE DOCUMENT INFORMATION
+    //     update(){
 
-            const dataBase = db.collection("users").doc(this.uid);
-            this.$router.replace({name: "Groups"});
-            dataBase.set({
-                groupName: this.groupName,
-                groupExp: this.groupExp,
-            })
+    //         const dataBase = db.collection("users").doc(this.uid);
+    //         this.$router.replace({name: "Groups"});
+    //         dataBase.set({
+    //             groupName: this.groupName,
+    //             groupExp: this.groupExp,
+    //         })
 
-        },
-        // ROUTE BACK TO GROUPS
+    //     },
+    //     // ROUTE BACK TO GROUPS
         toGroups(){
           this.$router.replace({name: "Groups"});
         },
-    },
-        // RETRIEVE DOCUMENT INFORMATION
-        created() {
+    }
+    // },
+    //     // RETRIEVE DOCUMENT INFORMATION
+    //     created() {
 
-            const auth = getAuth()
-            const userInfo = auth.currentUser
-            const uid = userInfo.uid
-            this.uid = uid
-            firebase
-            .firestore()
-            .collection("users")
-            .doc(uid)
-            .get()
-            .then((docRef) => {
-                this.groups = docRef.data().groups
-            })
-        }
+    //         const auth = getAuth()
+    //         const userInfo = auth.currentUser
+    //         const uid = userInfo.uid
+    //         this.uid = uid
 
+    //         firebase
+    //         .firestore()
+    //         .collection("users")
+    //         .doc(uid)
+    //         .get()
+    //         .then((docRef) => {
+
+    //             this.firstName = docRef.data().firstName
+    //             this.lastName = docRef.data().lastName
+    //         })
+    //     },
+        
+    // methods: {
+    //     createGroup(){
+            
+    //         this.fullName = this.firstName + " " + this.lastName
+
+    //         console.log(this.fullName);
+    //         db.collection("groups").add({
+    //             groupMembers: [this.retrieved_uid],
+    //             groupName: this.groupname,
+    //             Notes: this.notes,
+    //         }).then(function(docRef){
+                
+    //             const groupIDstr = docRef.id
+    //             const auth1 = getAuth()
+    //             const userInfo1 = auth1.currentUser
+    //             const uid1 = userInfo1.uid
+
+    //             db.collection("users").doc(uid1).get().then((docRef1) => {
+    //                 const groupIDObj = docRef1.data().groupID
+    //                 const compilation = [];
+    //                 for (var i = 0; i < groupIDObj.length; i++){
+    //                     compilation.push(groupIDObj[i])
+    //                 }
+    //                 compilation.push(groupIDstr)
+    //                 db.collection("users").doc(uid1).update({
+    //                     groupID: compilation
+    //                 });
+    //             });
+
+    //         }).catch(function(error){
+    //             console.log(error);
+    //         });
+            
+          
+               
+
+            // const docRef = db.collection("users").doc(this.retrieved_uid);
+
+
+            // docRef.get().then(function (thisDoc){
+            //     if (thisDoc.exists){
+            //         let groupID12 = createGroupDoc.id;
+            //         docRef.update(groupID12)
+            //         console.log("updated");
+            //     }
+            // })
+
+//         },
+//         toProfile(){
+//           this.$router.replace({name: "Profile"});
+//           console.log("MOVE");
+//         },
+//     }
+
+    
+// };
+
+                // this.groups = docRef.data().groups
+            // })
+        // }
+
+// }
 }
 </script>
