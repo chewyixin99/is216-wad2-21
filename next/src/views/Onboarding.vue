@@ -65,7 +65,7 @@
 
                 <!-- SUBMIT BUTTON -->
                 <div class="text-center mb-4">
-                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-64" @click.prevent="onboarding">
+                    <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-64" @click.prevent=" update() ; toHome() ">
                     SAVE
                     </button>
                 </div>
@@ -82,63 +82,86 @@
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import db from "../firebase/firebaseInit";
-import firebase from 'firebase/compat/app';
 
 export default {
+
     name: "Onboarding",
-data(){
-    return{
-        // retrieve first, last name and email from firestore
-        firstName: "",
-        lastName: "",
-        email: "",
-        experience: "",
-        favTeam: "",
-        favPlayer: "",
-        errorMsg : "",
-        error: null,
 
-    }
-},
     methods:{
-        onboarding(){
-            const auth = getAuth();
-            onAuthStateChanged(auth, (user) => {
-            if (user) {
-                const uid = user.uid;
-                const dataBase = db.collection("users").doc(uid);
-                this.$router.replace({name: "Home"});
-                dataBase.set({
-                    firstName: this.firstName,
-                    lastName: this.lastName,
-                    email: this.email,
-                    experience: this.experience,
-                    favPlayer: this.favPlayer,
-                    favTeam: this.favTeam,
-                });
-            } 
-        })
-        }
-    },
-    created(){
-        
-        const auth = getAuth()
-        const userInfo = auth.currentUser
-        const uid = userInfo.uid
-        this.email = userInfo.email
 
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(uid)
-          .get()
-          .then((docRef) => {
-            this.firstName = docRef.data().firstName
-            this.lastName = docRef.data().lastName
-          })
-      }
+        update(){
+
+            this.$store.dispatch("updateUserSettings");
+
+        },
+
+        toHome(){
+
+            this.$router.replace({name: "Home"});
+
+        },
+     
+    },
+
+    computed: {
+
+        firstName: {
+
+          get() {
+            return this.$store.state.profileFirstName
+            },
+
+          set(payload) {
+            this.$store.commit("changeFirstName", payload);
+            },
+
+        },
+
+        lastName: {
+            
+          get() {
+            return this.$store.state.profileLastName
+            },
+
+          set(payload) {
+            this.$store.commit("changeLastName", payload);
+            },
+
+        },
+        experience: {
+
+          get() {
+            return this.$store.state.profileExperience
+            },
+
+          set(payload) {
+            this.$store.commit("changeExperience", payload);
+            },
+
+        },
+        favPlayer: {
+
+          get() {
+            return this.$store.state.profileFavPlayer
+            },
+
+          set(payload) {
+            this.$store.commit("changeFavPlayer", payload);
+            },
+        },
+        favTeam: {
+
+          get() {
+            return this.$store.state.profileFavTeam
+            },
+
+          set(payload) {
+            this.$store.commit("changeFavTeam", payload);
+            },
+
+        },       
+        
+    },
     
 
 }
@@ -166,7 +189,23 @@ data(){
 //         const abc = useAuthState()
 //         console.log(abc);
        
+    // created(){
+        
+    //     const auth = getAuth()
+    //     const userInfo = auth.currentUser
+    //     const uid = userInfo.uid
+    //     this.email = userInfo.email
 
+    //     firebase
+    //       .firestore()
+    //       .collection("users")
+    //       .doc(uid)
+    //       .get()
+    //       .then((docRef) => {
+    //         this.firstName = docRef.data().firstName
+    //         this.lastName = docRef.data().lastName
+    //       })
+    //   },
               
 //     }
 
@@ -174,5 +213,28 @@ data(){
 //     this.errorMsg = "Please fill out all the fields!";
 //     }
 // }
+
+   // onboarding(){
+        //     const auth = getAuth();
+        //     onAuthStateChanged(auth, (user) => {
+        //     if (user) {
+        //         const uid = user.uid;
+        //         const dataBase = db.collection("users").doc(uid);
+        //         this.$router.replace({name: "Home"});
+        //         dataBase.set({
+        //             firstName: this.firstName,
+        //             lastName: this.lastName,
+        //             email: this.email,
+        //             experience: this.experience,
+        //             favPlayer: this.favPlayer,
+        //             favTeam: this.favTeam,
+        //             groupID: [],
+        //             activeCourt: this.activeCourt,
+        //             loggedInTime: 'whenever user logs in ',
+        //             checkedInTime: 'whenever user checks in to active court. 2hrs later activeCourt = null'
+        //         });
+        //     } 
+        // })
+        // }
 
 </script>

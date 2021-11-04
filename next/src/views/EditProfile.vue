@@ -51,6 +51,14 @@
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam">
                     </div>
 
+                    <div class="mb-6">
+                        <label class="block text-white text-sm font-bold mb-2" for="email">
+                            EMAIL
+                        </label>
+                        <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
+                    </div>
+
+
                     <!-- BUTTONS -->
                     <div class="text-center space-x-4">
                         <!-- BACK BUTTON -->
@@ -77,68 +85,96 @@
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
-import { getAuth } from "firebase/auth";
-import db from "../firebase/firebaseInit";
-import firebase from 'firebase/compat/app';
-
 
 export default {
-    name: "EditProfile",
-    data(){
-        return{
-                    
-            firstName: "",
-            lastName: "",
-            experience: "",
-            favTeam: "",
-            favPlayer: "",
-            uid: "",
-            errorMsg : "",
-            error: null,
 
-        }
-    },
+    name: "EditProfile",
+
     methods:{
         
-        // CHANGE FIRESTORE DOCUMENT INFORMATION
+        // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
 
-            const dataBase = db.collection("users").doc(this.uid);
-            this.$router.replace({name: "Home"});
-            dataBase.set({
-                firstName: this.firstName,
-                lastName: this.lastName,
-                experience: this.experience,
-                favPlayer: this.favPlayer,
-                favTeam: this.favTeam,
-            })
+            this.$store.dispatch("updateUserSettings");
 
         },
         // ROUTE BACK TO PROFILE
         toProfile(){
+
           this.$router.replace({name: "Profile"});
+
         },
     },
-        // RETRIEVE DOCUMENT INFORMATION
-        created() {
+    computed: {
 
-            const auth = getAuth()
-            const userInfo = auth.currentUser
-            const uid = userInfo.uid
-            this.uid = uid
-            firebase
-            .firestore()
-            .collection("users")
-            .doc(uid)
-            .get()
-            .then((docRef) => {
-                this.firstName = docRef.data().firstName
-                this.lastName = docRef.data().lastName
-                this.experience = docRef.data().experience
-                this.favTeam = docRef.data().favTeam
-                this.favPlayer = docRef.data().favPlayer
-            })
-        }
+        firstName: {
+
+          get() {
+            return this.$store.state.profileFirstName
+            },
+
+          set(payload) {
+            this.$store.commit("changeFirstName", payload);
+            },
+
+        },
+
+        lastName: {
+
+          get() {
+            return this.$store.state.profileLastName
+            },
+
+          set(payload) {
+            this.$store.commit("changeLastName", payload);
+            },
+
+        },
+
+        experience: {
+
+          get() {
+            return this.$store.state.profileExperience
+            },
+
+          set(payload) {
+            this.$store.commit("changeExperience", payload);
+            },
+
+        },
+
+        favPlayer: {
+
+          get() {
+            return this.$store.state.profileFavPlayer
+            },
+          set(payload) {
+            this.$store.commit("changeFavPlayer", payload);
+            },
+
+        },
+
+        favTeam: {
+
+          get() {
+            return this.$store.state.profileFavTeam
+            },
+
+          set(payload) {
+            this.$store.commit("changeFavTeam", payload);
+            },
+
+        },
+        
+        email: {
+
+          get() {
+            return this.$store.state.profileEmail
+            },
+          
+        },
+        
+    },
 
 }
 </script>
