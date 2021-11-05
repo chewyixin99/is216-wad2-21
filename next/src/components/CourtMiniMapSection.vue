@@ -7,7 +7,7 @@
 
         <!-- Check In -->
         <div class="my-4">
-            <the-button :onClick="getCourtData" class="bg-yellow-500 text-white" buttonType="form-full">
+            <the-button :onClick="togglePopUp" class="bg-yellow-500 text-white" buttonType="form-full">
                 CHECK IN
             </the-button>
         </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import store from "../store/index"
 import TheButton from "./TheButton.vue"
 import CourtMiniMap from "./CourtMiniMap.vue"
 import db from "../firebase/firebaseInit"
@@ -45,7 +46,9 @@ export default {
     },
 
     methods: {
-
+        togglePopUp() {
+            store.commit('courtToggleCheckinHidden')
+        },
         
         
         getCourtData() {

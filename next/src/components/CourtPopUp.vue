@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!isHidden">
+    <div v-if="!$store.state.courtCheckinHidden">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
@@ -33,7 +33,7 @@
 
                             <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
                                 <div class="flex">
-                                    <select name="hours" class="font-bold bg-transparent appearance-none outline-none">
+                                    <select name="hours" class="font-bold bg-transparent appearance-none outline-none" v-model="userCheckinHr">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -47,14 +47,17 @@
                                         <option value="11">10</option>
                                         <option value="12">12</option>
                                     </select>
+
                                     <span class="text-xl font-bold mr-3">:</span>
-                                    <select name="minutes" class="bg-transparent text-xl font-bold appearance-none outline-none mr-4">
+
+                                    <select name="minutes" class="bg-transparent text-xl font-bold appearance-none outline-none mr-4" v-model="userCheckinMin">
                                         <option value="0">00</option>
                                         <option value="30">30</option>
                                     </select>
-                                    <select name="ampm" class="bg-transparent text-xl font-bold appearance-none outline-none">
-                                        <option value="am">AM</option>
-                                        <option value="pm">PM</option>
+
+                                    <select name="ampm" class="bg-transparent text-xl font-bold appearance-none outline-none" v-model="userCheckinAmPm">
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
                                     </select>
                                 </div>
                             </div>
@@ -69,7 +72,7 @@
 
                             <div class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
                                 <div class="flex">
-                                    <select name="hours" class="font-bold bg-transparent appearance-none outline-none">
+                                    <select name="hours" class="font-bold bg-transparent appearance-none outline-none" v-model="userCheckoutHr">
                                         <option value="1">1</option>
                                         <option value="2">2</option>
                                         <option value="3">3</option>
@@ -80,30 +83,33 @@
                                         <option value="8">8</option>
                                         <option value="9">9</option>
                                         <option value="10">10</option>
-                                        <option value="11">10</option>
+                                        <option value="11">11</option>
                                         <option value="12">12</option>
                                     </select>
+
                                     <span class="text-xl font-bold mr-3">:</span>
-                                    <select name="minutes" class="bg-transparent text-xl font-bold appearance-none outline-none mr-4">
+                                    
+                                    <select name="minutes" class="bg-transparent text-xl font-bold appearance-none outline-none mr-4" v-model="userCheckoutMin">
                                         <option value="0">00</option>
                                         <option value="30">30</option>
                                     </select>
-                                    <select name="ampm" class="bg-transparent text-xl font-bold appearance-none outline-none">
-                                        <option value="am">AM</option>
-                                        <option value="pm">PM</option>
+
+                                    <select name="ampm" class="bg-transparent text-xl font-bold appearance-none outline-none" v-model="userCheckoutAmPm">
+                                        <option value="AM">AM</option>
+                                        <option value="PM">PM</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-
                     </div>
 
                     <!-- Check In Buttons Section -->
                     <div class=" m-5">
-                        <the-button class="bg-yellow-400 mb-4" buttonType="form-full">
+                        <the-button :onClick="checkinUser" class="bg-yellow-400 mb-4" buttonType="form-full">
                             CHECK IN
                         </the-button>
+
                         <the-button :onClick="cancel" class="bg-red-500" buttonType="form-full">
                             CANCEL
                         </the-button>
@@ -115,62 +121,133 @@
 </template>
 
 <script>
+import store from "../store/index"
 import TheButton from "./TheButton.vue"
 
 export default {
     name: "CourtPopUp",
     components: { TheButton },
-    props: {
-        hidden: {
-            type: Boolean,
-            default: false
-        },
-        currentCourtId: {
-            type: String
+
+    watch: {
+        '$store.state.courtCheckinHidden': function() {
+            this.getCurrentTime()
         }
     },
 
     data() {
         return {
-            isHidden: this.hidden,
-            userCheckinHr: "",
-            userCheckinMin: "",
-            userCheckoutHr: "",
-            userCheckoutMin: "",
-        }
-    },
+            // Local datetime manipulation
+            defaultDate: null,
 
-    updated() {
-        if(!this.isHidden) {
-            this.getDisplayTimes()
+            userCheckinHr: null,
+            userCheckinMin: null,
+            userCheckinAmPm: null,
+
+            userCheckoutHr: null,
+            userCheckoutMin: null,
+            userCheckoutAmPm: null,
+
+            payload : {
+                dbCheckinTime: null,
+                dbCheckoutTime: null,
+            }
         }
     },
 
 
     methods: {
         cancel() {
-            this.isHidden = true
+            store.commit('courtToggleCheckinHidden')
         },
 
-        getDisplayTimes() {
-            // Today passed into system
-            let today = new Date()
-            console.log(today); 
-            
-            // Checkin time computed and passed to user (default)
-            
-            // Checkout time computed +2 hrs passed to user (default)
-            // let date = today.getFullYear()
-            // let checkinTime = 
-            // let checkoutTime = 
+        getCurrentTime() {
+            // Formats current time for user select options
+            let coeff = 1000 * 60 * 30
+            let rawDateTime = new Date()
+            let currentDateTime = new Date(Math.round(rawDateTime.getTime() / coeff) * coeff)
+
+            this.defaultDate = currentDateTime.toLocaleDateString().split("/").reverse().map(date => Number(date))
+            let currentTime = currentDateTime.toLocaleTimeString().split(":")
+
+            this.userCheckinHr = Number(currentTime[0])
+            this.userCheckinMin = Number(currentTime[1])
+
+            if (this.userCheckinHr > 12) {
+                this.userCheckinHr = Number(currentTime[0]) - 12
+                this.userCheckinAmPm = "PM"
+            } else {
+                this.userCheckinAmPm = "AM"
+            }
+
+            this.userCheckoutHr = Number(currentTime[0]) + 2
+            this.userCheckoutMin = Number(currentTime[1])
+
+            if (this.userCheckoutHr > 12) {
+                this.userCheckoutHr = Number(currentTime[0]) - 10
+                this.userCheckoutAmPm = "PM"
+            } else {
+                this.userCheckoutAmPm = "AM"
+            }
         },
 
         getDbTimeFormat() {
-            // Takes in this time (whether user inputs or not) and formats
+            // Format into date object for firestore
+            let dbCheckinHr = null
+            let dbCheckoutHr = null
+
+            if (this.userCheckinAmPm == "AM") {
+                dbCheckinHr = this.userCheckinHr
+            } else {
+                dbCheckinHr = this.userCheckinHr + 12
+            }
+
+            if (this.userCheckoutAmPm == "AM") {
+                dbCheckoutHr = this.userCheckoutHr
+            } else {
+                dbCheckoutHr = this.userCheckoutHr + 12
+            }
+
+            this.payload.dbCheckinTime = new Date(this.defaultDate[0], this.defaultDate[1] - 1, this.defaultDate[2], dbCheckinHr, this.userCheckinMin)
+            this.payload.dbCheckoutTime = new Date(this.defaultDate[0], this.defaultDate[1] - 1, this.defaultDate[2], dbCheckoutHr, this.userCheckoutMin)
         },
 
-        updateDb() {
-            // Takes in formatted time data and passes to db @user/courtsPlayed/ where courtId == courtId update checkInTime and check
+        updateStore() {
+            // Compare store data and user input data,
+            // If latest check out is smaller than the current check in (no conflict):
+            //      Create new instance of check in to a current court
+            // Else (conflict exists):
+            //      Prompt if want to update to current court
+            //      Update check out instance of old court
+
+            if (this.payload.dbCheckinTime < store.state.profileLatestCheckout) {
+                console.log("[CourtPopUp] Conflict");
+            } else {
+                
+                console.log("[CourtPopUp] Successfully added.");
+            }
+
+
+        },
+
+        checkinUser() {
+            /*
+                Upon clicking checkout:
+                1. Check if the user currently checked in from store state
+                ---
+                If checked in:
+                2. Tell the user that he is already checked in to court id at what time
+                and prompt for override
+                ---
+                Else:
+                2. Formats time
+                2. Updates VueX store
+                3. Updates DB
+            */
+            this.getDbTimeFormat()
+            this.updateStore()
+
+
+
         }
     },
 
