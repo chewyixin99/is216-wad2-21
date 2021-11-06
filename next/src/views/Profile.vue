@@ -53,8 +53,8 @@
         </div>
       </div>
 
-      <div class="bg-white border rounded h-60 mx-6 mb-6 text-center">
-        This is for activity level
+      <div class="bg-gray-800 rounded mx-6 mb-6 p-6 text-center">
+        <activity-chart></activity-chart>
       </div>
 
 
@@ -105,12 +105,13 @@ import { useRouter } from 'vue-router'
 // import firebase from 'firebase/compat/app';
 import db from "../firebase/firebaseInit";
 import TheButton from "../components/TheButton.vue"
-
+import ActivityChart from "../components/ActivityChart.vue"
 
 export default {
   name: 'Profile',
   components: {
     TheButton,
+    ActivityChart,
   },
     data(){
       return{
