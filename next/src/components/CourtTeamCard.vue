@@ -14,28 +14,28 @@ Example Implementation:
 -->
 
 <template>
-    <div class="w-full bg-gray-800 rounded-lg p-10 flex flex-col justify-between items-center">
-        <div class="mb-10">
+    <div class="w-full bg-gray-800 rounded-lg p-4">
+        <div>
             <div class="text-center mb-5">
                 <p class="text-2xl text-yellow-500 font-bold">TEAM 1</p>
             </div>
 
-            <div class="font-bold flex justify-center items-center mb-5">
+            <div class="font-bold flex items-center m-3">
                 <the-profile-icon initials="BL"/>
                 <div class="text-white text-center ml-5">USERNAME</div>
             </div>
-            <div class="font-bold flex justify-center items-center mb-5">
+            <div class="font-bold flex items-center m-3">
                 <the-profile-icon initials="BL"/>
                 <div class="text-white text-center ml-5">USERNAME</div>
             </div>
-            <div class="font-bold flex justify-center items-center mb-5">
+            <div class="font-bold flex items-center m-3">
                 <the-profile-icon initials="BL"/>
                 <div class="text-white text-center ml-5">USERNAME</div>
             </div>
         </div>
 
-        <div>
-            <the-button class="bg-yellow-500 text-white" button-type="form-md">
+        <div class="mt-6">
+            <the-button class="bg-yellow-500 text-white" button-type="form-full">
                 <slot>JOIN</slot>
             </the-button>
         </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full p-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <court-team-card v-for="(a_team, index) in this.mockTeams" :teamMembers="a_team" :key="index"/>
             <court-new-team-card/>
         </div>

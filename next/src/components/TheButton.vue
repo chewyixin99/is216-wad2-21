@@ -17,10 +17,10 @@ export default {
     data() {
         return {
             "allButtonTypes" : {
-                "form-sm": "w-40 h-8 rounded",
-                "form-md": "w-48 h-8 rounded",
-                "form-lg": "w-56 h-8 rounded",
-                "form-full": "w-full h-8 rounded",
+                "form-sm": "w-40 py-5 h-8 rounded",
+                "form-md": "w-48 py-5 h-8 rounded",
+                "form-lg": "w-56 py-5 h-8 rounded",
+                "form-full": "w-full h-8 py-5 rounded",
                 "add": "w-20 h-20 rounded-full",
             },
         }
