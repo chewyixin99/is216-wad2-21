@@ -2,6 +2,11 @@
     <!-- Page Header -->
     <div>
         <div class="text-center">
+            <!-- button to be removed -->
+            <button v-on:click="checkData()">test</button>
+            <!-- button above to be removed -->
+
+            
             <div class="text-3xl text-yellow-500 font-bold m-4">
                 <h1>{{courtName.toUpperCase()}}</h1>
             </div>
@@ -66,6 +71,11 @@ export default {
   methods: {
       logStatus(status){
           console.log(status);
+      },
+
+    //   to delete
+      checkData() {
+          console.log(this.$store.state.selectedCourt)
       }
   },
 };

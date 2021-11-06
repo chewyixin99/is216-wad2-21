@@ -26,6 +26,12 @@ const store = createStore({
         //=== Court
         //--- Court PopUp
         courtCheckinHidden: true,
+
+        // == selectedCourt
+        selectedCourt: ``,
+
+        // == selectedProfle
+        selectedProfile:``,
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
@@ -82,7 +88,20 @@ const store = createStore({
         courtCheckIn(state, payload) {
             state.courtCurrentUserCheckin = payload.dbCheckinTime
             state.courtCurrentUserCheckout = payload.dbCheckoutTime
-        }
+        },
+
+
+        // == State management from homepage to publicProfile/selectedCourt
+        updateSelectedCourt(state, payload) {
+            state.selectedCourt = payload
+            console.log(state.selectedCourt)
+        },
+
+        updateSelectedProfile(state, payload) {
+            state.selectedProfile = payload
+            console.log(state.selectedProfile)
+        },
+        
 
     },
 
@@ -150,6 +169,9 @@ const store = createStore({
                 //         console.log("Error getting document:", error);
                 //     })
         // }
+
+
+        // === Start of home page functions
     },
 
     modules: {

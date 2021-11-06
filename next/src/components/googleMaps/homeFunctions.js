@@ -24,33 +24,39 @@ export default {
     this.currentBookmarks = [
       {
         name: "Singapore Basketball Court",
-        vicinity: "134 Pasir Ris Street 21"
-
+        vicinity: "134 Pasir Ris Street 21",
+        location: ``,
+        id: 1,
       },
       {
         name: "Basketball Court",
-        vicinity: "Opp Unit 104"
-
+        vicinity: "Opp Unit 104",
+        location: ``,
+        id: 2,
       },
       {
         name: "Basketball Court",
-        vicinity: "495 Tampines Street 43"
-
+        vicinity: "495 Tampines Street 43",
+        location: ``,
+        id: 3,
       },
       {
         name: "Basketball Court",
-        vicinity: "604 Elias Rd, Block 604, Singapore"
-
+        vicinity: "604 Elias Rd, Block 604, Singapore",
+        location: ``,
+        id: 4,
       },
       {
         name: "Pasir Ris Block 230 Basketball Court",
-        vicinity: "Blk, 230 Pasir Ris Street 11"
-
+        vicinity: "Blk, 230 Pasir Ris Street 11",
+        location: ``,
+        id: 5,
       },
       {
         name: "Basketball court @ Sun Plaza Park",
-        vicinity: "407 Tampines Street 41, Singapore"
-
+        vicinity: "407 Tampines Street 41, Singapore",
+        location: ``,
+        id: 6,
       },
     ]
 
@@ -59,57 +65,66 @@ export default {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
-      },
-      {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
-      },
-      {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: ``,
-      },
-      {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'chewyixin1999@gmail.com1',
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: ``,
+        email: 'chewyixin1999@gmail.com2',
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: ``,
+        email: 'chewyixin1999@gmail.com3',
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'chewyixin1999@gmail.com4',
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'chewyixin1999@gmail.com5',
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: ``,
+        email: 'chewyixin1999@gmail.com6',
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'chewyixin1999@gmail.com7',
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: ``,
+        email: 'chewyixin1999@gmail.com8',
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
         profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'chewyixin1999@gmail.com9',
+      },
+      {
+        firstName: "Chew",
+        lastName: "Yi Xin",
+        profilePicture: ``,
+        email: 'chewyixin1999@gmail.com10',
       },
       
     ]
     const { coords } = useGeolocation()
     this.defaultPos = coords.value
-
   },
   // ################################################################################################################ SETUP ################################################################################################################
   setup() {
@@ -145,7 +160,6 @@ export default {
     return { currPos, otherPos, mapDiv }
   },
   
-
   // ################################################################################################################ METHODS START ################################################################################################################
   methods: {
     // function for 'courtsNearMe' button ########################################################
@@ -247,7 +261,13 @@ export default {
       })
     },
 
+    updateSelectedProfile(profile) {
+      this.$store.commit('updateSelectedProfile', profile)
+    },
 
+    updateSelectedCourt(court) {
+      this.$store.commit('updateSelectedCourt', court)
+    }
 
   }
 }
