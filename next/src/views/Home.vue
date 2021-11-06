@@ -5,7 +5,7 @@
 
 <div class="container max-w-5xl mx-auto">
 
-  <div class="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
+  <div class="grid grid-cols-2  lg:grid-cols-2">
 
     <!-- Search  -->
     <div class="col-span-2 " > 
@@ -24,7 +24,7 @@
     </div> -->
 
     <!-- Bookmarks -->
-    <div class="col-span-2 md:col-span-1">
+    <div class="col-span-2 lg:col-span-1">
 
       <div class="primary-title">
         Bookmarks
@@ -59,7 +59,7 @@
 
 
     <!-- Near You -->
-    <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2" >
+    <div class="col-span-2 lg:col-span-1 row-span-1 lg:row-span-2" >
 
       <div class="primary-title">
         Near You
@@ -93,7 +93,7 @@
 
 
     <!-- Recently Played -->
-    <div class="col-span-2 md:col-span-1">
+    <div class="col-span-2 lg:col-span-1">
       <div class="primary-title">
         Recently Played
       </div>
