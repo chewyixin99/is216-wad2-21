@@ -6,6 +6,9 @@ import { Loader } from '@googlemaps/js-api-loader'
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyB0y4bi5X2uc_EZGF8yE-GIc_09jd9rwRg'
 
+var markersArray = []
+var markersDetails = []
+
 export default {
   name: 'app',
   data() {
@@ -16,6 +19,7 @@ export default {
       recentlyPlayed: [],
       searchInput: ``,
       map: ``,
+
     }
   },
   // ################################################################################################################ CREATED ################################################################################################################
@@ -245,19 +249,42 @@ export default {
         map,
         position: place.geometry.location,
       })
+    
       let contentString = `<p>${place.vicinity} ${place.name}<p>
-                          <br/><p>Business Status: ${place.business_status}</p>
-                          <br><a href="/court"><strong>Click to View Court</strong></a>`
+                          <br/>
+                          <p>Business Status: ${place.business_status}</p>
+                          <br>
+                          <a href="/court" >
+                            <strong>Click to View Court</strong>
+                          </a>
+                          `
       const infoWindow = new google.maps.InfoWindow({
         content: contentString
       })
 
       marker.addListener('click', () => {
+        const index = markersArray.indexOf(marker)
+        const court = markersDetails[index]
+
+        console.log(`before update (below):`)
+        console.log(this.$store.state.selectedCourt)
+        this.updateSelectedCourt(court)
+        console.log(`check if store is updated (below):`)
+        console.log(this.$store.state.selectedCourt)
+
         infoWindow.open({
           anchor: marker,
           map,
           shouldFocus: true,
         })
+      })
+
+      markersArray.push(marker)
+      markersDetails.push({
+        name: place.name,
+        vicinity: place.vicinity,
+        location: place.geometry.location,
+        id: place.place_id,
       })
     },
 

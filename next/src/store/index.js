@@ -28,10 +28,10 @@ const store = createStore({
         courtCheckinHidden: true,
 
         // == selectedCourt
-        selectedCourt: ``,
+        selectedCourt: `defaultValue`,
 
         // == selectedProfle
-        selectedProfile:``,
+        selectedProfile:`defaultValue`,
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
@@ -94,11 +94,13 @@ const store = createStore({
         // == State management from homepage to publicProfile/selectedCourt
         updateSelectedCourt(state, payload) {
             state.selectedCourt = payload
+            console.log(`From updateSelectedCourt mutation`)
             console.log(state.selectedCourt)
         },
 
         updateSelectedProfile(state, payload) {
             state.selectedProfile = payload
+            console.log(`From updateSelectedProfile mutation`)
             console.log(state.selectedProfile)
         },
         
