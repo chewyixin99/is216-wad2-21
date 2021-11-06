@@ -21,10 +21,13 @@
                 <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="text" v-model="email">
             </div>
             <!-- SUBMIT BUTTON -->
-            <div class="text-center">
-                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36" @click.prevent="reset">
-                SUBMIT
-            </button>
+            <div class="text-center space-x-4">
+                <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36" @click.prevent="toLogin">
+                    BACK
+                </button>
+                <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-36" @click.prevent="reset">
+                    SUBMIT
+                </button>
             
             </div>
         </form>

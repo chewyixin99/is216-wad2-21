@@ -22,6 +22,14 @@
                         </div>
                     </div>
 
+                    <!-- EMAIL -->
+                    <div class="mb-4">
+                        <label class="block text-white text-sm font-bold" for="email">
+                            EMAIL
+                        </label>
+                        <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
+                    </div>
+
                     <!-- EXPERIENCE -->
                     <div class="mb-4">
                         <label class="block text-white text-sm font-bold mb-2" for="experience">
@@ -51,16 +59,8 @@
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam">
                     </div>
 
-                    <div class="mb-6">
-                        <label class="block text-white text-sm font-bold mb-2" for="email">
-                            EMAIL
-                        </label>
-                        <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
-                    </div>
-
-
                     <!-- BUTTONS -->
-                    <div class="text-center space-x-4">
+                    <div class="mt-3 text-center space-x-4">
                         <!-- BACK BUTTON -->
                             <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="toProfile">
                             CANCEL

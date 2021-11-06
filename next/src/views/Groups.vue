@@ -9,9 +9,13 @@
           MY GROUPS
         </div>
         <div>
-          <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" @click="toCreateGroup">
+          
+          <!-- <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" @click="toCreateGroup">
             CREATE GROUP
-          </button>
+          </button> -->
+          <the-button :onClick="toCreateGroup" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-sm">
+            CREATE GROUP
+          </the-button>
         </div>
       </div>
 
@@ -52,6 +56,7 @@
 // import firebase from 'firebase/compat/app';
 // import TheProfileIcon from "../components/TheProfileIcon.vue"
 import Group from "../components/Group.vue"
+import TheButton from "../components/TheButton.vue"
 
 
 export default {
@@ -59,6 +64,7 @@ export default {
     components: {
         // TheProfileIcon,
         Group,
+        TheButton,
     },
     props: {
     },

@@ -35,7 +35,7 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'LogIn',
     component: LogIn,
     meta: { requiresUnauth: true }
   },
