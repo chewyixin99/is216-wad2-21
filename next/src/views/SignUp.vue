@@ -48,7 +48,7 @@
 
     <!-- LOG IN LINK -->
     <div class="text-center text-white">
-      <router-link class="router-link" :to="{name: 'Login'}">
+      <router-link class="router-link" :to="{name: 'LogIn'}">
       Already have an account? <span class="text-yellow-500">Log in</span></router-link>
     </div>
 

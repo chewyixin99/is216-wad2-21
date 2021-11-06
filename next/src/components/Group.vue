@@ -10,25 +10,32 @@
                 </div>
                 <!-- DELETE BUTTON -->
                 <div class="sm:space-x-4 md:space-x-0">
-                    <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded w-36 mt-3" @click="addMembers">
+                    <!-- <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded w-36 mt-3" @click="addMembers">
                         ADD MEMBER
                     </button>
                     <button class="bg-red-500 hover:bg-red-700 text-white font-bold font-bold py-2 px-4 rounded w-36 my-3" @click="leaveGroup">
                         LEAVE GROUP
-                    </button>
+                    </button> -->
+                    <the-button :onClick="addMembers" class="bg-yellow-500 hover:bg-yellow-700 text-white mt-3" buttonType="form-sm">
+                        ADD MEMBER
+                    </the-button>
+                    <the-button :onClick="leaveGroup" class="bg-red-500 hover:bg-red-700 text-white mt-3" buttonType="form-sm">
+                        LEAVE GROUP
+                    </the-button>
                 </div>
             </div>
             
             <!-- GROUP MEMBERS -->
-            <div class="col-span-4 md:col-span-3">
+            <div class="col-span-4 md:col-span-3 mt-3">
                 <!-- GROUP NAME -->
                 <div class="flex flex-wrap justify-between">
                     <span class="secondary-gold-title">{{groupName.toUpperCase()}}</span>
                     <span class="secondary-white-title">{{groupExp.toUpperCase()}}</span>
+                    <!-- <div class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white">{{this.groupMembers.length}} P</div> -->
                 </div>
                 <!-- V-FOR GROUP MEMBERS -->
-                <div class="grid grid-cols-8 lg:grid-cols-12 gap-4 mt-3">
-                    <the-profile-icon v-for="(a_player, index) in this.groupMembers" :initials="a_player.initials" :key="index"
+                <div class="grid grid-cols-5 md:grid-cols-10 gap-4 mt-3 justify-items-center">
+                    <the-profile-icon :onClick="toPublicUser" v-for="(a_player, index) in this.groupMembers" :initials="a_player.initials" :key="index"
                     class="font-bold" />
                 </div>
             </div>
@@ -40,11 +47,13 @@
 
 <script>
 import TheProfileIcon from "./TheProfileIcon.vue"
+import TheButton from "./TheButton.vue"
 
 export default {
     name: "Group",
     components: {
-        TheProfileIcon
+        TheProfileIcon,
+        TheButton,
     },
     props: {}, // Props should take in array of current players later on
 
@@ -124,7 +133,6 @@ export default {
 
     methods:{
 
-    // ROUTE TO CREATE GROUP
     addMembers(){
         var member = prompt("Enter email")
         return member
@@ -132,6 +140,9 @@ export default {
     leaveGroup(){
         alert ("Are you sure you want to leave this group?")
     },
+    toPublicUser(){
+        this.$router.replace({name: "PublicUser"});
+      },
 
     },
 }
