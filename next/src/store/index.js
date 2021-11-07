@@ -158,6 +158,162 @@ const store = new Vuex.Store({
                 experience: state.profileExperience,
             })
         },
+        async getGroupID({state}){ 
+            const dataBase = await db.collection('users').doc(state.profileID).get()
+            state.profileGroupID = dataBase.data().groupID;
+            console.log("this");
+
+        },
+
+        async addNewMember({state}){
+
+            const dataBase = await db.collection('users').doc(state.currentMemberID).get()
+            
+                const newMemberGroup = dataBase.data().groupID
+
+                const compilation1 = [];
+                for (var i = 0; i < newMemberGroup.length; i++){
+                    if (newMemberGroup[i] != ""){
+                        compilation1.push(newMemberGroup[i]);
+                    }
+                    
+                }
+                compilation1.push(state.currentGroupID)
+
+                console.log(compilation1);
+
+
+            const dataBase2 = await db.collection('users').doc(state.currentMemberID);
+            
+            await dataBase2.update({
+
+                groupID: compilation1,
+                
+            })
+
+            const dataBase3 = await db.collection('groups').doc(state.currentGroupID).get()
+            
+            const groupIDObj = dataBase3.data().memberID
+                
+                const compilation = [];
+                for (var j = 0; j < groupIDObj.length; j++){
+                    if (groupIDObj[j] != ""){
+                        compilation.push(groupIDObj[j]);
+                        console.log(groupIDObj[j]);
+                        console.log("this");
+                    }
+                    
+                }
+                compilation.push(state.currentMemberID)
+
+                console.log(compilation);
+                console.log("^this is group com");
+                console.log(state.currentGroupID);
+
+            const dataBase4 = await db.collection('groups').doc(state.currentGroupID);
+            
+            await dataBase4.update({
+
+                memberID: compilation,
+                
+        })
+            
+        },
+      
+        async removeMember({state}){
+
+            const dataBase = await db.collection('users').doc(state.currentMemberID).get()
+            
+                const newMemberGroup = dataBase.data().groupID
+
+                const compilation1 = [];
+                for (var i = 0; i < newMemberGroup.length; i++){
+                    if (newMemberGroup[i] != ""){
+                        compilation1.push(newMemberGroup[i]);
+                    }
+                    
+                }
+
+                let index = compilation1.indexOf(state.currentGroupID)
+                compilation1.splice(index,1)
+
+                console.log(compilation1);
+
+
+            const dataBase2 = await db.collection('users').doc(state.currentMemberID);
+            
+            await dataBase2.update({
+
+                groupID: compilation1,
+                
+            })
+
+            const dataBase3 = await db.collection('groups').doc(state.currentGroupID).get()
+            
+            const groupIDObj = dataBase3.data().memberID
+                
+                const compilation = [];
+                for (var j = 0; j < groupIDObj.length; j++){
+                    if (groupIDObj[j] != ""){
+                        compilation.push(groupIDObj[j]);
+                        console.log(groupIDObj[j]);
+                        console.log("this");
+                    }
+                    
+                }
+                let index2 = compilation.indexOf(state.currentMemberID)
+                compilation.splice(index2,1)
+                
+                console.log(compilation);
+                console.log("^this is group com");
+                console.log(state.currentGroupID);
+
+            const dataBase4 = await db.collection('groups').doc(state.currentGroupID);
+            
+            await dataBase4.update({
+
+                memberID: compilation,
+                
+        })
+            
+        },
+        
+        // ADD A NEW GROUP TO DATABASE AND ADD GROUP ID TO USER INFO
+        async addNewGroup({state}){
+            const dataBase = await db.collection("groups").add({
+                groupName: state.newGroupName,
+                groupExp: state.newGroupExp,
+                memberID: [state.profileID]
+            });
+
+            state.newGroupID = dataBase.id
+
+            const dataBase2 = await db.collection('users').doc(state.profileID).get()
+            
+                const groupIDObj = dataBase2.data().groupID
+
+                const compilation = [];
+                for (var i = 0; i < groupIDObj.length; i++){
+                    if (groupIDObj[i] != ""){
+                        compilation.push(groupIDObj[i]);
+                    }
+                    
+                }
+                compilation.push(state.newGroupID)
+
+            const dataBase3 = await db.collection('users').doc(state.profileID);
+            
+            await dataBase3.update({
+
+                groupID: compilation,
+                
+            })
+
+            state.profileGroupID = compilation
+            console.log("addnewgroup is completed");
+            
+        },
+
 
         //=== Court
         //--- Court PopUp
