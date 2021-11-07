@@ -4,7 +4,6 @@
   <div class="container max-w-5xl mx-auto">
       <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6">
         <div class="grid grid-cols-4 md:space-x-2">
-
           <!-- PROFILE IMAGE AND EDIT BUTTON -->
           <div class="col-span-4 md:col-span-1">
             <div class="rounded-full text-center">

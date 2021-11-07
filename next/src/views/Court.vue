@@ -5,14 +5,15 @@
         <!-- TITLE -->
         <div class="text-center mx-6">
              <!-- button to be removed -->
-            <button v-on:click="checkData()">test</button>
             <!-- button above to be removed -->
             <div class="primary-gold-title mt-3">
-                <h1>{{courtName.toUpperCase()}}</h1>
+                <!-- <h1>{{courtName.toUpperCase()}}</h1> -->
+                <h1> {{court.name.toUpperCase()}} </h1>
             </div>
     
             <div class="secondary-white-title italic font-bold">
-                <h1>{{courtAddress.toUpperCase()}}</h1>
+                <!-- <h1>{{courtAddress.toUpperCase()}}</h1> -->
+                <h1> {{court.vicinity.toUpperCase()}} </h1>
             </div>
         </div>
 
@@ -62,9 +63,12 @@ export default {
     return {
         isHidden: false,
 
-        //   Hardcoded
-        courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
-        courtAddress: "11 Bedok North Street 1, Singapore 469662",
+        court: this.$store.state.selectedCourt,
+
+
+        //   Hardcoded to be deleted
+        // courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
+        // courtAddress: "11 Bedok North Street 1, Singapore 469662",
 
     };
   },
@@ -74,10 +78,6 @@ export default {
           console.log(status);
       },
 
-    //   to delete
-      checkData() {
-          console.log(this.$store.state.selectedCourt)
-      }
   },
 };
 </script>
