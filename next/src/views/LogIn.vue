@@ -21,7 +21,7 @@
       </div>
       
 
-      <!-- sIGN IN BUTTON -->
+      <!-- SIGN IN BUTTON -->
       <div class="items-center justify-between text-center mb-4">
         <button type="submit" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-full" >
           LOG IN
@@ -47,6 +47,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import { useRouter } from 'vue-router'
 
 export default {
+  name: 'LogIn',
   setup() {
     const auth = getAuth()
     const router = useRouter()

@@ -11,6 +11,7 @@ import Court from '../views/Court.vue'
 import EditProfile from '../views/EditProfile.vue'
 import Groups from '../views/Groups.vue'
 import CreateGroup from '../views/CreateGroup.vue'
+import PublicUser from '../views/PublicUser.vue'
 
 const routes = [
   {
@@ -34,7 +35,7 @@ const routes = [
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'LogIn',
     component: LogIn,
     meta: { requiresUnauth: true }
   },
@@ -78,6 +79,12 @@ const routes = [
     path: '/creategroup',
     name: 'CreateGroup',
     component: CreateGroup,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/publicuser',
+    name: 'PublicUser',
+    component: PublicUser,
     meta: { requiresAuth: true }
   },
 

@@ -1,11 +1,21 @@
-import { createStore } from 'vuex'
+// Vuex persistedState imports
+import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
+
+
 import db from "../firebase/firebaseInit";
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
 
 
-const store = createStore({
+const store = new Vuex.Store({
+    plugins: [
+        createPersistedState({
+            storage: window.sessionStorage,
+        })
+    ],
     state: {
+        //=== User
         user: null,
         profileEmail: null,
         profileFirstName: null,
@@ -16,8 +26,8 @@ const store = createStore({
         profileFavPlayer: null,
         profileFavTeam: null,
         profileGroupID: null,
-        profileCheckedInTime: null,
         profileLoggedInTime: null,
+
         profileActiveCourt: null,
         newGroupExp: null,
         newGroupName: null,
@@ -29,9 +39,29 @@ const store = createStore({
         currentMemberID: null,
         currentGroupID: null,
 
+
+
+        profileLatestCourtID: null,
+        profileLatestCheckin: null,
+        profileLatestCheckout: null,
+
+        // default profile avatar
+        defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
+
+        //=== Court
+        //--- Court PopUp
+        courtCheckinHidden: true,
+
+        // == selectedCourt
+        selectedCourt: `defaultValue`,
+
+        // == selectedProfle
+        selectedProfile:`defaultValue`,
+
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
+
 
         inputCurrentMember(state, payload){
             state.currentMemberID = payload;
@@ -50,7 +80,11 @@ const store = createStore({
             state.newGroupExp = payload;
         },
 
-        updateUser(state,payload){
+
+
+        //=== User
+        updateUser(state, payload){
+
             state.user = payload
         },
 
@@ -63,15 +97,21 @@ const store = createStore({
             state.profileFavPlayer = doc.data().favPlayer;
             state.profileFavTeam = doc.data().favTeam;
             state.profileGroupID = doc.data().groupID; 
-            state.profileCheckedInTime = doc.data().checkedInTime;
             state.profileLoggedInTime = doc.data().loggedInTime;
             state.profileActiveCourt = doc.data().activeCourt;
         },
+
 
         setGroupInfo(state,doc){
             state.groupInfo = doc
             // state.groupExp = doc.data().groupExp
             // state.memberID = doc.data().memberID
+
+        setprofileLatestCheckOut(state, payload) {
+            state.profileLatestCheckin = payload.latestCheckinTime
+            state.profileLatestCheckout = payload.latestCheckoutTime
+            state.latestCourtID = payload.latestCourtID
+
         },
 
         changeFirstName(state, payload) {
@@ -93,17 +133,71 @@ const store = createStore({
             state.isflag = payload;
         },
         
+        //=== Court
+        //--- Court PopUp
+        courtToggleCheckinHidden(state) {
+            if (state.courtCheckinHidden) {
+                state.courtCheckinHidden = false
+            } else {
+                state.courtCheckinHidden = true
+            }
+        },
+
+        courtCheckIn(state, payload) {
+            state.courtCurrentUserCheckin = payload.dbCheckinTime
+            state.courtCurrentUserCheckout = payload.dbCheckoutTime
+        },
+
+
+        // == State management from homepage to publicProfile/selectedCourt
+        updateSelectedCourt(state, payload) {
+            state.selectedCourt = payload
+            console.log(`From updateSelectedCourt mutation`)
+            console.log(state.selectedCourt)
+        },
+
+        updateSelectedProfile(state, payload) {
+            state.selectedProfile = payload
+            console.log(`From updateSelectedProfile mutation`)
+            console.log(state.selectedProfile)
+        },
+        
+
     },
 
     //INTERACTIONS BETWEEN STORE AND FIREBASE 
     actions: { 
 
+
         // RETRIEVE USER INFO
-        async getCurrentUser({commit}){
+
+
+        async getCurrentUser({commit, dispatch}){
+
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
             const dbResults = await dataBase.get();
             commit("setProfileInfo", dbResults);
             console.log(dbResults);
+
+            dispatch("getProfileLatestCheckout")
+        },
+
+        async getProfileLatestCheckout({state, commit}) {
+            console.log(state.user);
+            const dataBase = await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime", "desc").limit(1)
+            dataBase.get().then(
+                (latestCheckoutDoc) => {
+                    if (latestCheckoutDoc.docs) {
+                        console.log("[checkinHistory collection] Retrieved latest check out time.");
+                        let latestCheckinTime = latestCheckoutDoc.docs[0].data().checkinTime.toDate()
+                        let latestCheckoutTime = latestCheckoutDoc.docs[0].data().checkoutTime.toDate()
+                        commit("setprofileLatestCheckOut", {latestCheckinTime: latestCheckinTime, latestCheckoutTime: latestCheckoutTime, latestCourtID: latestCheckoutDoc.docs[0].data().courtID})
+                    } else {
+                        console.log("[checkinHistory collection] No check in history, this guy is probably a new player.");
+                    }
+                }).catch((error) => {
+                    console.log("[checkinHistory collection] Error getting document: ", error);
+                })
         },
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
@@ -117,6 +211,7 @@ const store = createStore({
                 experience: state.profileExperience,
             })
         },
+
 
         async getGroupID({state}){ 
             const dataBase = await db.collection('users').doc(state.profileID).get()
@@ -309,6 +404,35 @@ const store = createStore({
             //     groupID:  tempUpdate
             // })
         
+
+
+        //=== Court
+        //--- Court PopUp
+
+        // async addCheckinHistory({state}) {
+        //     // Check if the user is currently checked in from the state
+        //     // 
+
+
+        //     const dataBase = await db.collection('users').doc(state.pofileID).collection('checkinHistory')
+        //     .where("courtID", "==", "")
+        //     // Find document where same court, same checkin time in collection checkinHistory
+        //     console.log(dataBase);
+                // const dataBase = await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime").limit(1)
+                // dataBase.get().then(
+                //     (checkoutTimeSnapshot) => {
+                //         if (checkoutTimeSnapshot.exists) {
+                //             console.log("Document data:", checkoutTimeSnapshot.data());
+                //         } else {
+                //             console.log("No such document!");
+                //         }
+                //     }).catch((error) => {
+                //         console.log("Error getting document:", error);
+                //     })
+        // }
+
+
+        // === Start of home page functions
 
     },
 

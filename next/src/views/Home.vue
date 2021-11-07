@@ -1,17 +1,17 @@
-<script src="../components/googleMaps/googleMaps">
+<script src="../components/googleMaps/homeFunctions">
 </script>
 
 <template>
 
 <div class="container max-w-5xl mx-auto">
 
-  <div class="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-2">
+  <div class="grid grid-cols-2  lg:grid-cols-2">
 
     <!-- Search  -->
-    <div class="col-span-2" > 
+    <div class="col-span-2 " > 
 
       <form class="m-5" action="">
-        <input type="text" class="shadow appearance-none border rounded w-10/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="court-search" placeholder="Search for a location, i.e., Serangoon Nex, Pasir Ris block 134  " v-model="searchInput">
+        <input type="text" class=" search-bar shadow appearance-none border rounded w-10/12 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="court-search" placeholder="Search for a location, i.e., Serangoon Nex, Pasir Ris block 134  " v-model="searchInput">
         <button v-on:click="searchForNearbyCourts()" class="search-button bg-yellow-400 hover:bg-yellow-300 text-gray-700 font-bold mx-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
           Search
         </button>
@@ -19,8 +19,12 @@
 
     </div>
 
+    <!-- <div>
+      {{ $store.state.user }}
+    </div> -->
+
     <!-- Bookmarks -->
-    <div class="col-span-2 md:col-span-1">
+    <div class="col-span-2 lg:col-span-1">
 
       <div class="primary-title">
         Bookmarks
@@ -39,14 +43,14 @@
 
         <ul v-for="b in currentBookmarks" :key="b">
           <li>
-            <div class="venue-name">
-              <a href="/court">
-                {{ b.name }}
-              </a>
-            </div>
-            <div class="venue-address">
-              {{ b.vicinity }}
-            </div>
+            <a href="/court" v-on:click="updateSelectedCourt(b)">
+              <div class="venue-name">
+                  {{ b.name }}
+              </div>
+              <div class="venue-address">
+                {{ b.vicinity }}
+              </div>
+            </a>
           </li>
         </ul>
       </div>
@@ -55,7 +59,7 @@
 
 
     <!-- Near You -->
-    <div class="col-span-2 md:col-span-1 row-span-1 md:row-span-2" >
+    <div class="col-span-2 lg:col-span-1 row-span-1 lg:row-span-2" >
 
       <div class="primary-title">
         Near You
@@ -89,27 +93,19 @@
 
 
     <!-- Recently Played -->
-    <div class="col-span-2 md:col-span-1">
+    <div class="col-span-2 lg:col-span-1">
       <div class="primary-title">
         Recently Played
       </div>
       <div class="recently-played">
 
-        <!-- <span v-for="p in recentlyPlayed" v-bind:key="p">
-          <div v-if="p.profilePicture.length > 0" class="player-image">
-            <a href="/profile"><img v-bind:src="p.profilePicture" alt=""></a>
-          </div>
-
-          <div v-else class="player-no-image">
-            <a href="/profile">{{ p.firstName.charAt(0) }}{{ p.lastName.charAt(0) }}</a>
-          </div>
-        </span> -->
+        
         <ul class="recently-played mr-4">
           <li v-for="p in  recentlyPlayed" :key="p">
-            <a href="/profile">
-              <span v-if="p.profilePicture.length > 0" >
+            <a href="/publicuser" v-on:click="updateSelectedProfile(p)">
+              <span v-if="p.profileImg.length > 0" >
                 <div class="player-image">
-                  <img v-bind:src="p.profilePicture" alt="">
+                  <img v-bind:src="p.profileImg" alt="">
                 </div>
               </span>
 
@@ -156,6 +152,7 @@
   margin-left: 5px;
   margin-bottom: 5px;
 }
+
 
 .mapDiv {
   height: 400px;

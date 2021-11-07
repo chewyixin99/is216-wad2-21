@@ -12,19 +12,25 @@
                 <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
               </div>
               <div class="sm:space-x-4 md:space-x-0">
-                <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded w-36 mt-3" @click="toEditProfile">
+                <!-- <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded w-36 mt-3" @click="toEditProfile">
                     EDIT PROFILE
                 </button>
                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold font-bold py-2 px-4 rounded w-36 my-3" @click="signOutUser">
                     SIGN OUT
-                </button>
+                </button> -->
+                <the-button :onClick="toEditProfile" class="bg-yellow-500 hover:bg-yellow-700 text-white mt-3" buttonType="form-sm">
+                  EDIT PROFILE
+                </the-button>
+                <the-button :onClick="signOutUser" class="bg-red-500 hover:bg-red-700 text-white mt-3" buttonType="form-sm">
+                  SIGN OUT
+                </the-button>
               </div>
             </div>
           </div>
 
           <!-- PROFILE DETAILS -->
           <div class="col-span-4 md:col-span-3">
-            <div class="primary-gold-title mb-4">
+            <div class="primary-gold-title mb-4 mt-3 text-center md:text-left">
               {{firstName.toUpperCase()}} {{lastName.toUpperCase()}}
             </div>
             <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
@@ -47,8 +53,8 @@
         </div>
       </div>
 
-      <div class="bg-white border rounded h-60 mx-6 mb-6 text-center">
-        This is for activity level
+      <div class="bg-gray-800 rounded mx-6 mb-6 p-6 text-center">
+        <activity-chart></activity-chart>
       </div>
 
 
@@ -98,10 +104,15 @@ import { useAuthState } from '../firebase/firebase'
 import { useRouter } from 'vue-router'
 // import firebase from 'firebase/compat/app';
 import db from "../firebase/firebaseInit";
-
+import TheButton from "../components/TheButton.vue"
+import ActivityChart from "../components/ActivityChart.vue"
 
 export default {
   name: 'Profile',
+  components: {
+    TheButton,
+    ActivityChart,
+  },
     data(){
       return{
           // firstName: "",

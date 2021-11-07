@@ -6,6 +6,9 @@ import { Loader } from '@googlemaps/js-api-loader'
 
 const GOOGLE_MAPS_API_KEY = 'AIzaSyB0y4bi5X2uc_EZGF8yE-GIc_09jd9rwRg'
 
+var markersArray = []
+var markersDetails = []
+
 export default {
   name: 'app',
   data() {
@@ -16,6 +19,7 @@ export default {
       recentlyPlayed: [],
       searchInput: ``,
       map: ``,
+
     }
   },
   // ################################################################################################################ CREATED ################################################################################################################
@@ -24,33 +28,39 @@ export default {
     this.currentBookmarks = [
       {
         name: "Singapore Basketball Court",
-        vicinity: "134 Pasir Ris Street 21"
-
+        vicinity: "134 Pasir Ris Street 21",
+        location: ``,
+        id: 1,
       },
       {
         name: "Basketball Court",
-        vicinity: "Opp Unit 104"
-
+        vicinity: "Opp Unit 104",
+        location: ``,
+        id: 2,
       },
       {
         name: "Basketball Court",
-        vicinity: "495 Tampines Street 43"
-
+        vicinity: "495 Tampines Street 43",
+        location: ``,
+        id: 3,
       },
       {
         name: "Basketball Court",
-        vicinity: "604 Elias Rd, Block 604, Singapore"
-
+        vicinity: "604 Elias Rd, Block 604, Singapore",
+        location: ``,
+        id: 4,
       },
       {
         name: "Pasir Ris Block 230 Basketball Court",
-        vicinity: "Blk, 230 Pasir Ris Street 11"
-
+        vicinity: "Blk, 230 Pasir Ris Street 11",
+        location: ``,
+        id: 5,
       },
       {
         name: "Basketball court @ Sun Plaza Park",
-        vicinity: "407 Tampines Street 41, Singapore"
-
+        vicinity: "407 Tampines Street 41, Singapore",
+        location: ``,
+        id: 6,
       },
     ]
 
@@ -58,58 +68,110 @@ export default {
       {
         firstName: "Chew",
         lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        profileImg: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'chewyixin1999@gmail.com1',
+        experience: `Beginner`,
+        favPlayer: `Kobe Bryant`,
+        favTeam: `LA Lakers`,
+        currentGroups: [],
       },
       {
         firstName: "Chew",
         lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        profileImg: ``,
+        email: 'chewyixin1999@gmail.com1',
+        experience: `Expert`,
+        favPlayer: `Lebron James`,
+        favTeam: `Miami Heat`,
+        currentGroups: [],
       },
       {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: ``,
+        firstName: "Loh",
+        lastName: "Kok Wee",
+        profileImg: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'lohkokwee@gmail.com1',
+        experience: `Beginner`,
+        favPlayer: `Kobe Bryant`,
+        favTeam: `LA Lakers`,
+        currentGroups: [],
       },
       {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        firstName: "Loh",
+        lastName: "Kok Wee",
+        profileImg: ``,
+        email: 'lohkokwee@gmail.com1',
+        experience: `Expert`,
+        favPlayer: `Lebron James`,
+        favTeam: `Miami Heat`,
+        currentGroups: [],
+      },
+      
+      {
+        firstName: "Gan",
+        lastName: "Jian Lin",
+        profileImg: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'ganjianlin@gmail.com1',
+        experience: `Beginner`,
+        favPlayer: `Kobe Bryant`,
+        favTeam: `LA Lakers`,
+        currentGroups: [],
       },
       {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: ``,
+        firstName: "Gan",
+        lastName: "Jian Lin",
+        profileImg: ``,
+        email: 'ganjianlin@gmail.com1',
+        experience: `Expert`,
+        favPlayer: `Lebron James`,
+        favTeam: `Miami Heat`,
+        currentGroups: [],
+      },
+      
+      {
+        firstName: "Lim",
+        lastName: "Joel",
+        profileImg: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'joellim@gmail.com1',
+        experience: `Beginner`,
+        favPlayer: `Kobe Bryant`,
+        favTeam: `LA Lakers`,
+        currentGroups: [],
       },
       {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: ``,
+        firstName: "Lim",
+        lastName: "Joel",
+        profileImg: ``,
+        email: 'joellim@gmail.com1',
+        experience: `Expert`,
+        favPlayer: `Lebron James`,
+        favTeam: `Miami Heat`,
+        currentGroups: [],
+      },
+      
+      {
+        firstName: "Biondi",
+        lastName: "Lee",
+        profileImg: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        email: 'biondilee@gmail.com1',
+        experience: `Beginner`,
+        favPlayer: `Kobe Bryant`,
+        favTeam: `LA Lakers`,
+        currentGroups: [],
       },
       {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
-      },
-      {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
-      },
-      {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
-      },
-      {
-        firstName: "Chew",
-        lastName: "Yi Xin",
-        profilePicture: `https://t3.ftcdn.net/jpg/02/22/85/16/240_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg`,
+        firstName: "Biondi",
+        lastName: "Lee",
+        profileImg: ``,
+        email: 'biondilee@gmail.com1',
+        experience: `Expert`,
+        favPlayer: `Lebron James`,
+        favTeam: `Miami Heat`,
+        currentGroups: [],
       },
       
     ]
     const { coords } = useGeolocation()
     this.defaultPos = coords.value
-
   },
   // ################################################################################################################ SETUP ################################################################################################################
   setup() {
@@ -145,7 +207,6 @@ export default {
     return { currPos, otherPos, mapDiv }
   },
   
-
   // ################################################################################################################ METHODS START ################################################################################################################
   methods: {
     // function for 'courtsNearMe' button ########################################################
@@ -231,23 +292,52 @@ export default {
         map,
         position: place.geometry.location,
       })
+    
       let contentString = `<p>${place.vicinity} ${place.name}<p>
-                          <br/><p>Business Status: ${place.business_status}</p>
-                          <br><a href="/court"><strong>Click to View Court</strong></a>`
+                          <br/>
+                          <p>Business Status: ${place.business_status}</p>
+                          <br>
+                          <a href="/court" >
+                            <strong>Click to View Court</strong>
+                          </a>
+                          `
       const infoWindow = new google.maps.InfoWindow({
         content: contentString
       })
 
       marker.addListener('click', () => {
+        const index = markersArray.indexOf(marker)
+        const court = markersDetails[index]
+
+        console.log(`before update (below):`)
+        console.log(this.$store.state.selectedCourt)
+        this.updateSelectedCourt(court)
+        console.log(`check if store is updated (below):`)
+        console.log(this.$store.state.selectedCourt)
+
         infoWindow.open({
           anchor: marker,
           map,
           shouldFocus: true,
         })
       })
+
+      markersArray.push(marker)
+      markersDetails.push({
+        name: place.name,
+        vicinity: place.vicinity,
+        location: place.geometry.location,
+        id: place.place_id,
+      })
     },
 
+    updateSelectedProfile(profile) {
+      this.$store.commit('updateSelectedProfile', profile)
+    },
 
+    updateSelectedCourt(court) {
+      this.$store.commit('updateSelectedCourt', court)
+    }
 
   }
 }

@@ -1,28 +1,35 @@
 <template>
-    <!-- Page Header -->
-    <div>
-        <div class="text-center">
-            <div class="text-3xl text-yellow-500 font-bold m-4">
-                <h1>{{courtName.toUpperCase()}}</h1>
+
+
+    <div class="container max-w-5xl mx-auto">
+        <!-- TITLE -->
+        <div class="text-center mx-6">
+             <!-- button to be removed -->
+            <!-- button above to be removed -->
+            <div class="primary-gold-title mt-3">
+                <!-- <h1>{{courtName.toUpperCase()}}</h1> -->
+                <h1> {{court.name.toUpperCase()}} </h1>
             </div>
     
-            <div class="text-xl text-white italic font-bold m-4">
-                <h1>{{courtAddress.toUpperCase()}}</h1>
+            <div class="secondary-white-title italic font-bold">
+                <!-- <h1>{{courtAddress.toUpperCase()}}</h1> -->
+                <h1> {{court.vicinity.toUpperCase()}} </h1>
             </div>
         </div>
-        
-        <div class="grid grid-cols-12 gap-4">
+
+        <!-- BODY CONTENT -->
+        <div class="grid grid-cols-1 md:grid-cols-3 mt-5">
             <!-- [Non-Mobile] Left Section -->
             <!-- Maps and Check In Options -->
-            <div class="col-start-3 col-span-2">
+            <div class="col-span-1 mx-6">
                 <court-mini-map-section/>
             </div>
     
             <!-- [Non-Mobile] Right Section -->
-            <div class="col-span-6">
+            <div class="col-span-2 justify-center mx-6">
                 <!-- Current Players Section -->
-                <div>
-                    <div class="text-2xl text-yellow-500 font-bold mx-4">
+                <div class="mb-6">
+                    <div class="secondary-gold-title">
                         <h1>CURRENT PLAYERS</h1>
                     </div>
                     <court-current-players/>
@@ -30,11 +37,13 @@
         
                 <!-- Current Teams Section -->
                 <div>
-                    <div class="text-2xl text-yellow-500 font-bold m-4">
+                    <div class="secondary-gold-title">
                         <h1>CURRENT TEAMS</h1>
                     </div>
                     <court-team/>
                 </div>
+
+                <court-pop-up :hidden="isHidden"/>
             </div>
         </div>
     </div>
@@ -44,21 +53,32 @@
 import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
+import CourtPopUp from "../components/CourtPopUp.vue"
 
 export default {
   name: "Court",
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtPopUp },
 
   data() {
     return {
-      //   Hardcoded
-      courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
-      courtAddress: "11 Bedok North Street 1, Singapore 469662",
+        isHidden: false,
+
+        court: this.$store.state.selectedCourt,
+
+
+        //   Hardcoded to be deleted
+        // courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
+        // courtAddress: "11 Bedok North Street 1, Singapore 469662",
 
     };
   },
 
-  methods: {},
+  methods: {
+      logStatus(status){
+          console.log(status);
+      },
+
+  },
 };
 </script>
 
