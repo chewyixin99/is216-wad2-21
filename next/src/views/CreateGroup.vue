@@ -14,7 +14,7 @@
                         <label class="block text-white text-sm font-bold mb-2" for="groupName">
                             GROUP NAME
                         </label>
-                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupName" type="text" name="groupName" v-model="groupName">
+                        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupName" type="text" name="groupName" v-model="newGroupName">
                     </div>
 
                     <!-- EXPERIENCE -->
@@ -23,7 +23,7 @@
                             EXPERIENCE
                         </label>
 
-                        <select class="form-select mt-1 block w-full shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupExp" name="groupExp" v-model="groupExp">
+                        <select class="form-select mt-1 block w-full shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupExp" name="groupExp" v-model="newGroupExp">
                             <option>Recreational</option>
                             <option>Intermediate</option>
                             <option>Competitive</option>
@@ -64,15 +64,55 @@ import 'firebase/compat/firestore';
 export default {
     name: "CreateGroups",
     data(){
+
         return{
-            groupName: "",
-            groupExp: "",
+
             errorMsg : "",
             error: null,
 
         }
     },
     methods:{
+
+        toGroups(){
+
+          this.$router.replace({name: "Groups"});
+
+        },
+
+        update(){
+
+            this.$store.dispatch("addNewGroup");
+
+
+        },
+
+    },
+
+    computed: {
+
+        newGroupName: {
+
+            set(payload) {
+                this.$store.commit("newGroupName", payload);
+            },
+
+        },
+
+        newGroupExp: {
+
+            set(payload) {
+                this.$store.commit("newGroupExp", payload);
+            },
+
+        }
+
+    }
+    
+}
+</script>
+
+<!--
     //     // !!! IMPORTANT: UNABLE TO PUSH NEW DATA, IT WILL REPLACE BECAUSE OF SET
     //     // CHANGE FIRESTORE DOCUMENT INFORMATION
     //     update(){
@@ -86,10 +126,7 @@ export default {
 
     //     },
     //     // ROUTE BACK TO GROUPS
-        toGroups(){
-          this.$router.replace({name: "Groups"});
-        },
-    }
+
     // },
     //     // RETRIEVE DOCUMENT INFORMATION
     //     created() {
@@ -173,5 +210,4 @@ export default {
         // }
 
 // }
-}
-</script>
+-->
