@@ -159,7 +159,15 @@ export default {
             this.$store.commit("changeFavTeam", payload);
             },
 
-        },       
+        },  
+
+        email: {
+
+          get() {
+            return this.$store.state.profileEmail
+            },
+        }
+      
         
     },
     

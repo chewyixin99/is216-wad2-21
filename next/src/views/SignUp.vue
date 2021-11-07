@@ -74,6 +74,7 @@ data(){
         firstName: "",
         lastName: "",
         email: "",
+        groupID: [],
         password: "",
         errorMsg : "",
         error: null,
@@ -99,6 +100,8 @@ methods:{
           firstName: this.firstName,
           lastName: this.lastName,
           email: this.email,
+          groupID: this.groupID,
+
         });
               
     }
