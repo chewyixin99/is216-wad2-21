@@ -103,9 +103,9 @@
         <ul class="recently-played mr-4">
           <li v-for="p in  recentlyPlayed" :key="p">
             <a href="/publicuser" v-on:click="updateSelectedProfile(p)">
-              <span v-if="p.profilePicture.length > 0" >
+              <span v-if="p.profileImg.length > 0" >
                 <div class="player-image">
-                  <img v-bind:src="p.profilePicture" alt="">
+                  <img v-bind:src="p.profileImg" alt="">
                 </div>
               </span>
 

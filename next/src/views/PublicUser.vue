@@ -8,7 +8,7 @@
           <div class="col-span-4 md:col-span-1">
             <div class="rounded-full text-center">
               <div class="profile-image flex justify-center items-center">
-                <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
+                <img v-bind:src="profilePicture" alt="">
               </div>
             </div>
           </div>
@@ -89,44 +89,42 @@ export default {
       computed: {
 
         firstName: {
-
           get() {
-            return this.$store.state.profileFirstName
+            return this.$store.state.selectedProfile.firstName
             },
-            
         },
         
         lastName: {
-
           get() {
-            return this.$store.state.profileLastName
+            return this.$store.state.selectedProfile.lastName
             },
-
         },
 
         experience: {
-
           get() {
-            return this.$store.state.profileExperience
+            return this.$store.state.selectedProfile.experience
             },
-
         },
 
         favPlayer: {
-
           get() {
-            return this.$store.state.profileFavPlayer
+            return this.$store.state.selectedProfile.favPlayer
             },
-
         },
         
         favTeam: {
-
           get() {
-            return this.$store.state.profileFavTeam
+            return this.$store.state.selectedProfile.favTeam
             },
-
         },
+
+        profilePicture: {
+          get() {
+            return this.$store.state.selectedProfile.profileImg == ""
+              ? this.$store.state.defaultProfileImg
+              : this.$store.state.selectedProfile.profileImg
+          }
+        }
 
     }
 }

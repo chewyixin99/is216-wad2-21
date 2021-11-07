@@ -32,6 +32,9 @@ const store = new Vuex.Store({
         profileLatestCheckin: null,
         profileLatestCheckout: null,
 
+        // default profile avatar
+        defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
+
         //=== Court
         //--- Court PopUp
         courtCheckinHidden: true,
