@@ -1,7 +1,7 @@
 <template>
     <div v-if="!$store.state.courtCheckinHidden">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
 
                 <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
     
@@ -25,13 +25,14 @@
                             </p>
                         </div>
 
+                        <div class="grid grid-cols-2 sm:grid-cols-1">
                         <!-- Check In Time -->
-                        <div class="my-5 grid grid-cols-2 justify-items-center">
-                            <div class="text-xl font-bold text-white flex items-center justify-center">
+                        <div class="my-3 grid grid-cols-1 sm:grid-cols-2 justify-items-center">
+                            <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
                                 CHECK IN:
                             </div>
 
-                            <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                            <div class="col-span-1 bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-4">
                                 <div class="flex">
                                     <select name="hours" class="font-bold bg-transparent appearance-none outline-none" v-model="userCheckinHr">
                                         <option value="1">1</option>
@@ -65,12 +66,12 @@
 
 
                         <!-- Check In Time -->
-                        <div class="my-5 grid grid-cols-2 justify-items-center">
-                            <div class="text-xl font-bold text-white flex items-center justify-center">
+                        <div class="my-3 grid grid-cols-1 sm:grid-cols-2 justify-items-center">
+                            <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
                                 CHECK OUT:
                             </div>
 
-                            <div class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                            <div class="col-span-1 bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-4">
                                 <div class="flex">
                                     <select name="hours" class="font-bold bg-transparent appearance-none outline-none" v-model="userCheckoutHr">
                                         <option value="1">1</option>
@@ -105,14 +106,16 @@
                     </div>
 
                     <!-- Check In Buttons Section -->
-                    <div class=" m-5">
-                        <the-button :onClick="checkinUser" class="bg-yellow-400 mb-4" buttonType="form-full">
-                            CHECK IN
-                        </the-button>
-
-                        <the-button :onClick="cancel" class="bg-red-500" buttonType="form-full">
+                    <div class="flex grid grid-cols-1 sm:grid-cols-2 gap-4 mt-3">
+                        <the-button :onClick="cancel" class="bg-red-500 order-last sm:order-first" buttonType="form-full">
                             CANCEL
                         </the-button>
+
+                        <the-button :onClick="checkinUser" class="bg-yellow-500" buttonType="form-full">
+                            CHECK IN
+                        </the-button>
+                    </div>
+
                     </div>
                 </div>
             </div>
