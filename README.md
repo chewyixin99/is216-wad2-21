@@ -1,9 +1,14 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=453407&assignment_repo_type=GroupAssignmentRepo)
 # :wave: is216-project
 
-## 🤓 IS216 - YOUR GROUP NUMBER - YOUR GROUP NAME
-* Please update the above header. For example, it should look like this: **IS216 - Group 123 - Supreme Children**
-* Who are your group members? List everyone's full name, SMU email address, and other info you wish to put here.
+## 🤓 IS216 - Group 38 - NEXT
+<!-- * Please update the above header. For example, it should look like this: **IS216 - Group 123 - Supreme Children**
+* Who are your group members? List everyone's full name, SMU email address, and other info you wish to put here. -->
+<!-- INSERT NEXT LOGO HERE -->
+* Chew Yi Xin (yixin.chew.2020@scis.smu.edu.sg)
+* Gan Jian Lin (jianlin.gan.2020@scis.smu.edu.sg)
+* Joel Lim (joel.lim.2020@scis.smu.edu.sg)
+* Loh Kok Wee (kokwee.loh.2020@scis.smu.edu.sg)
 
 
 ## 🤓 Project Overview ##
