@@ -3,7 +3,7 @@
     <TheNavigationBar v-if="!navigation"/>
     <router-view/>
 
-    <TheFooter style="position: fixed; bottom: 0;"/>
+    <TheFooter/>
   </div>
 
 </template>

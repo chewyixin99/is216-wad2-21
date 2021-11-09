@@ -38,8 +38,8 @@
         </div>
       </div>
 
-      <div class="bg-white border rounded h-60 mx-6 mb-6 text-center">
-        This is for activity level
+      <div class="bg-gray-800 rounded mx-6 p-6 text-center">
+        <activity-chart></activity-chart>
       </div>
 
 
@@ -65,11 +65,13 @@
 // import firebase from 'firebase/compat/app';
 // import db from "../firebase/firebaseInit";
 import Group from "../components/Group.vue"
+import ActivityChart from '../components/ActivityChart.vue'
 
 export default {
   name: 'PublicUser',
   components: {
-      Group
+      Group,
+      ActivityChart,
   },
     data(){
       return{

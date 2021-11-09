@@ -2,7 +2,7 @@
     
 
     <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-3 mx-6">
-        <div class="grid grid-cols-4">
+        <div class="grid grid-cols-4 gap-4">
 
             <div class="col-span-4 md:col-span-1 text-center">
                 <div class="profile-image flex justify-center items-center">
@@ -15,7 +15,7 @@
                     </button>
                 </div>
                 <div>
-                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold font-bold py-2 px-4 rounded w-36 my-3" @click="$emit('remove',{id:this.info,name:groupName})">
+                    <button class="bg-red-500 hover:bg-red-700 text-white font-bold font-bold py-2 px-4 rounded w-36 mt-3" @click="$emit('remove',{id:this.info,name:groupName})">
                     LEAVE GROUP
                     </button>
                 </div>
