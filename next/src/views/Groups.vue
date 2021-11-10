@@ -15,7 +15,7 @@
           <!-- <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" @click="toCreateGroup">
             CREATE GROUP
           </button> -->
-          <the-button :onClick="toCreateGroup" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-sm">
+          <the-button :onClick="toCreateGroup" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-md">
             CREATE GROUP
           </the-button>
 

@@ -3,15 +3,15 @@
 
   <div class="container max-w-5xl mx-auto">
       <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6">
-        <div class="grid grid-cols-4 md:space-x-2">
+        <div class="grid grid-cols-5 gap-4">
 
           <!-- PROFILE IMAGE AND EDIT BUTTON -->
-          <div class="col-span-4 md:col-span-1">
+          <div class="col-span-5 md:col-span-1">
             <div class="rounded-full text-center">
               <div class="profile-image flex justify-center items-center">
                 <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
               </div>
-              <div class="sm:space-x-4 md:space-x-0">
+              <div class="space-x-3 md:space-x-0">
                 <!-- <button class="bg-yellow-500 hover:bg-yellow-700 text-gray-800 font-bold py-2 px-4 rounded w-36 mt-3" @click="toEditProfile">
                     EDIT PROFILE
                 </button>
@@ -29,8 +29,8 @@
           </div>
 
           <!-- PROFILE DETAILS -->
-          <div class="col-span-4 md:col-span-3">
-            <div class="primary-gold-title mb-4 mt-3 text-center md:text-left">
+          <div class="col-span-5 md:col-span-4">
+            <div class="primary-gold-title mb-4 text-center md:text-left">
               {{firstName.toUpperCase()}} {{lastName.toUpperCase()}}
             </div>
             <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
@@ -53,7 +53,7 @@
         </div>
       </div>
 
-      <div class="bg-gray-800 rounded mx-6 mb-6 p-6 text-center">
+      <div class="bg-gray-800 rounded mx-6 mb-6 p-3 text-center">
         <activity-chart></activity-chart>
       </div>
 

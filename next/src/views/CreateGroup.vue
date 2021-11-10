@@ -4,7 +4,7 @@
     <div class="container max-w-3xl mx-auto">
 
 
-        <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6">
+        <div class="bg-gray-800 shadow-md rounded px-8 py-6 m-6">
             <form>
                 <div>
 
@@ -33,11 +33,11 @@
                     <!-- BUTTONS -->
                     <div class="text-center space-x-4">
                         <!-- BACK BUTTON -->
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="toGroups">
+                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-28 sm:w-48" @click.prevent="toGroups">
                             CANCEL
                             </button>
                         <!-- UPDATE BUTTON -->
-                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="update(); toGroups()">
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-28 sm:w-48" @click.prevent="update(); toGroups()">
                             CREATE
                             </button>
                         
