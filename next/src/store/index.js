@@ -28,7 +28,6 @@ const store = new Vuex.Store({
         profileGroupID: null,
         profileLoggedInTime: null,
 
-        profileActiveCourt: null,
         newGroupExp: null,
         newGroupName: null,
         newGroupID: null,
@@ -39,18 +38,17 @@ const store = new Vuex.Store({
         currentMemberID: null,
         currentGroupID: null,
 
-
-
-        profileLatestCourtID: null,
-        profileLatestCheckin: null,
-        profileLatestCheckout: null,
+        profileActiveCourt: null,
+        profileMostRelevantCourtID: null,
+        profileMostRelevantCheckin: null,
+        profileMostRelevantCheckout: null,
 
         // default profile avatar
         defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
 
         //=== Court
         //--- Court PopUp
-        courtCheckinHidden: true,
+        courtShowCheckinModal: false,
 
         // == selectedCourt
         selectedCourt: `defaultValue`,
@@ -98,7 +96,6 @@ const store = new Vuex.Store({
             state.profileFavTeam = doc.data().favTeam;
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
-            state.profileActiveCourt = doc.data().activeCourt;
         },
 
 
@@ -108,11 +105,11 @@ const store = new Vuex.Store({
             // state.memberID = doc.data().memberID
         },
         
-        setprofileLatestCheckOut(state, payload) {
-            state.profileLatestCheckin = payload.latestCheckinTime
-            state.profileLatestCheckout = payload.latestCheckoutTime
-            state.latestCourtID = payload.latestCourtID
-
+        setProfileLatestCheckIO(state, payload) {
+            state.profileActiveCourt = payload.activeCourt
+            state.profileMostRelevantCourtID = payload.mostRelevantCourtID
+            state.profileMostRelevantCheckin = payload.mostRelevantCheckinTime
+            state.profileMostRelevantCheckout = payload.mostRelevantCheckoutTime
         },
 
         changeFirstName(state, payload) {
@@ -136,11 +133,15 @@ const store = new Vuex.Store({
         
         //=== Court
         //--- Court PopUp
-        courtToggleCheckinHidden(state) {
-            if (state.courtCheckinHidden) {
-                state.courtCheckinHidden = false
+        courtDefaultCheckinModal(state) {
+            state.courtShowCheckinModal = false
+        },
+
+        courtToggleCheckinModal(state) {
+            if (state.courtShowCheckinModal) {
+                state.courtShowCheckinModal = false
             } else {
-                state.courtCheckinHidden = true
+                state.courtShowCheckinModal = true
             }
         },
 
@@ -174,31 +175,65 @@ const store = new Vuex.Store({
 
 
         async getCurrentUser({commit, dispatch}){
-
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
             const dbResults = await dataBase.get();
             commit("setProfileInfo", dbResults);
             console.log(dbResults);
 
-            dispatch("getProfileLatestCheckout")
+            dispatch("getProfileCheckIO")
         },
 
-        async getProfileLatestCheckout({state, commit}) {
-            console.log(state.user);
-            const dataBase = await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime", "desc").limit(1)
-            dataBase.get().then(
-                (latestCheckoutDoc) => {
-                    if (latestCheckoutDoc.docs) {
-                        console.log("[checkinHistory collection] Retrieved latest check out time.");
-                        let latestCheckinTime = latestCheckoutDoc.docs[0].data().checkinTime.toDate()
-                        let latestCheckoutTime = latestCheckoutDoc.docs[0].data().checkoutTime.toDate()
-                        commit("setprofileLatestCheckOut", {latestCheckinTime: latestCheckinTime, latestCheckoutTime: latestCheckoutTime, latestCourtID: latestCheckoutDoc.docs[0].data().courtID})
-                    } else {
-                        console.log("[checkinHistory collection] No check in history, this guy is probably a new player.");
+        async getProfileLatestIO({state, commit}) {
+            // Gets the most relevant history
+            let currentTime = firebase.firestore.Timestamp.now()
+            let payload = {}
+            let isActive = false
+
+            // 1. Check for any current ACTIVE check ins
+            await db.collection('users').doc(state.profileID).collection("checkinHistory")
+            .where('checkoutTime', '>', currentTime) // Looks for all checkouts that haven't occured (if user has current booking)
+            .get()
+            .then((possibleTimeslots) => {
+                possibleTimeslots.forEach((possibleTimeslotsDoc) => {
+                    // Assumption is we only allow 1 check in at all times in DB
+                    if (possibleTimeslotsDoc.data().checkinTime <= currentTime){ // Looks for check in that are smaller than current time (user currently active)
+                        payload["activeCourt"] = possibleTimeslotsDoc.data().courtID
+                        payload["mostRelevantCourtID"] = possibleTimeslotsDoc.data().courtID
+                        payload["mostRelevantCheckinTime"] = possibleTimeslotsDoc.data().checkinTime.toDate()
+                        payload["mostRelevantCheckoutTime"] = possibleTimeslotsDoc.data().checkoutTime.toDate()
+                        
+                        isActive = true
+                        commit("setProfileLatestCheckIO", payload)
+                        console.log(`[checkinHistory collection] User is currently active.`);
                     }
-                }).catch((error) => {
-                    console.log("[checkinHistory collection] Error getting document: ", error);
                 })
+            }).catch((error) => {
+                console.log("[checkinHistory collection] Error adding to firebase: ", error);
+            })
+
+        
+            // 2. If there are NO ACTIVE courts, we take the latest booking as the most relevant one
+            if (!isActive) {
+                console.log("hello");
+                await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime", "desc").limit(1)
+                .get().then(
+                    (latestCheckoutDoc) => {
+                        if (latestCheckoutDoc.docs) {
+                            payload["activeCourt"] = null
+                            payload["mostRelevantCourtID"] = latestCheckoutDoc[0].data().courtID
+                            payload["mostRelevantCheckinTime"] = latestCheckoutDoc[0].data().checkinTime.toDate()
+                            payload["mostRelevantCheckoutTime"] = latestCheckoutDoc[0].data().checkoutTime.toDate()
+                            
+                            commit("setProfileLatestCheckIO", payload)
+                            console.log(`[checkinHistory collection] User is currently NOT active.`);
+                        } else {
+                            console.log("[checkinHistory collection] No check in history, this guy is probably a new player.");
+                        }
+                    }).catch((error) => {
+                        console.log("[checkinHistory collection] Error getting document: ", error);
+                    })
+            }
+
         },
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
@@ -405,32 +440,84 @@ const store = new Vuex.Store({
 
         //=== Court
         //--- Court PopUp
+        async addCheckinHistory({state, dispatch}, payload) {
+            // Dispatch new check in history upon clicking check in in pop-up
+            // Note: This is called when there are no conflicts
 
-        // async addCheckinHistory({state}) {
-        //     // Check if the user is currently checked in from the state
-        //     // 
+            await db.collection('users').doc(state.profileID).collection("checkinHistory")
+            .add({
+                checkinTime: payload.dbCheckinTime,
+                checkoutTime: payload.dbCheckoutTime,
+                courtID: state.selectedCourt
+            }).then((docRef) => {
+                // We commit to store only upon successful check in so that state houses valid data only
+                dispatch("getProfileLatestIO")
+                console.log("[checkinHistory collection] Successfully added to firebase, docRef.id: ", docRef.id);
+            }).catch((error) => {
+                console.log("[checkinHistory collection] Error adding to firebase: ", error);
+            })
+        },
+
+        async addConflictedCheckinHistory({state}, payload) {
+            // Checkout of previously conflicted document
+            // Note: Assumption is there is at max one conflict at anytime because we checkout of the previous location whenever there are conflicts
+            console.log("hello");
+            await db.collection('users').doc(state.profileID).collection("checkinHistory")
+            .where('checkoutTime', '>', payload.dbCheckinTime) // Looks for all future check outs
+            .get()
+            .then((possibleConflictSnapshots) => {
+                possibleConflictSnapshots.forEach((possibleConflictDoc) => {
+                    if (possibleConflictDoc.data().checkinTime <= payload.dbCheckinTime){
+                        // Looks for document that currently checked in to to edit check out
+                        possibleConflictDoc.ref.update({
+                            checkoutTime: firebase.firestore.Timestamp.now()  
+                        }) 
+                        console.log(`[checkinHistory collection] Successfully updated doc (${possibleConflictDoc.id}) with checkoutTime (${firebase.firestore.Timestamp.now()})`);
+                    }
+                })
+
+                // Adds a new check in based on the current time of the user
+
+            }).catch((error) => {
+                console.log("[checkinHistory collection] Error adding to firestore: ", error);
+            })
 
 
-        //     const dataBase = await db.collection('users').doc(state.pofileID).collection('checkinHistory')
-        //     .where("courtID", "==", "")
-        //     // Find document where same court, same checkin time in collection checkinHistory
-        //     console.log(dataBase);
-                // const dataBase = await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime").limit(1)
-                // dataBase.get().then(
-                //     (checkoutTimeSnapshot) => {
-                //         if (checkoutTimeSnapshot.exists) {
-                //             console.log("Document data:", checkoutTimeSnapshot.data());
-                //         } else {
-                //             console.log("No such document!");
-                //         }
-                //     }).catch((error) => {
-                //         console.log("Error getting document:", error);
-                //     })
-        // }
+        },
 
 
-        // === Start of home page functions
+        async getCourt({commit}, payload) {
+            // state.selectedCourt
+            const courtDataBaseRef = db.collection('court').doc(payload.id)
+            courtDataBaseRef.get()
+            .then((courtSnapshot) => {
+                if (courtSnapshot.exists) {
+                    commit("updateSelectedCourt", payload.id)
+                } else {
+                    courtDataBaseRef('court').set({
+                        courtID: payload.id,
+                        courtLocation: payload.latLon,
+                        courtName: payload.courtName,
+                        currentUsers: []
+                    })
+                    commit("updateSelectedCourt", payload.id)
+                    console.log(`[court collection] Added new court ${payload.courtName} to firestore`);
+                }
+            }).catch((error) => {
+                console.log("[court collection] Error adding to firestore: ", error);
+            })
+        }
 
+
+        // // === Start of home page functions
+
+    },
+
+    getters: {
+        // Dev tools temp
+        state(state) {
+          return state;
+        }
     },
 
     modules: {
