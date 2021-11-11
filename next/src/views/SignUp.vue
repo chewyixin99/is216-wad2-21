@@ -101,7 +101,9 @@ methods:{
           lastName: this.lastName,
           email: this.email,
           groupID: this.groupID,
-
+          experience: ``,
+          favPlayer: ``,
+          favTeam: ``,
         });
               
     }
