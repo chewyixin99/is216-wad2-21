@@ -23,15 +23,15 @@
             <div class="col-span-5 md:col-span-4">
 
                 <div class="flex flex-wrap  justify-between">
-                    <span class="secondary-gold-title">{{groupName}}</span>
+                    <!-- <span class="secondary-gold-title">{{groupName}}</span> -->
                     <!-- <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{memberID.length}} P</span> -->
-                    <!-- <span class="secondary-gold-title">{{groupName.toUpperCase()}}</span> -->
-                    <!-- <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{memberID.length}} P</span> -->
+                    <span class="secondary-gold-title">{{groupName.toUpperCase()}}</span>
+                    <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{memberID.length}} P</span>
 
                 </div>
                 <div class="text-center md:text-left">
-                    <span class="secondary-white-title">{{groupExp}}</span>
-                    <!-- <span class="secondary-white-title">{{groupExp.toUpperCase()}}</span> -->
+                    <!-- <span class="secondary-white-title">{{groupExp}}</span> -->
+                    <span class="secondary-white-title">{{groupExp.toUpperCase()}}</span>
                 </div>
 
                 <div class="flex flex-wrap justify-between my-6">
@@ -78,10 +78,10 @@ export default {
     },
     data(){
         return{
-            groupName: null,
-            groupExp: null,
-            memberID: null,
-            newMemberID: null,
+            groupName: "",
+            groupExp: "",
+            memberID: "",
+            newMemberID: "",
         }
     },
     method:{

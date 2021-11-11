@@ -175,6 +175,7 @@ export default {
     data() {
         return {
             // Local datetime manipulation
+            currentDateTime: new Date(),
             defaultDate: null,
             userCheckinTime: null,
             userCheckoutTime:null,
@@ -210,18 +211,18 @@ export default {
 
         getTimeData() {
             // Formats current time for user select options
-            let currentDateTime = new Date()
-            let checkoutTime = new Date()
-            checkoutTime.setHours(currentDateTime.getHours() + 2)
-
-            this.defaultDate = currentDateTime.toLocaleDateString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
+            // let checkoutTime = new Date()
+            // checkoutTime.setHours(this.currentDateTime.getHours() + 2)
+            this.defaultDate = this.currentDateTime.toLocaleDateString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
             
             // TESTCASE
-            // currentDateTime = new Date(`${this.defaultDate} 08:00`)
-            // let checkoutTime = new Date(`${this.defaultDate} 10:00`)
-
+            let currentDateTime = new Date(`${this.defaultDate} 08:00`)
+            let checkoutTime = new Date(`${this.defaultDate} 10:00`)
             this.userCheckinTime = currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
             this.userCheckoutTime = checkoutTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+            
+            // this.userCheckinTime = this.currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+            // this.userCheckoutTime = checkoutTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
 
             this.minTime = new Date(`${this.defaultDate} 08:00`)
             this.maxTime = new Date(`${this.defaultDate} 22:00`)
@@ -232,6 +233,7 @@ export default {
             let dbCheckoutTime = new Date(`${this.defaultDate} ${this.userCheckoutTime}`)
             
             // Validations
+            // Check in limitations
             if (dbCheckinTime < this.minTime || dbCheckinTime >= this.maxTime) {
                 this.invalidCheckin = true
             } else {
@@ -242,6 +244,12 @@ export default {
                 this.invalidCheckout = true
             } else {
                 this.invalidCheckout = false
+            }
+
+            // No check ins before current time
+            if (dbCheckinTime < this.currentDateTime || dbCheckoutTime < this.currentDateTime) {
+                this.invalidCheckout = true
+                this.invalidCheckout = true
             }
 
             // Firebase check in attempt
@@ -256,9 +264,9 @@ export default {
         dbCheckin() {
             // check why conflict not working
 
-            // console.log(store.state.profileMostRelevantCheckout);
-            // console.log(this.payload.dbCheckinTime);
-            // console.log(store.state.profileMostRelevantCheckout < this.payload.dbCheckinTime);
+            console.log(store.state.profileMostRelevantCheckout);
+            console.log(this.payload.dbCheckinTime);
+            console.log(store.state.profileMostRelevantCheckout > this.payload.dbCheckinTime);
 
             if (store.state.profileActiveCourt !== null && store.state.profileMostRelevantCheckout > this.payload.dbCheckinTime) {
                 // Alert user that he already has an exisitng check in
@@ -267,7 +275,6 @@ export default {
             } else {
                 store.dispatch("addCheckinHistory", this.payload)
                 this.closeModal()
-                console.log("[CourtPopUp] Successfully added.");
             }
         },
 
