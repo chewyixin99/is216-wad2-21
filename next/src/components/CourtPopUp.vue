@@ -32,9 +32,9 @@
                                     CHECK IN:
                                 </div>
 
-                                <div :class="{'bg-red-500': invalidCheckin}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                <div :class="{'bg-red-500': invalidCheckin || pastInputError}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
                                     <div class="flex">
-                                        <input :class="{'bg-red-500': invalidCheckin}" class="bg-white" type="time" v-model="userCheckinTime">
+                                        <input :class="{'bg-red-500': invalidCheckin || pastInputError}" class="bg-white" type="time" v-model="userCheckinTime">
                                     </div>
                                 </div>
                             </div>
@@ -46,9 +46,9 @@
                                     CHECK OUT:
                                 </div>
 
-                                <div :class="{'bg-red-500': invalidCheckout}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                <div :class="{'bg-red-500': invalidCheckout || pastInputError}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
                                     <div class="flex">
-                                        <input :class="{'bg-red-500': invalidCheckout}" class="bg-white" type="time" v-model="userCheckoutTime">
+                                        <input :class="{'bg-red-500': invalidCheckout || pastInputError}" class="bg-white" type="time" v-model="userCheckoutTime">
                                     </div>
                                 </div>
                             </div>
@@ -56,6 +56,10 @@
                             <!-- Error Message -->
                             <p v-if="invalidCheckin || invalidCheckout" class="text-sm text-red-300 italic">
                                 Please check your inputs. Check ins and check outs are allowed between 08:00 to 22:00 daily!
+                            </p>
+
+                            <p v-if="pastInputError" class="text-sm text-red-300 italic">
+                                Please check your inputs. Check ins and check outs are only permitted from the present time onwards!
                             </p>
 
 
@@ -102,7 +106,7 @@
                             </div>
 
                             <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                hello
+                                {{$store.state.selectedCourt}}
                             </div>
                         </div>
 
@@ -135,7 +139,7 @@
                         </h3>
 
                         <p class="text-sm text-red-300 italic">
-                            If you continue with the check in, we will be checking you out of your current court at the current time and checking you into your selected court at your selected time.
+                            If you continue with the check in, we will be checking you out of your current court and checking you into your selected court at your selected time.
                         </p>
 
                     </div>
@@ -185,6 +189,7 @@ export default {
             maxTime: null,
             invalidCheckin: false,
             invalidCheckout: false,
+            pastInputError: false,
 
             // Conflict Management
             conflict: false,
@@ -211,24 +216,20 @@ export default {
 
         getTimeData() {
             // Formats current time for user select options
-            // let checkoutTime = new Date()
-            // checkoutTime.setHours(this.currentDateTime.getHours() + 2)
-            this.defaultDate = this.currentDateTime.toLocaleDateString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
+            let checkoutTime = new Date()
+            checkoutTime.setHours(this.currentDateTime.getHours() + 1)
+            this.defaultDate = this.currentDateTime.toLocaleDateString([], {year: 'numeric', month: 'numeric', day: 'numeric'}).split("/")
+            this.defaultDate = `${this.defaultDate[1]}/${this.defaultDate[0]}/${this.defaultDate[2]}`
             
-            // TESTCASE
-            let currentDateTime = new Date(`${this.defaultDate} 08:00`)
-            let checkoutTime = new Date(`${this.defaultDate} 10:00`)
-            this.userCheckinTime = currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
+            this.userCheckinTime = this.currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
             this.userCheckoutTime = checkoutTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
-            
-            // this.userCheckinTime = this.currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
-            // this.userCheckoutTime = checkoutTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
 
             this.minTime = new Date(`${this.defaultDate} 08:00`)
             this.maxTime = new Date(`${this.defaultDate} 22:00`)
         },
 
         clientCheckinValidations() {
+            console.log(store.state.selectedCourt);
             let dbCheckinTime = new Date(`${this.defaultDate} ${this.userCheckinTime}`)
             let dbCheckoutTime = new Date(`${this.defaultDate} ${this.userCheckoutTime}`)
             
@@ -240,20 +241,24 @@ export default {
                 this.invalidCheckin = false
             }
             
-            if (dbCheckoutTime > this.maxTime || dbCheckoutTime < dbCheckinTime) {
+            if (dbCheckoutTime > this.minTime || dbCheckoutTime < this.maxTime) {
                 this.invalidCheckout = true
             } else {
                 this.invalidCheckout = false
             }
 
-            // No check ins before current time
-            if (dbCheckinTime < this.currentDateTime || dbCheckoutTime < this.currentDateTime) {
-                this.invalidCheckout = true
-                this.invalidCheckout = true
+            // Do not permit checkins more than 5 mins before current time
+            let pastInputDateCheck = new Date()
+            pastInputDateCheck.setMinutes(this.currentDateTime.getMinutes() - 5)
+
+            if (dbCheckinTime < pastInputDateCheck || dbCheckoutTime < pastInputDateCheck) {
+                this.pastInputError = true
+            } else {
+                this.pastInputError = false
             }
 
             // Firebase check in attempt
-            if (!this.invalidCheckin && !this.invalidCheckout) {
+            if (!this.invalidCheckin && !this.invalidCheckout && !this.pastInputError) {
                 this.payload.dbCheckinTime = dbCheckinTime
                 this.payload.dbCheckoutTime = dbCheckoutTime
 
@@ -262,15 +267,8 @@ export default {
         },
 
         dbCheckin() {
-            // check why conflict not working
-
-            console.log(store.state.profileMostRelevantCheckout);
-            console.log(this.payload.dbCheckinTime);
-            console.log(store.state.profileMostRelevantCheckout > this.payload.dbCheckinTime);
-
             if (store.state.profileActiveCourt !== null && store.state.profileMostRelevantCheckout > this.payload.dbCheckinTime) {
-                // Alert user that he already has an exisitng check in
-                // Prompt if its ok to checkout at the selected time for the existing checkin and place a new checkin
+                // User is currently ACTIVE on a court and attempting to check in within his current check in time range.
                 this.conflict = true
             } else {
                 store.dispatch("addCheckinHistory", this.payload)
@@ -279,7 +277,6 @@ export default {
         },
 
         checkinUserConflict() {
-            this.getDbTimeFormat()
             store.dispatch("addConflictedCheckinHistory", this.payload)
             this.closeModal()
         }

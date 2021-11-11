@@ -208,14 +208,14 @@ const store = new Vuex.Store({
             await db.collection('users').doc(state.profileID).collection("checkinHistory")
             .where('checkoutTime', '>', currentTime) // Looks for all checkouts that haven't occured (if user has current booking)
             .get()
-            .then((possibleTimeslots) => {
-                possibleTimeslots.forEach((possibleTimeslotsDoc) => {
-                    // Assumption is we only allow 1 check in at all times in DB
-                    if (possibleTimeslotsDoc.data().checkinTime <= currentTime){ // Looks for check in that are smaller than current time (user currently active)
-                        payload["activeCourt"] = possibleTimeslotsDoc.data().courtID
-                        payload["mostRelevantCourtID"] = possibleTimeslotsDoc.data().courtID
-                        payload["mostRelevantCheckinTime"] = possibleTimeslotsDoc.data().checkinTime.toDate()
-                        payload["mostRelevantCheckoutTime"] = possibleTimeslotsDoc.data().checkoutTime.toDate()
+            .then((possibleActiveTimeslots) => {
+                possibleActiveTimeslots.forEach((possibleActiveTimeslotsDoc) => {
+                    // Assumption is we only allow 1 ACTIVE check in at all times in DB
+                    if (possibleActiveTimeslotsDoc.data().checkinTime <= currentTime){ // Looks for check in that are smaller than current time (user currently active)
+                        payload["activeCourt"] = possibleActiveTimeslotsDoc.data().courtID
+                        payload["mostRelevantCourtID"] = possibleActiveTimeslotsDoc.data().courtID
+                        payload["mostRelevantCheckinTime"] = possibleActiveTimeslotsDoc.data().checkinTime.toDate()
+                        payload["mostRelevantCheckoutTime"] = possibleActiveTimeslotsDoc.data().checkoutTime.toDate()
                         
                         isActive = true
                         commit("setProfileLatestCheckIO", payload)
@@ -229,7 +229,6 @@ const store = new Vuex.Store({
         
             // 2. If there are NO ACTIVE courts, we take the latest booking as the most relevant one
             if (!isActive) {
-                console.log("hello");
                 await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime", "desc").limit(1)
                 .get().then(
                     (latestCheckoutDoc) => {
@@ -457,7 +456,7 @@ const store = new Vuex.Store({
         //--- Court PopUp
         async addCheckinHistory({state, dispatch}, payload) {
             // Dispatch new check in history upon clicking check in in pop-up
-            // User is currently NOT active at any court
+            // User is currently NOT ACTIVE at any court
             // Check for any future bookings that coincide with this booking and override if there are any
             const checkinHistoryDbRef = db.collection('users').doc(state.profileID).collection("checkinHistory")
 
@@ -476,7 +475,7 @@ const store = new Vuex.Store({
                 
                 // Adds current check in attempt
                 checkinHistoryDbRef.add({
-                    courtID: state.selectedCourt,
+                    courtID: state.selectedCourt.id,
                     checkinTime: payload.dbCheckinTime,
                     checkoutTime: payload.dbCheckoutTime,
                 }).then((newCheckInDocRef) => {
@@ -492,28 +491,38 @@ const store = new Vuex.Store({
             })
         },
 
-        async addConflictedCheckinHistory({state}, payload) {
-            // Conflict occurs if active at a particular court
-            // Checkout of active court and check in to current entry upon prompt
-            // Note: Assumption is there is at max one conflict at anytime because we checkout of the previous location whenever there are conflicts
-            await db.collection('users').doc(state.profileID).collection("checkinHistory")
-            .where('checkoutTime', '>', payload.dbCheckinTime) // Looks for all future check outs
+        async addConflictedCheckinHistory({state, dispatch}, payload) {
+            // Conflict occurs if ACTIVE at a current court
+            // Checkout of ACTIVE court and check in to new entry upon prompt
+            const checkinHistoryDbRef =  db.collection('users').doc(state.profileID).collection("checkinHistory")
+            checkinHistoryDbRef.where('checkoutTime', '>', payload.dbCheckinTime)
             .get()
             .then((possibleConflictSnapshots) => {
                 possibleConflictSnapshots.forEach((possibleConflictDoc) => {
                     if (possibleConflictDoc.data().checkinTime <= payload.dbCheckinTime){
                         // Looks for document that currently checked in to to edit check out
                         possibleConflictDoc.ref.update({
-                            checkoutTime: firebase.firestore.Timestamp.now()  
+                            checkoutTime: payload.dbCheckinTime
                         }) 
-                        console.log(`[checkinHistory collection] Successfully updated doc (${possibleConflictDoc.id}) with checkoutTime (${firebase.firestore.Timestamp.now()})`);
+                        console.log(`[addConflictedCheckinHistory] Successfully updated doc (${possibleConflictDoc.id}) with checkoutTime (${payload.dbCheckinTime})`);
                     }
                 })
 
                 // Adds a new check in based on the current time of the user
+                checkinHistoryDbRef.add({
+                    courtID: state.selectedCourt.id,
+                    checkinTime: payload.dbCheckinTime,
+                    checkoutTime: payload.dbCheckoutTime,
+                }).then((newCheckInDocRef) => {
+                    // Dispatch a request to look for new most relevant court
+                    dispatch("getProfileLatestIO")
+                    console.log("[addCheckinHistory] Successfully added new check in to firebase, docRef.id: ", newCheckInDocRef.id);
+                }).catch((error) => {
+                    console.log("[addCheckinHistory] Error adding new check in to firebase: ", error);
+                })
 
             }).catch((error) => {
-                console.log("[checkinHistory collection] Error adding to firestore: ", error);
+                console.log("[addConflictedCheckinHistory] Error adding to firestore: ", error);
             })
 
 
