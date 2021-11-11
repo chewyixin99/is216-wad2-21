@@ -21,13 +21,13 @@ export default {
         }
     },
 
-    setup(props) {
-        console.log(`=== setup from theprofileicon.vue ===`)
-        console.log(props.imgSrc.length)
-        console.log(props.imgSrc)
-        console.log(typeof props.imgSrc)
-        console.log(`=== end ofsetup from theprofileicon.vue ===`)
-    }
+    // setup(props) {
+    //     console.log(`=== setup from theprofileicon.vue ===`)
+    //     // console.log(props.imgSrc.length)
+    //     console.log(props.imgSrc)
+    //     console.log(typeof props.imgSrc)
+    //     console.log(`=== end ofsetup from theprofileicon.vue ===`)
+    // }
     
 }
 </script>

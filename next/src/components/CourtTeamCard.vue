@@ -21,15 +21,15 @@ Example Implementation:
             </div>
 
             <div class="font-bold flex items-center m-3">
-                <the-profile-icon initials="BL"/>
+                <the-profile-icon initials="BL" imgSrc=""/>
                 <div class="text-white text-center ml-5">USERNAME</div>
             </div>
             <div class="font-bold flex items-center m-3">
-                <the-profile-icon initials="BL"/>
+                <the-profile-icon initials="BL" imgSrc=""/>
                 <div class="text-white text-center ml-5">USERNAME</div>
             </div>
             <div class="font-bold flex items-center m-3">
-                <the-profile-icon initials="BL"/>
+                <the-profile-icon initials="BL" imgSrc=""/>
                 <div class="text-white text-center ml-5">USERNAME</div>
             </div>
         </div>

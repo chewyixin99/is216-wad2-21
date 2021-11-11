@@ -35,7 +35,12 @@
                 </div>
                 <!-- V-FOR GROUP MEMBERS -->
                 <div class="grid grid-cols-5 md:grid-cols-10 gap-4 mt-3 justify-items-center">
-                    <the-profile-icon :onClick="toPublicUser" v-for="(a_player, index) in this.groupMembers" :initials="a_player.initials" :key="index"
+                    <the-profile-icon 
+                    :onClick="toPublicUser" 
+                    v-for="(a_player, index) in this.groupMembers" 
+                    :initials="a_player.initials" 
+                    :imgSrc="a_player.profileImg"
+                    :key="index"
                     class="font-bold" />
                 </div>
             </div>
@@ -65,67 +70,83 @@ export default {
             groupMembers: [
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
                 {
                     initials: "BL",
-                    username: "Bitta Loong"
+                    username: "Bitta Loong",
+                    profileImg: ``,
                 },
         ]
         }
