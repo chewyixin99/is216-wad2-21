@@ -1,7 +1,7 @@
 <template>
     <div v-if="$store.state.courtShowCheckinModal && !conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
 
                 <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
     
@@ -25,9 +25,10 @@
                             </p>
                         </div>
 
+                        <div class="grid grid-cols-2 sm:grid-cols-1">
                         <!-- Check In Time -->
-                        <div class="my-5 grid grid-cols-2 justify-items-center">
-                            <div class="text-xl font-bold text-white flex items-center justify-center">
+                        <div class="my-3 grid grid-cols-1 sm:grid-cols-2 justify-items-center">
+                            <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
                                 CHECK IN:
                             </div>
 
@@ -148,6 +149,8 @@
                         <the-button :onClick="closeModal" class="bg-red-500" buttonType="form-full">
                             CANCEL
                         </the-button>
+                    </div>
+
                     </div>
                 </div>
             </div>

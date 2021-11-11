@@ -5,10 +5,10 @@
 
 <div class="container max-w-5xl mx-auto">
 
-  <div class="mx-6">
+  <div class="m-6">
 
     <!-- Search  -->
-    <div class="mt-6" > 
+    <div > 
 
       <form class="w-full md:w-10/12 flex space-x-2 mx-auto" action="">
         <input type="text" class=" search-bar shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="court-search" placeholder="Search for a location, i.e., Serangoon Nex, Pasir Ris block 134  " v-model="searchInput">
@@ -71,7 +71,7 @@
           <button 
           class="search-button bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold my-3 px-2 rounded focus:outline-none focus:shadow-outline" 
           v-on:click="findNearbyCourts(currPos.lat, currPos.lng)">
-            REFRESH
+            COURTS NEAR ME
           </button>
         </div>
 

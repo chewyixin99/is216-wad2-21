@@ -1,7 +1,7 @@
 <template>
 
     <li>
-        <span class="secondary-white-title">{{firstName}}</span>
+        <span class="secondary-white-title">{{firstName}} {{lastName}}</span>
     </li>
 
 </template>

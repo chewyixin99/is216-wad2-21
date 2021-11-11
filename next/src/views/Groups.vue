@@ -15,16 +15,22 @@
           <!-- <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" @click="toCreateGroup">
             CREATE GROUP
           </button> -->
-          <the-button :onClick="toCreateGroup" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-sm">
+          <the-button :onClick="toCreateGroup" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-md">
             CREATE GROUP
           </the-button>
 
-    </div>
+        </div>
 
-    <div v-for="info in groupID" :key="info">
-        <MyGroups :info = info @add="addMembers($event)" @remove="removeMembers($event)"/>
+        <div v-if="groupID.length == 0">
+          <div class="bg-gray-800 shadow-md rounded px-8 py-10 my-3 mx-6 text-white text-center">
+            NO GROUP YET
+          </div>
+        </div>
 
-    </div>
+        <div v-else v-for="info in groupID" :key="info">
+            <MyGroups :info = info @add="addMembers($event)" @remove="removeMembers($event)"/>
+
+        </div>
 
 
 

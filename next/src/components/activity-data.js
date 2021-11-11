@@ -4,7 +4,7 @@ export const ActivityData = {
       labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       datasets: [
         {
-          label: "Activity Level",
+          label: "Activity Level (Hrs)",
           data: [3, 0, 1, 2, 0, 0, 2],
           backgroundColor: "rgba(54,73,93,.5)",
           borderColor: "#36495d",

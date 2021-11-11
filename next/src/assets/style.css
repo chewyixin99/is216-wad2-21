@@ -14,11 +14,13 @@ body {
     background-color: #30205B;
     position: relative;
     bottom: 0;
-    margin-top: 100px;
+    margin-top: auto;
 }
 
-.container-bg {
-    background-color: #303030;
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 154px);
 }
 
 .primary-gold-title {
@@ -53,6 +55,5 @@ body {
     width: 120px;
     height: 120px;
     border: 1px solid #FEb842 ;
-    margin: 10px 10px 5px 0px;
     box-shadow: 1px 2px;
 }

@@ -16,32 +16,37 @@ const store = new Vuex.Store({
     ],
     state: {
         //=== User
-        user: null,
-        profileEmail: null,
-        profileFirstName: null,
-        profileLastName: null,
-        profileID: null,
-        profileInitials: null,
-        profileExperience: null,
-        profileFavPlayer: null,
-        profileFavTeam: null,
-        profileGroupID: null,
-        profileLoggedInTime: null,
+        user: ``,
+        profileEmail: ``,
+        profileFirstName: ``,
+        profileLastName: ``,
+        profileID: ``,
+        profileInitials: ``,
+        profileExperience: ``,
+        profileFavPlayer: ``,
+        profileFavTeam: ``,
+        profileGroupID: ``,
+        profileLoggedInTime: ``,
+        profileInitialsURL: null,
+        profileImg: null,
+      
+        newGroupExp: ``,
+        newGroupName: ``,
+        newGroupID: ``,
+        memberID: ``, // TBC
+        groupName: ``, // TBC
+        groupEXP: ``, // TBC
+        groupInfo: ``,
+        currentMemberID: ``,
+        currentGroupID: ``,
 
-        newGroupExp: null,
-        newGroupName: null,
-        newGroupID: null,
-        memberID: null, // TBC
-        groupName: null, // TBC
-        groupEXP: null, // TBC
-        groupInfo: null,
-        currentMemberID: null,
-        currentGroupID: null,
 
-        profileActiveCourt: null,
-        profileMostRelevantCourtID: null,
-        profileMostRelevantCheckin: null,
-        profileMostRelevantCheckout: null,
+
+        profileActiveCourt: ``,
+        profileMostRelevantCourtID: ``,
+        profileMostRelevantCheckin: ``,
+        profileMostRelevantCheckout: ``,
+
 
         // default profile avatar
         defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
@@ -96,13 +101,18 @@ const store = new Vuex.Store({
             state.profileFavTeam = doc.data().favTeam;
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
+            state.profileActiveCourt = doc.data().activeCourt;
+            state.profileImg = doc.data().profileImg;
         },
 
+        setProfileInitials(state){
+            state.profileInitials = 
+            state.profileFirstName.match(/(\b\S)?/g).join("") + 
+            state.profileLastName.match(/(\b\S)?/g).join("");
+        },
 
-        setGroupInfo(state,doc){
-            state.groupInfo = doc
-            // state.groupExp = doc.data().groupExp
-            // state.memberID = doc.data().memberID
+        setProfileInitialsURL(state){
+            state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials
         },
         
         setProfileLatestCheckIO(state, payload) {
@@ -112,6 +122,9 @@ const store = new Vuex.Store({
             state.profileMostRelevantCheckout = payload.mostRelevantCheckoutTime
         },
 
+        changeProfileImg(state, payload) {
+            state.profileImg = payload;
+        },
         changeFirstName(state, payload) {
             state.profileFirstName = payload;
         },
@@ -178,7 +191,10 @@ const store = new Vuex.Store({
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
             const dbResults = await dataBase.get();
             commit("setProfileInfo", dbResults);
+            commit("setProfileInitials");
+            commit("setProfileInitialsURL")
             console.log(dbResults);
+            
 
             dispatch("getProfileCheckIO")
         },

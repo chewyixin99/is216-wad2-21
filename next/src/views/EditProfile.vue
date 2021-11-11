@@ -2,10 +2,13 @@
 
     <div class="container max-w-3xl mx-auto">
 
-        <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6">
+        <div class="bg-gray-800 shadow-md rounded px-8 py-6 m-6">
             <form>
                 <div>
-                    
+                    <div class="profile-image flex justify-center items-center mb-4">
+                        <avatar-input :value="profileImg"/>
+                        <!-- :default-src= profileInitialsURL -->
+                    </div>
                     <!-- FIRST AND LAST NAME -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -62,11 +65,11 @@
                     <!-- BUTTONS -->
                     <div class="mt-3 text-center space-x-4">
                         <!-- BACK BUTTON -->
-                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="toProfile">
+                            <button class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded w-28 sm:w-48" @click.prevent="toProfile">
                             CANCEL
                             </button>
                         <!-- UPDATE BUTTON -->
-                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-36 sm:w-64" @click.prevent="update(); toProfile()">
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded w-28 sm:w-48" @click.prevent="update(); toProfile()">
                             UPDATE
                             </button>
                         
@@ -85,99 +88,46 @@
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import AvatarInput from '../components/AvatarInput.vue';
 
 export default {
 
     name: "EditProfile",
 
+    components: {
+        AvatarInput,
+    },
+
+    data(){
+        return{
+            profileImg: this.$store.state.profileImg,
+            firstName: this.$store.state.profileFirstName,
+            lastName: this.$store.state.profileLastName,
+            experience: this.$store.state.profileExperience,
+            favPlayer: this.$store.state.profileFavPlayer,
+            favTeam: this.$store.state.profileFavTeam,
+            email: this.$store.state.profileEmail,
+        }
+    },
     methods:{
         
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
 
-
+            this.$store.state.profileFirstName = this.firstName
+            this.$store.state.profileLastName = this.lastName
+            this.$store.state.profileExperience = this.experience
+            this.$store.state.profileFavPlayer = this.favPlayer
+            this.$store.state.profileFavTeam = this.favTeam
             this.$store.dispatch("updateUserSettings");
 
         },
 
         // ROUTE BACK TO PROFILE
         toProfile(){
-
           this.$router.replace({name: "Profile"});
-
         },
+
     },
-
-    computed: {
-
-        firstName: {
-
-          get() {
-            return this.$store.state.profileFirstName
-            },
-
-          set(payload) {
-            this.$store.commit("changeFirstName", payload);
-            },
-
-        },
-
-        lastName: {
-
-          get() {
-            return this.$store.state.profileLastName
-            },
-
-          set(payload) {
-            this.$store.commit("changeLastName", payload);
-            },
-
-        },
-
-        experience: {
-
-          get() {
-            return this.$store.state.profileExperience
-            },
-
-          set(payload) {
-            this.$store.commit("changeExperience", payload);
-            },
-
-        },
-
-        favPlayer: {
-
-          get() {
-            return this.$store.state.profileFavPlayer
-            },
-          set(payload) {
-            this.$store.commit("changeFavPlayer", payload);
-            },
-
-        },
-
-        favTeam: {
-
-          get() {
-            return this.$store.state.profileFavTeam
-            },
-
-          set(payload) {
-            this.$store.commit("changeFavTeam", payload);
-            },
-
-        },
-        
-        email: {
-
-          get() {
-            return this.$store.state.profileEmail
-            },
-          
-        },
-        
-    },
-
 }
 </script>
