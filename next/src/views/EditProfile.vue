@@ -100,7 +100,13 @@ export default {
 
     data(){
         return{
-            profileImg: this.$store.state.profileImg 
+            profileImg: this.$store.state.profileImg,
+            firstName: this.$store.state.profileFirstName,
+            lastName: this.$store.state.profileLastName,
+            experience: this.$store.state.profileExperience,
+            favPlayer: this.$store.state.profileFavPlayer,
+            favTeam: this.$store.state.profileFavTeam,
+            email: this.$store.state.profileEmail,
         }
     },
     methods:{
@@ -123,16 +129,5 @@ export default {
         },
 
     },
-
-    data() {
-        return {
-            firstName: this.$store.state.profileFirstName,
-            lastName: this.$store.state.profileLastName,
-            experience: this.$store.state.profileExperience,
-            favPlayer: this.$store.state.profileFavPlayer,
-            favTeam: this.$store.state.profileFavTeam,
-            email: this.$store.state.profileEmail,
-        }
-    }
 }
 </script>
