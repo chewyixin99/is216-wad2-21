@@ -4,7 +4,7 @@
 ## 🤓 IS216 - Group 38 - NEXT
 <!-- * Please update the above header. For example, it should look like this: **IS216 - Group 123 - Supreme Children**
 * Who are your group members? List everyone's full name, SMU email address, and other info you wish to put here. -->
-<!-- INSERT NEXT LOGO HERE -->
+![Next Logo](nextlogo2.png)
 * Chew Yi Xin (yixin.chew.2020@scis.smu.edu.sg)
 * Gan Jian Lin (jianlin.gan.2020@scis.smu.edu.sg)
 * Joel Lim (joel.lim.2020@scis.smu.edu.sg)
@@ -36,6 +36,9 @@
 
 ## 🤓 Other Things ##
 * FEEL FREE to **add more things** into this **README**
+* [Figma (Mobile)](https://www.figma.com/proto/O5EaYzT19cAZYyO9pd1L1d/NEXT?page-id=113%3A41&node-id=266%3A76&viewport=241%2C48%2C0.17&scaling=scale-down&starting-point-node-id=266%3A76&show-proto-sidebar=1)
+* [Figma (Web)](https://www.figma.com/proto/O5EaYzT19cAZYyO9pd1L1d/NEXT?page-id=113%3A41&node-id=339%3A1375&viewport=241%2C48%2C0.17&scaling=scale-down&starting-point-node-id=339%3A1375&show-proto-sidebar=1)
+* [Figma (Working File)]()
 
 
 ## 🤓 Useful Resources ##
