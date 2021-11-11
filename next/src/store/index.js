@@ -49,8 +49,8 @@ const store = new Vuex.Store({
         profileLatestCheckout: ``,
 
 
-        // default profile avatar
-        defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
+        // default profile avatar, yixin, to be removed after JL implemented default avatar
+        // defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
 
         //=== Court
         //--- Court PopUp

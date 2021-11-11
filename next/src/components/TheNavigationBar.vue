@@ -29,7 +29,10 @@
         <router-link to="/profile" class="block mt-4 lg:hidden text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
         
         <router-link to="/profile" class="hidden mt-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">
-          <the-profile-icon v-bind:initials="initials"/>
+          <the-profile-icon 
+          v-bind:initials="initials"
+          v-bind:imgSrc="imgSrc"
+          />
         </router-link>
       </div>
     </div>
@@ -46,7 +49,22 @@ export default {
   data() {
     return {
       showMenu: false,
-      initials:  `${this.$store.state.profileFirstName.charAt(0).toUpperCase()}${this.$store.state.profileLastName.charAt(0).toUpperCase()}`,
+    }
+  },
+  computed: {
+    initials: {
+
+      get() {
+        return `${this.$store.state.profileFirstName.charAt(0).toUpperCase()}${this.$store.state.profileLastName.charAt(0).toUpperCase()}`
+      },
+
+    },
+    imgSrc: {
+
+      get() {
+        return `${this.$store.state.profileImg}`
+      },
+      
     }
   },
   methods : {
