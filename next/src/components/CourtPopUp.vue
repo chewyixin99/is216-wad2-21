@@ -11,65 +11,66 @@
 
                 <div class="inline-block align-bottom bg-purple-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                         
-                    <!-- Check In Details Section -->
-                    <div class="text-white text-center m-5">
-                        <!-- Check In Title -->
-                        <h3 class="text-xl font-bold text-white" id="modal-title">
-                            CHECK IN DETAILS
-                        </h3>
+                        <!-- Check In Details Section -->
+                        <div class="text-white text-center m-5">
+                            <!-- Check In Title -->
+                            <h3 class="text-xl font-bold text-white" id="modal-title">
+                                CHECK IN DETAILS
+                            </h3>
 
-                        <!-- Check In Text -->
-                        <div class="m-2">
-                            <p class="text-sm text-white italic">
-                                Select the date and time that you would be heading down to the court!
+                            <!-- Check In Text -->
+                            <div class="m-2">
+                                <p class="text-sm text-white italic">
+                                    Select the date and time that you would be heading down to the court!
+                                </p>
+                            </div>
+
+                            <div class="grid grid-cols-2 sm:grid-cols-1">
+                            <!-- Check In Time -->
+                            <div class="my-3 grid grid-cols-1 sm:grid-cols-2 justify-items-center">
+                                <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
+                                    CHECK IN:
+                                </div>
+
+                                <div :class="{'bg-red-500': invalidCheckin}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                    <div class="flex">
+                                        <input :class="{'bg-red-500': invalidCheckin}" class="bg-white" type="time" v-model="userCheckinTime">
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Check Out Time -->
+                            <div class="my-5 grid grid-cols-2 justify-items-center">
+                                <div class="text-xl font-bold text-white flex items-center justify-center">
+                                    CHECK OUT:
+                                </div>
+
+                                <div :class="{'bg-red-500': invalidCheckout}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                    <div class="flex">
+                                        <input :class="{'bg-red-500': invalidCheckout}" class="bg-white" type="time" v-model="userCheckoutTime">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Error Message -->
+                            <p v-if="invalidCheckin || invalidCheckout" class="text-sm text-red-300 italic">
+                                Please check your inputs. Check ins and check outs are allowed between 08:00 to 22:00 daily!
                             </p>
+
+
                         </div>
 
-                        <div class="grid grid-cols-2 sm:grid-cols-1">
-                        <!-- Check In Time -->
-                        <div class="my-3 grid grid-cols-1 sm:grid-cols-2 justify-items-center">
-                            <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
-                                CHECK IN:
-                            </div>
+                        <!-- Check In Buttons Section -->
+                        <div class=" m-5">
+                            <the-button :onClick="clientCheckinValidations" class="bg-yellow-400 mb-4" buttonType="form-full">
+                                CHECK IN
+                            </the-button>
 
-                            <div :class="{'bg-red-500': invalidCheckin}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                <div class="flex">
-                                    <input :class="{'bg-red-500': invalidCheckin}" class="bg-white" type="time" v-model="userCheckinTime">
-                                </div>
-                            </div>
+                            <the-button :onClick="closeModal" class="bg-red-500" buttonType="form-full">
+                                CANCEL
+                            </the-button>
                         </div>
-
-
-                        <!-- Check Out Time -->
-                        <div class="my-5 grid grid-cols-2 justify-items-center">
-                            <div class="text-xl font-bold text-white flex items-center justify-center">
-                                CHECK OUT:
-                            </div>
-
-                            <div :class="{'bg-red-500': invalidCheckout}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                <div class="flex">
-                                    <input :class="{'bg-red-500': invalidCheckout}" class="bg-white" type="time" v-model="userCheckoutTime">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Error Message -->
-                        <p v-if="invalidCheckin || invalidCheckout" class="text-sm text-red-300 italic">
-                            Please check your inputs. Check ins and check outs are allowed between 08:00 to 22:00 daily!
-                        </p>
-
-
-                    </div>
-
-                    <!-- Check In Buttons Section -->
-                    <div class=" m-5">
-                        <the-button :onClick="clientCheckinValidations" class="bg-yellow-400 mb-4" buttonType="form-full">
-                            CHECK IN
-                        </the-button>
-
-                        <the-button :onClick="closeModal" class="bg-red-500" buttonType="form-full">
-                            CANCEL
-                        </the-button>
                     </div>
                 </div>
             </div>
@@ -151,7 +152,6 @@
                         </the-button>
                     </div>
 
-                    </div>
                 </div>
             </div>
         </div>
@@ -215,6 +215,11 @@ export default {
             checkoutTime.setHours(currentDateTime.getHours() + 2)
 
             this.defaultDate = currentDateTime.toLocaleDateString([], {year: 'numeric', month: 'numeric', day: 'numeric'})
+            
+            // TESTCASE
+            // currentDateTime = new Date(`${this.defaultDate} 08:00`)
+            // let checkoutTime = new Date(`${this.defaultDate} 10:00`)
+
             this.userCheckinTime = currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
             this.userCheckoutTime = checkoutTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
 
@@ -249,7 +254,13 @@ export default {
         },
 
         dbCheckin() {
-            if (store.state.profileActiveCourt !== null && store.profileMostRelevantCheckout > this.payload.dbCheckinTime) {
+            // check why conflict not working
+
+            // console.log(store.state.profileMostRelevantCheckout);
+            // console.log(this.payload.dbCheckinTime);
+            // console.log(store.state.profileMostRelevantCheckout < this.payload.dbCheckinTime);
+
+            if (store.state.profileActiveCourt !== null && store.state.profileMostRelevantCheckout > this.payload.dbCheckinTime) {
                 // Alert user that he already has an exisitng check in
                 // Prompt if its ok to checkout at the selected time for the existing checkin and place a new checkin
                 this.conflict = true
