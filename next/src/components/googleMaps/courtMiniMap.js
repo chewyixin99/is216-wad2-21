@@ -34,7 +34,7 @@ export default {
             zoom: 15,
           })
 
-          let contentString = `<p>${props.courtObj.vicinity} <br/><br/> ${props.courtObj.name}<p>`
+          let contentString = `<p>${props.courtObj.name} <br/><br/> ${props.courtObj.vicinity}<p>`
 
           const infoWindow = new google.maps.InfoWindow({
             content: contentString
@@ -53,20 +53,6 @@ export default {
               shouldFocus: true,
             })
           })
-    
-          // var currPosMarker = new google.maps.Marker ({
-          //   position: currPos.value,
-          //   map: map.value,
-          //   icon: ''
-          // })
-    
-          // map.value.addListener(
-          //   'click',
-          //   ({ latLng: { lat, lng }}) => {  
-          //     otherPos.value = { lat: lat(), lng: lng() }
-          //     currPosMarker.setMap(null)
-          //   }
-          // )
 
 
         })
