@@ -6,6 +6,11 @@
             <form>
                 <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6">
                     
+                    <div class="profile-image flex justify-center items-center mb-4">
+                        <avatar-input :value="img"/>
+                        <!-- :default-src= profileInitialsURL -->
+                    </div>
+
                         <!-- FIRST AND LAST NAME -->
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                             <div>
@@ -82,10 +87,21 @@
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import AvatarInput from '../components/AvatarInput.vue';
 
 export default {
 
     name: "Onboarding",
+
+    components: {
+        AvatarInput,
+    },
+
+    data(){
+        return{
+            // initialsURL: null,
+        }
+    },
 
     methods:{
 
@@ -166,83 +182,47 @@ export default {
           get() {
             return this.$store.state.profileEmail
             },
-        }
+        },
+
+        img: {
+
+          get() {
+            return this.$store.state.profileImg
+            },
+
+        },
+
+        // initials: {
+
+        //     set() {
+        //         if (firstName != "" && lastName != ""){
+        //             this.$store.commit("setProfileInitials");
+        //         }
+        //     },
+
+        // },
+
+        // initialsURL: {
+
+        //     get() {
+        //         return this.$store.state.profileInitialsURL
+        //     },
+
+        //     set() {
+        //         if (initials){
+        //             this.$store.commit("setProfileInitialsURL");
+        //         }
+        //     },
+
+        // },
+
       
         
     },
-    
+   
 
 }
 
-// methods:{
-//   async onboarding() {
-//       if (
-//         this.email !== "" && 
-//         this.password !== "" &&
-//         this.firstName !== "" &&
-//         this.lastName !== "" 
-//       ) {
-//         this.error = false;
-//         this.errorMsg = "";
-//         // const firebaseAuth = await firebase.auth();
-//         // const createUser = await firebaseAuth.createUserWithEmailAndPassword(this.email, this.password);
-//         // const result = await createUser;
-//         // const dataBase = db.collection("users").doc(result.user.uid);
-//         // this.$router.replace({name: "Home"});
-//         // await dataBase.set({
-//         //   firstName: this.firstName,
-//         //   lastName: this.lastName,
-//         //   email: this.email,
-//         // });
-//         const abc = useAuthState()
-//         console.log(abc);
-       
-    // created(){
-        
-    //     const auth = getAuth()
-    //     const userInfo = auth.currentUser
-    //     const uid = userInfo.uid
-    //     this.email = userInfo.email
 
-    //     firebase
-    //       .firestore()
-    //       .collection("users")
-    //       .doc(uid)
-    //       .get()
-    //       .then((docRef) => {
-    //         this.firstName = docRef.data().firstName
-    //         this.lastName = docRef.data().lastName
-    //       })
-    //   },
-              
-//     }
-
-//     this.error = true;
-//     this.errorMsg = "Please fill out all the fields!";
-//     }
-// }
-
-   // onboarding(){
-        //     const auth = getAuth();
-        //     onAuthStateChanged(auth, (user) => {
-        //     if (user) {
-        //         const uid = user.uid;
-        //         const dataBase = db.collection("users").doc(uid);
-        //         this.$router.replace({name: "Home"});
-        //         dataBase.set({
-        //             firstName: this.firstName,
-        //             lastName: this.lastName,
-        //             email: this.email,
-        //             experience: this.experience,
-        //             favPlayer: this.favPlayer,
-        //             favTeam: this.favTeam,
-        //             groupID: [],
-        //             activeCourt: this.activeCourt,
-        //             loggedInTime: 'whenever user logs in ',
-        //             checkedInTime: 'whenever user checks in to active court. 2hrs later activeCourt = null'
-        //         });
-        //     } 
-        // })
-        // }
 
 </script>

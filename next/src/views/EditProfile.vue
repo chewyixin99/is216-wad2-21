@@ -5,7 +5,10 @@
         <div class="bg-gray-800 shadow-md rounded px-8 py-6 m-6">
             <form>
                 <div>
-                    
+                    <div class="profile-image flex justify-center items-center mb-4">
+                        <avatar-input :value="profileImg"/>
+                        <!-- :default-src= profileInitialsURL -->
+                    </div>
                     <!-- FIRST AND LAST NAME -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                         <div>
@@ -85,19 +88,28 @@
 
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import AvatarInput from '../components/AvatarInput.vue';
 
 export default {
 
     name: "EditProfile",
 
+    components: {
+        AvatarInput,
+    },
+
+    data(){
+        return{
+            profileImg: this.$store.state.profileImg 
+        }
+    },
     methods:{
         
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
 
-
             this.$store.dispatch("updateUserSettings");
-
+            
         },
 
         // ROUTE BACK TO PROFILE
@@ -106,6 +118,7 @@ export default {
           this.$router.replace({name: "Profile"});
 
         },
+
     },
 
     computed: {
@@ -176,6 +189,25 @@ export default {
             },
           
         },
+
+        profileInitialsURL: {
+
+          get() {
+            return this.$store.state.profileInitialsURL
+            },
+
+        },
+
+        // profileImg: {
+        //     get() {
+        //         return this.$store.state.profileImg
+        //     },
+        //     set(payload) {
+        //         this.$store.commit("changeProfileImg", payload);
+        //     },
+
+        // }
+
         
     },
 

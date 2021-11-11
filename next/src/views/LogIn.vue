@@ -7,13 +7,13 @@
         <label class="block text-white text-sm font-bold mb-2" for="email">
           EMAIL
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name ="email" id="email" type="text" placeholder="Email">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name ="email" id="email" type="text"  placeholder="Email">
       </div>
       <div class="mb-6">
         <label class="block text-white text-sm font-bold mb-2" for="password">
           PASSWORD
         </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" name ="password" id="password" type="password" placeholder="Password">
+        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline" name ="password" id="password"  type="password" placeholder="Password">
         <div class="text-gray-400 text-right">
           <router-link class="forgot-password" :to="{name: 'ForgotPassword'}">
           Forgot Password?</router-link>
@@ -67,39 +67,3 @@ export default {
 }
 </script>
 
-
-<!--
-
-This code is one of my test codes - but it gave me problems *********
-
-<script>
-import firebase from 'firebase/compat/app';
-
-export default {
-    name: "Login",
-
-    data() {
-        return {
-            email: "",
-            password: "",
-            error: null,
-            errorMsg: "",
-        };
-     },
-    methods:{
-      signIn() {
-        firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(()=>{
-          this.$router.push({name: "Home"});
-          this.error = false;
-          this.errorMsg = "";
-          console.log(firebase.auth().currentUser.uid);
-        }).catch(err=>{
-          this.error = true;
-          this.errorMsg = err.message;
-        })
-      }
-     }
-};
-</script>
-
--->
