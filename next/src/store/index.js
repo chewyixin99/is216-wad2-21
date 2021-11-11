@@ -16,34 +16,34 @@ const store = new Vuex.Store({
     ],
     state: {
         //=== User
-        user: null,
-        profileEmail: null,
-        profileFirstName: null,
-        profileLastName: null,
-        profileID: null,
-        profileInitials: null,
-        profileExperience: null,
-        profileFavPlayer: null,
-        profileFavTeam: null,
-        profileGroupID: null,
-        profileLoggedInTime: null,
+        user: ``,
+        profileEmail: ``,
+        profileFirstName: ``,
+        profileLastName: ``,
+        profileID: ``,
+        profileInitials: ``,
+        profileExperience: ``,
+        profileFavPlayer: ``,
+        profileFavTeam: ``,
+        profileGroupID: ``,
+        profileLoggedInTime: ``,
 
-        profileActiveCourt: null,
-        newGroupExp: null,
-        newGroupName: null,
-        newGroupID: null,
-        memberID: null, // TBC
-        groupName: null, // TBC
-        groupEXP: null, // TBC
-        groupInfo: null,
-        currentMemberID: null,
-        currentGroupID: null,
+        profileActiveCourt: ``,
+        newGroupExp: ``,
+        newGroupName: ``,
+        newGroupID: ``,
+        memberID: ``, // TBC
+        groupName: ``, // TBC
+        groupEXP: ``, // TBC
+        groupInfo: ``,
+        currentMemberID: ``,
+        currentGroupID: ``,
 
 
 
-        profileLatestCourtID: null,
-        profileLatestCheckin: null,
-        profileLatestCheckout: null,
+        profileLatestCourtID: ``,
+        profileLatestCheckin: ``,
+        profileLatestCheckout: ``,
 
         // default profile avatar
         defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
