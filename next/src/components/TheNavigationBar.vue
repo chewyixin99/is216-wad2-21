@@ -28,7 +28,7 @@
         
         <router-link to="/profile" active-class="active text-yellow-500" class="block font-bold mt-4 lg:hidden text-white lg:my-0 hover:text-yellow-500 mr-10">PROFILE</router-link>
         
-        <router-link to="/profile" active-class="active text-yellow-500" class="hidden font-bold mt-4 lg:inline-block text-white lg:my-0 hover:text-yellow-500 mr-10">
+        <router-link to="/profile" class="hidden font-bold mt-4 lg:inline-block text-white lg:my-0 mr-10">
           <the-profile-icon 
           v-bind:initials="initials"
           v-bind:imgSrc="imgSrc"
