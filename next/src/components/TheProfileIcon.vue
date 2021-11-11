@@ -1,7 +1,8 @@
 <template>
   <div class="bg-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
-    <span v-if="showImg" >{{this.initials}}</span>
-    <img v-else class="object-cover w-full h-full rounded-full" v-bind:src="imgSrc" alt="">
+    <img v-if="showImg" class="w-full h-full rounded-full object-cover" v-bind:src="imgSrc" alt="">
+    <span v-else>{{this.initials}}</span>
+    
   </div>
 </template>
 
@@ -17,15 +18,22 @@ export default {
 
     computed: {
         showImg() {
-            return this.imgSrc.length == 0 || this.imgSrc == 'null'
+            if (this.imgSrc == 'null' || this.imgSrc == 'undefined' || this.imgSrc == '') {
+              console.log('false')
+              return false
+            }
+            console.log('true')
+            return true
         }
     },
 
     // setup(props) {
     //     console.log(`=== setup from theprofileicon.vue ===`)
-    //     // console.log(props.imgSrc.length)
+    //     console.log(props.imgSrc.length)
     //     console.log(props.imgSrc)
     //     console.log(typeof props.imgSrc)
+
+    //     console.log(props.initials)
     //     console.log(`=== end ofsetup from theprofileicon.vue ===`)
     // }
     
