@@ -531,24 +531,33 @@ const store = new Vuex.Store({
 
         async getCourt({commit}, payload) {
             // state.selectedCourt
-            const courtDataBaseRef = db.collection('court').doc(payload.id)
-            courtDataBaseRef.get()
+            console.log('=== start of getCourt action dispatch ===')
+            const lat = payload.location.lat()
+            const lng = payload.location.lng()
+            let courtCollection = db.collection('court')
+            await courtCollection
+            .doc(payload.id)
+            .get()
             .then((courtSnapshot) => {
                 if (courtSnapshot.exists) {
-                    commit("updateSelectedCourt", payload.id)
+                    commit("updateSelectedCourt", payload)
                 } else {
-                    courtDataBaseRef('court').set({
+                    courtCollection.add({
                         courtID: payload.id,
-                        courtLocation: payload.latLon,
-                        courtName: payload.courtName,
+                        courtLocation: new firebase.firestore.GeoPoint(lat, lng),
+                        courtName: payload.name,
+                        courtVicinity: payload.vicinity,
                         currentUsers: []
                     })
-                    commit("updateSelectedCourt", payload.id)
-                    console.log(`[court collection] Added new court ${payload.courtName} to firestore`);
+                    commit("updateSelectedCourt", payload)
+                    console.log(`[court collection] Added new court ${payload.name} to firestore`);
+                    console.log('=== end of getCourt action dispatch ===')
                 }
             }).catch((error) => {
                 console.log("[court collection] Error adding to firestore: ", error);
+                console.log('=== end of getCourt action dispatch ===')
             })
+            
         }
 
 

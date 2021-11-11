@@ -30,36 +30,42 @@ export default {
         name: "Singapore Basketball Court",
         vicinity: "134 Pasir Ris Street 21",
         location: {lat: 1.353, lng: 103.867},
+        currentUsers: [],
         id: 1,
       },
       {
         name: "Basketball Court",
         vicinity: "Opp Unit 104",
         location: {lat: 1.353, lng: 103.867},
+        currentUsers: [],
         id: 2,
       },
       {
         name: "Basketball Court",
         vicinity: "495 Tampines Street 43",
         location: {lat: 1.353, lng: 103.867},
+        currentUsers: [],
         id: 3,
       },
       {
         name: "Basketball Court",
         vicinity: "604 Elias Rd, Block 604, Singapore",
         location: {lat: 1.353, lng: 103.867},
+        currentUsers: [],
         id: 4,
       },
       {
         name: "Pasir Ris Block 230 Basketball Court",
         vicinity: "Blk, 230 Pasir Ris Street 11",
         location: {lat: 1.353, lng: 103.867},
+        currentUsers: [],
         id: 5,
       },
       {
         name: "Basketball court @ Sun Plaza Park",
         vicinity: "407 Tampines Street 41, Singapore",
         location: {lat: 1.353, lng: 103.867},
+        currentUsers: [],
         id: 6,
       },
     ]
@@ -226,7 +232,7 @@ export default {
       // Prepare request for area around current latlong object w/ radius and keywords
       var request = {
         location: currPosLatLng,
-        radius: '1500',
+        radius: `1500`,
         keyword: ['basketball courts']
       };
       // Places API service object to retrieve nearby spots
@@ -256,7 +262,7 @@ export default {
 
             var request = {
               location: results[0].geometry.location,
-              radius: '1500',
+              radius: `1500`,
               keyword: ['basketball courts']
             };
             // Places API service object to retrieve nearby spots
@@ -292,6 +298,12 @@ export default {
         map,
         position: place.geometry.location,
       })
+      const court = {
+        name: place.name,
+        vicinity: place.vicinity,
+        location: place.geometry.location,
+        id: place.place_id,
+      }
     
       let contentString = `<p>${place.vicinity} ${place.name}<p>
                           <br/>
@@ -307,9 +319,9 @@ export default {
 
       marker.addListener('click', () => {
         const index = markersArray.indexOf(marker)
-        const court = markersDetails[index]
+        const specificCourt = markersDetails[index]
 
-        this.updateSelectedCourt(court)
+        this.getCourt(specificCourt)
 
         infoWindow.open({
           anchor: marker,
@@ -319,12 +331,7 @@ export default {
       })
 
       markersArray.push(marker)
-      markersDetails.push({
-        name: place.name,
-        vicinity: place.vicinity,
-        location: place.geometry.location,
-        id: place.place_id,
-      })
+      markersDetails.push(court)
     },
 
     updateSelectedProfile(profile) {
@@ -333,6 +340,11 @@ export default {
 
     updateSelectedCourt(court) {
       this.$store.commit('updateSelectedCourt', court)
+    },
+
+
+    getCourt(court) {
+      this.$store.dispatch('getCourt', court)
     }
 
   }
