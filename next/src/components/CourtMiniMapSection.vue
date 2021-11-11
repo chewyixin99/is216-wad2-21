@@ -49,7 +49,7 @@ export default {
 
     methods: {
         togglePopUp() {
-            store.commit('courtToggleCheckinHidden')
+            store.commit('courtToggleCheckinModal')
         },
         
         

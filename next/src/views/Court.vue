@@ -43,7 +43,7 @@
                     <court-team/>
                 </div>
 
-                <court-pop-up :hidden="isHidden"/>
+                <court-pop-up/>
             </div>
         </div>
     </div>
@@ -57,19 +57,17 @@ import CourtPopUp from "../components/CourtPopUp.vue"
 
 export default {
   name: "Court",
+  
   components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtPopUp },
+
+  created() {
+    this.$store.commit('courtDefaultCheckinModal')
+
+  },
 
   data() {
     return {
-        isHidden: false,
-
-        court: this.$store.state.selectedCourt,
-
-
-        //   Hardcoded to be deleted
-        // courtName: "Heartbeat@Bedok ActiveSG Swimming Complex",
-        // courtAddress: "11 Bedok North Street 1, Singapore 469662",
-
+        court: this.$store.state.selectedCourt
     };
   },
 
