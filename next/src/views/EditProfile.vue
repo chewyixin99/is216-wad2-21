@@ -108,108 +108,31 @@ export default {
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
 
+            this.$store.state.profileFirstName = this.firstName
+            this.$store.state.profileLastName = this.lastName
+            this.$store.state.profileExperience = this.experience
+            this.$store.state.profileFavPlayer = this.favPlayer
+            this.$store.state.profileFavTeam = this.favTeam
             this.$store.dispatch("updateUserSettings");
-            
+
         },
 
         // ROUTE BACK TO PROFILE
         toProfile(){
-
           this.$router.replace({name: "Profile"});
-
         },
 
     },
 
-    computed: {
-
-        firstName: {
-
-          get() {
-            return this.$store.state.profileFirstName
-            },
-
-          set(payload) {
-            this.$store.commit("changeFirstName", payload);
-            },
-
-        },
-
-        lastName: {
-
-          get() {
-            return this.$store.state.profileLastName
-            },
-
-          set(payload) {
-            this.$store.commit("changeLastName", payload);
-            },
-
-        },
-
-        experience: {
-
-          get() {
-            return this.$store.state.profileExperience
-            },
-
-          set(payload) {
-            this.$store.commit("changeExperience", payload);
-            },
-
-        },
-
-        favPlayer: {
-
-          get() {
-            return this.$store.state.profileFavPlayer
-            },
-          set(payload) {
-            this.$store.commit("changeFavPlayer", payload);
-            },
-
-        },
-
-        favTeam: {
-
-          get() {
-            return this.$store.state.profileFavTeam
-            },
-
-          set(payload) {
-            this.$store.commit("changeFavTeam", payload);
-            },
-
-        },
-        
-        email: {
-
-          get() {
-            return this.$store.state.profileEmail
-            },
-          
-        },
-
-        profileInitialsURL: {
-
-          get() {
-            return this.$store.state.profileInitialsURL
-            },
-
-        },
-
-        // profileImg: {
-        //     get() {
-        //         return this.$store.state.profileImg
-        //     },
-        //     set(payload) {
-        //         this.$store.commit("changeProfileImg", payload);
-        //     },
-
-        // }
-
-        
-    },
-
+    data() {
+        return {
+            firstName: this.$store.state.profileFirstName,
+            lastName: this.$store.state.profileLastName,
+            experience: this.$store.state.profileExperience,
+            favPlayer: this.$store.state.profileFavPlayer,
+            favTeam: this.$store.state.profileFavTeam,
+            email: this.$store.state.profileEmail,
+        }
+    }
 }
 </script>

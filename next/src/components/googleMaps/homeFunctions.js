@@ -29,37 +29,37 @@ export default {
       {
         name: "Singapore Basketball Court",
         vicinity: "134 Pasir Ris Street 21",
-        location: ``,
+        location: {lat: 1.353, lng: 103.867},
         id: 1,
       },
       {
         name: "Basketball Court",
         vicinity: "Opp Unit 104",
-        location: ``,
+        location: {lat: 1.353, lng: 103.867},
         id: 2,
       },
       {
         name: "Basketball Court",
         vicinity: "495 Tampines Street 43",
-        location: ``,
+        location: {lat: 1.353, lng: 103.867},
         id: 3,
       },
       {
         name: "Basketball Court",
         vicinity: "604 Elias Rd, Block 604, Singapore",
-        location: ``,
+        location: {lat: 1.353, lng: 103.867},
         id: 4,
       },
       {
         name: "Pasir Ris Block 230 Basketball Court",
         vicinity: "Blk, 230 Pasir Ris Street 11",
-        location: ``,
+        location: {lat: 1.353, lng: 103.867},
         id: 5,
       },
       {
         name: "Basketball court @ Sun Plaza Park",
         vicinity: "407 Tampines Street 41, Singapore",
-        location: ``,
+        location: {lat: 1.353, lng: 103.867},
         id: 6,
       },
     ]
@@ -309,11 +309,7 @@ export default {
         const index = markersArray.indexOf(marker)
         const court = markersDetails[index]
 
-        console.log(`before update (below):`)
-        console.log(this.$store.state.selectedCourt)
         this.updateSelectedCourt(court)
-        console.log(`check if store is updated (below):`)
-        console.log(this.$store.state.selectedCourt)
 
         infoWindow.open({
           anchor: marker,

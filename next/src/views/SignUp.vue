@@ -101,11 +101,12 @@ methods:{
           lastName: this.lastName,
           email: this.email,
           groupID: this.groupID,
-          experience: "",
-          favPlayer: "",
-          favTeam: "",
+          experience: ``,
+          favPlayer: ``,
+          favTeam: ``,
           initialsURL: "",
           profileImg: "",
+
         });
         
         this.$store.commit("setProfileInitials")
