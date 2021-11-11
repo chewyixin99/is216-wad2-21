@@ -104,7 +104,18 @@ methods:{
           experience: ``,
           favPlayer: ``,
           favTeam: ``,
+          initialsURL: "",
+          profileImg: "",
+
         });
+        
+        this.$store.commit("setProfileInitials")
+        .then(()=>{
+          return this.$store.state.profileInitials
+        })
+        .then(()=>{
+          return this.$store.commit("setProfileInitialsURL")
+        })
               
     }
 

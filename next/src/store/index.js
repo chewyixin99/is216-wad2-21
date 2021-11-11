@@ -16,6 +16,7 @@ const store = new Vuex.Store({
     ],
     state: {
         //=== User
+
         user: ``,
         profileEmail: ``,
         profileFirstName: ``,
@@ -27,7 +28,9 @@ const store = new Vuex.Store({
         profileFavTeam: ``,
         profileGroupID: ``,
         profileLoggedInTime: ``,
-
+        profileInitialsURL: null,
+        profileImg: null,
+      
         profileActiveCourt: ``,
         newGroupExp: ``,
         newGroupName: ``,
@@ -44,6 +47,7 @@ const store = new Vuex.Store({
         profileLatestCourtID: ``,
         profileLatestCheckin: ``,
         profileLatestCheckout: ``,
+
 
         // default profile avatar
         defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
@@ -99,13 +103,17 @@ const store = new Vuex.Store({
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
             state.profileActiveCourt = doc.data().activeCourt;
+            state.profileImg = doc.data().profileImg;
         },
 
+        setProfileInitials(state){
+            state.profileInitials = 
+            state.profileFirstName.match(/(\b\S)?/g).join("") + 
+            state.profileLastName.match(/(\b\S)?/g).join("");
+        },
 
-        setGroupInfo(state,doc){
-            state.groupInfo = doc
-            // state.groupExp = doc.data().groupExp
-            // state.memberID = doc.data().memberID
+        setProfileInitialsURL(state){
+            state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials
         },
         
         setprofileLatestCheckOut(state, payload) {
@@ -115,6 +123,9 @@ const store = new Vuex.Store({
 
         },
 
+        changeProfileImg(state, payload) {
+            state.profileImg = payload;
+        },
         changeFirstName(state, payload) {
             state.profileFirstName = payload;
         },
@@ -175,16 +186,21 @@ const store = new Vuex.Store({
 
         async getCurrentUser({commit, dispatch}){
 
+
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
             const dbResults = await dataBase.get();
             commit("setProfileInfo", dbResults);
+            commit("setProfileInitials");
+            commit("setProfileInitialsURL")
             console.log(dbResults);
+            
 
             dispatch("getProfileLatestCheckout")
         },
 
         async getProfileLatestCheckout({state, commit}) {
             console.log(state.user);
+            console.log("state user");
             const dataBase = await db.collection('users').doc(state.profileID).collection("checkinHistory").orderBy("checkoutTime", "desc").limit(1)
             dataBase.get().then(
                 (latestCheckoutDoc) => {

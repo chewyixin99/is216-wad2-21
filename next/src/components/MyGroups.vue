@@ -24,7 +24,7 @@
 
                 <div class="flex flex-wrap  justify-between">
                     <span class="secondary-gold-title">{{groupName}}</span>
-                    <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">1 P</span>
+                    <!-- <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{memberID.length}} P</span> -->
                     <!-- <span class="secondary-gold-title">{{groupName.toUpperCase()}}</span> -->
                     <!-- <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{memberID.length}} P</span> -->
 
