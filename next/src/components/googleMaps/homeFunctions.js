@@ -232,7 +232,7 @@ export default {
       // Prepare request for area around current latlong object w/ radius and keywords
       var request = {
         location: currPosLatLng,
-        radius: '1500',
+        radius: `1500`,
         keyword: ['basketball courts']
       };
       // Places API service object to retrieve nearby spots
@@ -262,7 +262,7 @@ export default {
 
             var request = {
               location: results[0].geometry.location,
-              radius: '1500',
+              radius: `1500`,
               keyword: ['basketball courts']
             };
             // Places API service object to retrieve nearby spots
@@ -291,7 +291,6 @@ export default {
 
     // createMarker function ########################################################
     createMarker(place) {
-      console.log(place)
       if (!place.geometry || !place.geometry.location) return;
 
       const map = this.map
@@ -299,6 +298,12 @@ export default {
         map,
         position: place.geometry.location,
       })
+      const court = {
+        name: place.name,
+        vicinity: place.vicinity,
+        location: place.geometry.location,
+        id: place.place_id,
+      }
     
       let contentString = `<p>${place.vicinity} ${place.name}<p>
                           <br/>
@@ -314,9 +319,9 @@ export default {
 
       marker.addListener('click', () => {
         const index = markersArray.indexOf(marker)
-        const court = markersDetails[index]
+        const specificCourt = markersDetails[index]
 
-        this.getCourt(court)
+        this.getCourt(specificCourt)
 
         infoWindow.open({
           anchor: marker,
@@ -326,12 +331,7 @@ export default {
       })
 
       markersArray.push(marker)
-      markersDetails.push({
-        name: place.name,
-        vicinity: place.vicinity,
-        location: place.geometry.location,
-        id: place.place_id,
-      })
+      markersDetails.push(court)
     },
 
     updateSelectedProfile(profile) {
