@@ -1,7 +1,7 @@
 <template>
   <div class="bg-yellow-500 rounded-full w-10 h-10 flex items-center justify-center">
       <span v-if="showImg" >{{this.initials}}</span>
-      <span v-else > <img class="object-cover" v-bind:src="imgSrc" alt=""> </span>
+      <span v-else > <img class="object-cover rounded-full" v-bind:src="imgSrc" alt=""> </span>
   </div>
 </template>
 

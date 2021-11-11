@@ -29,17 +29,21 @@
       <!-- Bookmarks -->
       <div class="col-span-1">
 
-        <div class="primary-title">
+        <div class="secondary-gold-title">
           Bookmarks
         </div>
 
-        <div v-if="currentBookmarks.length < 1" >
-          <span class="secondary-title">You currently have no bookmarks!</span><br/>
-          <button 
-          class="search-button bg-yellow-500 hover:bg-yellow-700 text-white font-bold my-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-          v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"
-          > Find A Court Near Me
-          </button>
+        <div v-if="currentBookmarks.length < 0" class="text-center">
+          <div class="bg-gray-800 rounded text-center py-20">
+            <div class="text-white">You currently have no bookmarks!</div>
+
+            <button 
+            class="search-button bg-yellow-500 hover:bg-yellow-700 text-white font-bold my-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
+            v-on:click="findNearbyCourts(currPos.lat, currPos.lng)"
+            > Find A Court Near Me
+            </button>
+          
+          </div>
         </div>
 
         <div v-else class="bookmarks bg-gray-800 text-white rounded-md py-2 px-4">
@@ -65,11 +69,11 @@
       <div class="col-span-1 row-span-1 md:row-span-2" >
 
         <div class="flex justify-between">
-          <div class="primary-title">
+          <div class="secondary-gold-title">
             Near You
           </div>
           <button 
-          class="search-button bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold my-3 px-2 rounded focus:outline-none focus:shadow-outline" 
+          class="search-button bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold my-2 px-2 rounded focus:outline-none focus:shadow-outline" 
           v-on:click="findNearbyCourts(currPos.lat, currPos.lng)">
             COURTS NEAR ME
           </button>
@@ -105,7 +109,7 @@
 
       <!-- Recently Played -->
       <div class="col-span-1">
-        <div class="primary-title">
+        <div class="secondary-gold-title">
           Recently Played
         </div>
         <div class="recently-played">
