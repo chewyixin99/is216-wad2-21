@@ -241,7 +241,7 @@ export default {
             let dbCheckoutTime = new Date(`${this.defaultDate} ${this.userCheckoutTime}`)
             
             // Validations
-            Check in smaller than check out vcalidation
+            // Check in smaller than check out vcalidation
             console.log(!(dbCheckinTime < dbCheckoutTime));
             if (!(dbCheckinTime < dbCheckoutTime)) {
                 this.clashingCheckIO = true
