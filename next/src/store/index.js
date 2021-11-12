@@ -457,20 +457,23 @@ const store = new Vuex.Store({
         async addCheckinHistory({state, dispatch}, payload) {
             // Dispatch new check in history upon clicking check in in pop-up
             // User is currently NOT ACTIVE at any court
-            // Check for any future bookings that coincide with this booking and override if there are any
+            // Check for any FUTURE bookings that coincide with this booking and override if there are any
             const checkinHistoryDbRef = db.collection('users').doc(state.profileID).collection("checkinHistory")
 
-            checkinHistoryDbRef.where('checkinTime', '<', payload.dbCheckoutTime) // Looks for all future check ins
+            checkinHistoryDbRef.where('checkinTime', '<', payload.dbCheckoutTime) // Looks for all FUTURE check ins
             .get()
             .then((possibleConflictSnapshots) => {
                 possibleConflictSnapshots.forEach((possibleConflictDoc) => {
-                    // Deletes any possible conflicts
-                    possibleConflictDoc.ref.delete()
-                    .then(
-                        console.log("[addCheckinHistory] Deleted document with conflicting check in time.")
-                    ).catch((error) => {
-                        console.log("[addCheckinHistory] Error deleting conflicting document from firestore: ", error);
-                    })
+                    // Conflict occurs where checkout of document is bigger than checkin of payload (ensures no delete of past check ins)
+                    if (possibleConflictDoc.checkoutTime.toDate() > payload.dbCheckinTime) {
+                        // Deletes any possible conflicts
+                        possibleConflictDoc.ref.delete()
+                        .then(
+                            console.log("[addCheckinHistory] Deleted document with conflicting check in time.")
+                        ).catch((error) => {
+                            console.log("[addCheckinHistory] Error deleting conflicting document from firestore: ", error);
+                        })
+                    }
                 })
                 
                 // Adds current check in attempt
@@ -499,7 +502,7 @@ const store = new Vuex.Store({
             .get()
             .then((possibleConflictSnapshots) => {
                 possibleConflictSnapshots.forEach((possibleConflictDoc) => {
-                    if (possibleConflictDoc.data().checkinTime <= payload.dbCheckinTime){
+                    if (possibleConflictDoc.data().checkinTime.toDate() <= payload.dbCheckinTime){
                         // Looks for document that currently checked in to to edit check out
                         possibleConflictDoc.ref.update({
                             checkoutTime: payload.dbCheckinTime

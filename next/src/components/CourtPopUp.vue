@@ -32,9 +32,9 @@
                                     CHECK IN:
                                 </div>
 
-                                <div :class="{'bg-red-500': invalidCheckin || pastInputError}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                <div :class="{'bg-red-500': invalidCheckin || pastInputError  || clashingCheckIO}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
                                     <div class="flex">
-                                        <input :class="{'bg-red-500': invalidCheckin || pastInputError}" class="bg-white" type="time" v-model="userCheckinTime">
+                                        <input :class="{'bg-red-500': invalidCheckin || pastInputError || clashingCheckIO}" class="bg-white" type="time" v-model="userCheckinTime">
                                     </div>
                                 </div>
                             </div>
@@ -46,14 +46,18 @@
                                     CHECK OUT:
                                 </div>
 
-                                <div :class="{'bg-red-500': invalidCheckout || pastInputError}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                <div :class="{'bg-red-500': invalidCheckout || pastInputError || clashingCheckIO}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
                                     <div class="flex">
-                                        <input :class="{'bg-red-500': invalidCheckout || pastInputError}" class="bg-white" type="time" v-model="userCheckoutTime">
+                                        <input :class="{'bg-red-500': invalidCheckout || pastInputError || clashingCheckIO}" class="bg-white" type="time" v-model="userCheckoutTime">
                                     </div>
                                 </div>
                             </div>
 
                             <!-- Error Message -->
+                            <p v-if="clashingCheckIO" class="text-sm text-red-300 italic">
+                                Please check your inputs. Check ins should be smaller than check outs!
+                            </p>
+
                             <p v-if="invalidCheckin || invalidCheckout" class="text-sm text-red-300 italic">
                                 Please check your inputs. Check ins and check outs are allowed between 08:00 to 22:00 daily!
                             </p>
@@ -189,6 +193,7 @@ export default {
             maxTime: null,
             invalidCheckin: false,
             invalidCheckout: false,
+            clashingCheckIO: false,
             pastInputError: false,
 
             // Conflict Management
@@ -211,6 +216,8 @@ export default {
             this.conflict = false
             this.invalidCheckin = false
             this.invalidCheckout = false
+            this.clashingCheckIO = false
+
             store.commit('courtToggleCheckinModal')
         },
 
@@ -233,32 +240,40 @@ export default {
             let dbCheckinTime = new Date(`${this.defaultDate} ${this.userCheckinTime}`)
             let dbCheckoutTime = new Date(`${this.defaultDate} ${this.userCheckoutTime}`)
             
-            // Validations
-            // Check in limitations
-            if (dbCheckinTime < this.minTime || dbCheckinTime >= this.maxTime) {
-                this.invalidCheckin = true
+            // // Validations
+            // Check in smaller than check out vcalidation
+            console.log(!(dbCheckinTime < dbCheckoutTime));
+            if (!(dbCheckinTime < dbCheckoutTime)) {
+                this.clashingCheckIO = true
             } else {
-                this.invalidCheckin = false
+                this.clashingCheckIO = false
             }
+
+            // // Check in minmax time limitations
+            // if (dbCheckinTime < this.minTime || dbCheckinTime >= this.maxTime) {
+            //     this.invalidCheckin = true
+            // } else {
+            //     this.invalidCheckin = false
+            // }
             
-            if (dbCheckoutTime < this.minTime || dbCheckoutTime >= this.maxTime) {
-                this.invalidCheckout = true
-            } else {
-                this.invalidCheckout = false
-            }
+            // if (dbCheckoutTime < this.minTime || dbCheckoutTime >= this.maxTime) {
+            //     this.invalidCheckout = true
+            // } else {
+            //     this.invalidCheckout = false
+            // }
 
-            // Do not permit checkins more than 5 mins before current time
-            let pastInputDateCheck = new Date()
-            pastInputDateCheck.setMinutes(this.currentDateTime.getMinutes() - 5)
+            // // Do not permit checkins more than 5 mins before current time
+            // let pastInputDateCheck = new Date()
+            // pastInputDateCheck.setMinutes(this.currentDateTime.getMinutes() - 5)
 
-            if (dbCheckinTime < pastInputDateCheck || dbCheckoutTime < pastInputDateCheck) {
-                this.pastInputError = true
-            } else {
-                this.pastInputError = false
-            }
+            // if (dbCheckinTime < pastInputDateCheck || dbCheckoutTime < pastInputDateCheck) {
+            //     this.pastInputError = true
+            // } else {
+            //     this.pastInputError = false
+            // }
 
             // Firebase check in attempt
-            if (!this.invalidCheckin && !this.invalidCheckout && !this.pastInputError) {
+            if (!this.invalidCheckin && !this.invalidCheckout && !this.pastInputError && !this.clashingCheckIO) {
                 this.payload.dbCheckinTime = dbCheckinTime
                 this.payload.dbCheckoutTime = dbCheckoutTime
 
