@@ -54,7 +54,7 @@ export default {
       }
       
     },
-    emits: ['add'],
+    // emits: ['add'],
     components: {
 
         // TheProfileIcon,

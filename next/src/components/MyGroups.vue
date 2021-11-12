@@ -6,6 +6,14 @@
 
             <div class="col-span-5 md:col-span-1 text-center">
                 <div class="profile-image flex justify-center items-center">
+                    <!-- <div v-if="groupImg">
+                        <AvatarInputGroup :value="groupImg" />
+                    </div>
+                    <div v-else>
+                        <AvatarInputGroup :value="groupImgDefault"/>
+                    </div> -->
+                    
+                    
                     <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
                 </div>
 
@@ -49,7 +57,11 @@
 
 
         </div>
-
+                <span class="secondary-white-title">TEAM NOTEBOARD:</span>
+                <textarea v-model="groupMsg"></textarea>
+                <the-button class="bg-yellow-500 hover:bg-yellow-700 text-white mt-3" buttonType="form-sm" @click="updateNoteboard">
+                        UPDATE NOTEBOARD
+                </the-button>
     </div> 
 
 </template>
@@ -63,6 +75,7 @@ import 'firebase/compat/firestore';
 import Members from "./Members.vue"
 import firebase from 'firebase/compat/app';
 import TheButton from "./TheButton.vue"
+// import AvatarInputGroup from "./AvatarInputGroup.vue"
 
 export default {
 
@@ -73,20 +86,44 @@ export default {
 
         Members,
         TheButton, 
-
+        // AvatarInputGroup
 
     },
+
     data(){
         return{
+
             groupName: "",
             groupExp: "",
             memberID: "",
             newMemberID: "",
+            groupMsg: null,
+            groupImg: null,
+            groupImgDefault: null,
+
         }
     },
-    method:{
 
+    methods:{
 
+        updateNoteboard(){
+
+            firebase
+            .firestore()
+            .collection("groups")
+            .doc(this.info)
+            .update({
+
+                groupMsg: this.groupMsg
+
+            })
+            .then(()=>{
+                console.log("Group Message Update Successful");
+            })
+            
+        }
+
+        
     },
 
     created() {
@@ -102,8 +139,16 @@ export default {
             this.groupName = docRef.data().groupName
             this.groupExp = docRef.data().groupExp
             this.memberID = docRef.data().memberID
+            this.groupMsg = docRef.data().groupMsg
+            // this.groupImg = docRef.data().groupImg
+            this.groupImgDefault = docRef.data().groupImgDefault
 
         })
+        .then(()=>{        
+            console.log(this.groupImgDefault);
+            console.log(this.groupImg);
+        })
+
 
         },
 

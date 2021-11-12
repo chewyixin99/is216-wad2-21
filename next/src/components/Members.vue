@@ -1,7 +1,16 @@
 <template>
 
     <li>
-        <span class="secondary-white-title">{{firstName}} {{lastName}}</span>
+        <div class="grid grid-cols-3 gap-1">
+            <div v-if="profileImg">
+                <img class="h-10 w-10 rounded-full object-cover" :src="profileImg">
+            </div>
+            <div v-else> 
+                <img class="h-10 w-10 rounded-full object-cover" :src="profileInitialsURL">
+            </div>
+            <span class="secondary-white-title flex justify-center items-center">{{firstName}} {{lastName}}</span>
+        </div>
+        <hr>
     </li>
 
 </template>
@@ -21,6 +30,8 @@ export default ({
             firstName: null,
             lastName: null,
             experience: null,
+            profileImg: null,
+            profileInitialsURL: null,
         }
 
     },
@@ -35,8 +46,12 @@ export default ({
             this.firstName = docRef.data().firstName
             this.lastName = docRef.data().lastName
             this.experience = docRef.data().experience
-
-            
+            this.profileImg = docRef.data().profileImg
+            this.profileInitialsURL = docRef.data().initialsURL
+        })
+        .then(()=>{
+            console.log(this.profileImg);
+            console.log(this.profileInitialsURL);
         })
 
 
