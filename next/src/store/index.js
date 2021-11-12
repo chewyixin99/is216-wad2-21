@@ -121,7 +121,7 @@ const store = new Vuex.Store({
         },
 
         setProfileInitialsURL(state){
-            state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials
+            state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials + "&background=FEB842&color=fff&bold=true"
         },
         
         setProfileLatestCheckIO(state, payload) {
@@ -201,13 +201,19 @@ const store = new Vuex.Store({
         addBookmark(state, payload) {
             state.profileBookmarks.push(payload)
             state.profileBookmarksID.push(payload.id)
+            // console.log(state)
+            // console.log(payload)
         },
 
         deleteBookmark(state, payload) {
-            const indexBookmark = state.profileBookmarks.indexOf(payload)
-            state.profileBookmarks.splice(indexBookmark, 1)
-            const indexBookmarkID = state.profileBookmarks.indexOf(payload)
-            state.profileBookmarksID.splice(indexBookmarkID, 1)
+            const index = state.profileBookmarksID.indexOf(payload.id)
+            // console.log(`index below`)
+            // console.log(index)
+            // console.log(state.profileBookmarks)
+            // console.log(state.profileBookmarksID)
+            // console.log(payload.id)
+            state.profileBookmarks.splice(index, 1)
+            state.profileBookmarksID.splice(index, 1)
         },
         
         updateSelectedCourtCurrentUsers(state, payload) {
