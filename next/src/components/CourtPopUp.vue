@@ -1,4 +1,5 @@
 <template>
+    <!-- Check in modal -->
     <div v-if="$store.state.courtShowCheckinModal && !conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
@@ -85,6 +86,7 @@
         </div>
     </div>
 
+    <!-- Active conflict modal -->
     <div v-if="$store.state.courtShowCheckinModal && conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
