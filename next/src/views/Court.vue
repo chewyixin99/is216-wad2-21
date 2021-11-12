@@ -17,7 +17,7 @@
             <!-- [Non-Mobile] Left Section -->
             <!-- Maps and Check In Options -->
             <div class="col-span-1 mx-6">
-                <court-mini-map-section/>
+                <court-mini-map-section :courtID="court.id"/>/>  <!-- ************************************************************ -->
             </div>
     
             <!-- [Non-Mobile] Right Section -->
@@ -27,7 +27,7 @@
                     <div class="secondary-gold-title">
                         <h1>CURRENT PLAYERS</h1>
                     </div>
-                    <court-current-players/>
+                    <court-current-players :courtID="court.id"/>
                 </div>
         
                 <!-- Current Teams Section -->
@@ -39,6 +39,8 @@
                 </div>
 
                 <court-pop-up/>
+
+
             </div>
         </div>
     </div>
@@ -61,7 +63,7 @@ export default {
 
   data() {
     return {
-        court: this.$store.state.selectedCourt
+        court: this.$store.state.selectedCourt // this has id, loc, name, vicinity
     };
   },
 

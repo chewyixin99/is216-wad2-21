@@ -1,42 +1,55 @@
 <template>
     <div class="m-4">
-        <div class="grid grid-cols-5 sm:grid-cols-8 gap-4 justify-items-center">
-            <the-profile-icon 
-            v-for="(a_player, index) in $store.state.selectedCourtCurrentUsers" 
-            :initials="a_player.profileInitials" 
-            :imgSrc="a_player.profileImg"
-            :key="index"
-            class="font-bold" />
-        </div>
+        <ol class="grid md:grid-cols-3 gap-3">
+
+            <CourtCurrentPlayer :playerID = currentPlayer v-for="currentPlayer in currentPlayers" :key="currentPlayer" />
+
+        </ol>
     </div>
 </template>
 
 <script>
-import store from '../store/index'
-import TheProfileIcon from "./TheProfileIcon.vue"
+// import store from '../store/index'
+// import TheProfileIcon from "./TheProfileIcon.vue"
+import CourtCurrentPlayer from "./CourtCurrentPlayer.vue"
+import firebase from 'firebase/compat/app';
 
 export default {
     name: "CourtCurrentPlayers",
 
     components: {
-        TheProfileIcon
+        // TheProfileIcon
+        CourtCurrentPlayer
     },
+
+    props: ["courtID"],
     
-    mounted() {
-        store.dispatch("updateSelectedCourtCurrentUsers")
-    },
-
-    created() {
-    },
-
-    data() {
+    // mounted() {
+    //     store.dispatch("updateSelectedCourtCurrentUsers")
+    // },
+    data(){
         return {
+            currentPlayers: null,
         }
     },
+    created() {
 
-    methods: {
-    
+        firebase
+        .firestore()
+        .collection("court")
+        .doc(this.courtID)
+        .get()
+        .then((docRef) => {
+            
+            this.currentPlayers = docRef.data().currentPlayers
+
+        })
+        .then(()=>{
+            console.log("Current players successfully retrieved from court");
+        })
+
     },
+
 }
 </script>
 

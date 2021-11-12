@@ -9,14 +9,17 @@
 
         <!-- Check In -->
         <div class="my-4">
-            <the-button :onClick="togglePopUp" class="bg-yellow-500 text-white" buttonType="form-full">
+            <!-- <the-button :onClick="togglePopUp" class="bg-yellow-500 text-white" buttonType="form-full">
+                CHECK IN
+            </the-button> -->
+            <the-button :onClick="checkIn" class="bg-yellow-500 text-white" buttonType="form-full"> <!--*********************************************************-->
                 CHECK IN
             </the-button>
         </div>
 
         <!-- Check Out -->
         <div class="my-4">
-            <the-button class="bg-white" buttonType="form-full">
+            <the-button :onClick="checkOut" class="bg-white" buttonType="form-full">
                 CHECK OUT
             </the-button>
         </div>
@@ -41,6 +44,7 @@ import TheButton from "./TheButton.vue"
 import CourtMiniMap from "./CourtMiniMap.vue"
 import db from "../firebase/firebaseInit"
 
+
 export default {
     name: "CourtMiniMapSection",
     components: { TheButton, CourtMiniMap },
@@ -51,6 +55,7 @@ export default {
             currentCourtId: "etpohlg3k66q0X5khU4W" // hardcoded
         }
     },
+    props: ["courtID"],
 
     computed: {
         showBookmark() {
@@ -89,7 +94,34 @@ export default {
         bookmarkCourt() {
             console.log('=== bookmark court === ')
             this.$store.dispatch('bookmarkCourt', this.$store.state.selectedCourt)
-        }
+        },
+        
+        checkIn(){
+
+            this.$store.state.checkedInCourtID = this.courtID
+            console.log(this.courtID);
+            console.log("court id");
+            this.$store.dispatch("addCurrentPlayer")
+            .then(()=>{
+                location.reload();
+            })
+        },
+
+        checkOut(){
+
+            if (this.$store.state.checkedInCourtID == ""){
+                alert("You have not checked in!")
+            }
+            else{
+                this.$store.dispatch("removeCurrentPlayer")
+                .then(()=>{
+                    location.reload();
+                })
+            }
+            
+
+        },
+
 
     },
 

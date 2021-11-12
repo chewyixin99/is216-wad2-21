@@ -4,6 +4,7 @@
         <div class="relative inline-block"> 
             <img v-if="src" :src="src" alt="Avatar" class="h-24 rounded-full object-cover">
             <img v-else :src="groupImgDefault" alt="Avatar" class="h-24 rounded-full object-cover">
+
             <div class="absolute top-0 h-full w-full  bg-opacity-25 flex items-center justify-center">
                 <button @click.prevent="browse()" class="rounded-full hover:bg-white hover:bg-opacity-25 p-2 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" 
@@ -14,7 +15,7 @@
                     stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
-        </div>   
+        </div>  
     </div>
 </template>
 
@@ -42,7 +43,7 @@ export default {
         },
         remove(){
             this.file = null;
-            this.src = this.value
+            this.src = null,
             this.$emit('input', this.file)
             firebase.firestore().collection("groups").doc(this.groupID ).update({groupImg: null})
 
@@ -62,16 +63,39 @@ export default {
             upload.on('state_changed', (snapshot) => {console.log(snapshot);},
             (error) => {console.log(error);}, ()=> {
                 upload.snapshot.ref.getDownloadURL().then((downloadURL)=>{
-                    this.$store.commit("changeProfileImg",downloadURL)
                     console.log(downloadURL);
                     return firebase.firestore().collection("groups").doc(this.groupID).update({groupImg: downloadURL})
+                })
+                .then(()=>{
+                    console.log("Group image updated successfully in database");
                 })
                 
             })
         
+        },
     },
-    
+
+    created() {
+
+        // this.src = this.value
+
+        firebase
+        .firestore()
+        .collection("groups")
+        .doc(this.groupID)
+        .get()
+        .then((docRef) => {
+
+            this.src = docRef.data().groupImg
+
+        })
+        .then(()=>{
+            console.log(this.file);
+            console.log("Group image is loaded");
+        })
+
     },
+
 
 }
 </script>

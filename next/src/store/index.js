@@ -64,6 +64,12 @@ const store = new Vuex.Store({
         // == selectedProfle
         selectedProfile:`defaultValue`,
 
+
+        checkedInCourtID: ""
+
+
+
+
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
@@ -227,6 +233,93 @@ const store = new Vuex.Store({
             console.log(dbResults);
             
             dispatch("getProfileLatestIO")
+        },
+
+        // *****************************************************************
+        async addCurrentPlayer({state}){ 
+
+            const dataBase = await db.collection('court').doc(state.checkedInCourtID).get()
+            
+                const currentPlayers= dataBase.data().currentPlayers
+
+                const compilation1 = [];
+                for (var i = 0; i < currentPlayers.length; i++){
+                    if (currentPlayers[i] != "" && currentPlayers[i] != state.profileID){
+                        compilation1.push(currentPlayers[i]);
+                    }
+                    
+                }
+                compilation1.push(state.profileID)
+
+                console.log(compilation1);
+
+
+            const dataBase2 = await db.collection('court').doc(state.checkedInCourtID);
+            
+            await dataBase2.update({
+
+                currentPlayers: compilation1
+                
+            })
+            .then(()=>{
+                console.log("User successfully added to Current Players");
+            })
+                
+
+            const dataBase4 = await db.collection('users').doc(state.profileID);
+            
+            await dataBase4.update({
+
+                checkedInCourt: state.checkedInCourtID,
+                
+            })
+            .then(()=>{
+                console.log("User successfully checked in to court");
+            })
+            
+        },
+
+        async removeCurrentPlayer({state}){
+
+            const dataBase = await db.collection('users').doc(state.profileID);
+            
+            await dataBase.update({
+
+                checkedInCourt: "",
+                
+            })
+            .then(()=>{
+                console.log("User successfully checked out from court");
+            })
+
+            const dataBase3 = await db.collection('court').doc(state.checkedInCourtID).get()
+            
+            const currentPlayers = dataBase3.data().currentPlayers
+                
+                const compilation = [];
+
+                for (var j = 0; j < currentPlayers.length; j++){
+                    if (currentPlayers[j] != ""){
+                        compilation.push(currentPlayers[j]);
+                        console.log(currentPlayers[j]);
+                    }
+                    
+                }
+                let index = compilation.indexOf(state.profileID)
+                compilation.splice(index,1)
+
+
+            const dataBase4 = await db.collection('court').doc(state.checkedInCourtID);
+            
+            await dataBase4.update({
+
+                currentPlayers: compilation,
+                
+            })
+            .then(()=>{
+                console.log("User successfully removed from current players in court");
+            })
+            
         },
 
         async getProfileLatestIO({state, commit, dispatch}) {
