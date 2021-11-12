@@ -2,8 +2,8 @@
     <div class="m-4">
         <div class="grid grid-cols-5 sm:grid-cols-8 gap-4 justify-items-center">
             <the-profile-icon 
-            v-for="(a_player, index) in this.currentPlayers" 
-            :initials="a_player.initials" 
+            v-for="(a_player, index) in $store.state.selectedCourtCurrentUsers" 
+            :initials="a_player.profileInitials" 
             :imgSrc="a_player.profileImg"
             :key="index"
             class="font-bold" />
@@ -12,82 +12,31 @@
 </template>
 
 <script>
+import store from '../store/index'
 import TheProfileIcon from "./TheProfileIcon.vue"
 
 export default {
     name: "CourtCurrentPlayers",
+
     components: {
         TheProfileIcon
     },
-    props: {}, // Props should take in array of current players later on
+    
+    mounted() {
+        store.dispatch("updateSelectedCourtCurrentUsers")
+    },
 
+    created() {
+    },
 
     data() {
         return {
-            currentPlayers: [
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                }
-        ]
         }
-    }
+    },
+
+    methods: {
+    
+    },
 }
 </script>
 

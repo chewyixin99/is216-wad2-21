@@ -47,20 +47,22 @@
                     </div>
 
                     <!-- FAVOURITE PLAYER -->
-                    <div class="mb-4">
+                     <!-- <div class="mb-6">
                         <label class="block text-white text-sm font-bold mb-2" for="favPlayer">
-                            FAVOURITE PLAYERS
+                            FAVOURITE PLAYER
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer">
-                    </div>
+                    </div> -->
+                    <FavPlayer/>
 
                     <!-- FAVOURITE TEAM -->
-                    <div class="mb-6">
+                    <!-- <div class="mb-6">
                         <label class="block text-white text-sm font-bold mb-2" for="favTeam">
                             FAVOURITE TEAMS
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam">
-                    </div>
+                    </div> -->
+                    <FavTeam/>
 
                     <!-- BUTTONS -->
                     <div class="mt-3 text-center space-x-4">
@@ -89,6 +91,9 @@
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import AvatarInput from '../components/AvatarInput.vue';
+import FavPlayer from '../components/FavPlayer.vue';
+import FavTeam from '../components/FavTeam.vue';
+
 
 export default {
 
@@ -96,6 +101,8 @@ export default {
 
     components: {
         AvatarInput,
+        FavPlayer,
+        FavTeam,
     },
 
     data(){
@@ -113,7 +120,7 @@ export default {
         
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
-
+            console.log(this.favPlayer);
             this.$store.state.profileFirstName = this.firstName
             this.$store.state.profileLastName = this.lastName
             this.$store.state.profileExperience = this.experience

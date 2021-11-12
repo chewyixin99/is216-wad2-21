@@ -1,7 +1,9 @@
 <template>
+<div>
+    <!-- Check in modal -->
     <div v-if="$store.state.courtShowCheckinModal && !conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
-            <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center">
+            <div class="flex items-center justify-center min-h-screen pt-4 pb-20 text-center">
 
                 <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
     
@@ -9,7 +11,7 @@
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
     
 
-                <div class="inline-block align-bottom bg-purple-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+                <div class="inline-block align-bottom bg-purple-900 rounded-lg overflow-hidden shadow-xl transform transition-all mx-6">
                         
                         <!-- Check In Details Section -->
                         <div class="text-white text-center m-5">
@@ -25,14 +27,14 @@
                                 </p>
                             </div>
 
-                            <div class="grid grid-cols-2 sm:grid-cols-1">
+                            <div class="grid grid-cols-2 sm:grid-cols-1 gap-4 mt-6">
                             <!-- Check In Time -->
-                            <div class="my-3 grid grid-cols-1 sm:grid-cols-2 justify-items-center">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 justify-items-center gap-2">
                                 <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
                                     CHECK IN:
                                 </div>
 
-                                <div :class="{'bg-red-500': invalidCheckin || pastInputError  || clashingCheckIO}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                <div :class="{'bg-red-500': invalidCheckin || pastInputError  || clashingCheckIO}"  class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-3">
                                     <div class="flex">
                                         <input :class="{'bg-red-500': invalidCheckin || pastInputError || clashingCheckIO}" class="bg-white" type="time" v-model="userCheckinTime">
                                     </div>
@@ -41,12 +43,12 @@
 
 
                             <!-- Check Out Time -->
-                            <div class="my-5 grid grid-cols-2 justify-items-center">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 justify-items-center gap-2">
                                 <div class="text-xl font-bold text-white flex items-center justify-center">
                                     CHECK OUT:
                                 </div>
 
-                                <div :class="{'bg-red-500': invalidCheckout || pastInputError || clashingCheckIO}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                                <div :class="{'bg-red-500': invalidCheckout || pastInputError || clashingCheckIO}" class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-3">
                                     <div class="flex">
                                         <input :class="{'bg-red-500': invalidCheckout || pastInputError || clashingCheckIO}" class="bg-white" type="time" v-model="userCheckoutTime">
                                     </div>
@@ -70,8 +72,8 @@
                         </div>
 
                         <!-- Check In Buttons Section -->
-                        <div class=" m-5">
-                            <the-button :onClick="clientCheckinValidations" class="bg-yellow-400 mb-4" buttonType="form-full">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                            <the-button :onClick="clientCheckinValidations" class="bg-yellow-500 sm:order-last" buttonType="form-full">
                                 CHECK IN
                             </the-button>
 
@@ -85,6 +87,7 @@
         </div>
     </div>
 
+    <!-- Active conflict modal -->
     <div v-if="$store.state.courtShowCheckinModal && conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -110,7 +113,7 @@
                             </div>
 
                             <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                {{$store.state.selectedCourt}}
+                                {{$store.state.profileActiveCourt.name}}
                             </div>
                         </div>
 
@@ -121,8 +124,7 @@
                             </div>
 
                             <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                hello
-
+                                {{$store.state.profileMostRelevantCheckin.toLocaleTimeString()}}
                             </div>
                         </div>
 
@@ -134,7 +136,7 @@
                             </div>
 
                             <div class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                hello
+                                {{$store.state.profileMostRelevantCheckout.toLocaleTimeString()}}
                             </div>
                         </div>
 
@@ -150,8 +152,8 @@
 
 
                     <!-- Check In Buttons Section -->
-                    <div class=" m-5">
-                        <the-button :onClick="checkinUserConflict" class="bg-yellow-400 mb-4" buttonType="form-full">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
+                        <the-button :onClick="checkinUserConflict" class="bg-yellow-500 sm:order-last" buttonType="form-full">
                             CONTINUE
                         </the-button>
 
@@ -164,6 +166,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 
 <script>

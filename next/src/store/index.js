@@ -38,6 +38,7 @@ const store = new Vuex.Store({
         groupName: ``, // TBC
         groupEXP: ``, // TBC
         groupInfo: ``,
+        groupMsg: ``,
         currentMemberID: ``,
         currentGroupID: ``,
 
@@ -58,6 +59,7 @@ const store = new Vuex.Store({
 
         // == selectedCourt
         selectedCourt: `defaultValue`,
+        selectedCourtCurrentUsers: [],
 
         // == selectedProfle
         selectedProfile:`defaultValue`,
@@ -202,6 +204,10 @@ const store = new Vuex.Store({
             state.profileBookmarksID.splice(indexBookmarkID, 1)
         },
         
+        updateSelectedCourtCurrentUsers(state, payload) {
+            state.selectedCourtCurrentUsers = payload
+        },
+        
 
     },
 
@@ -223,7 +229,7 @@ const store = new Vuex.Store({
             dispatch("getProfileLatestIO")
         },
 
-        async getProfileLatestIO({state, commit}) {
+        async getProfileLatestIO({state, commit, dispatch}) {
             // Gets the most relevant history
             let currentTime = firebase.firestore.Timestamp.now()
             let payload = {}
@@ -243,7 +249,11 @@ const store = new Vuex.Store({
                         payload["mostRelevantCheckoutTime"] = possibleActiveTimeslotsDoc.data().checkoutTime.toDate()
                         
                         isActive = true
+                        // Commits the most relevant information
                         commit("setProfileLatestCheckIO", payload)
+                        // Dispatches to current court that user is active in
+                        dispatch("courtActiveUserCheckin")
+
                         console.log(`[checkinHistory collection] User is currently active.`);
                     }
                 })
@@ -263,6 +273,7 @@ const store = new Vuex.Store({
                             payload["mostRelevantCheckinTime"] = latestCheckoutDoc.docs[0].data().checkinTime.toDate()
                             payload["mostRelevantCheckoutTime"] = latestCheckoutDoc.docs[0].data().checkoutTime.toDate()
                             
+                            // Commits the most relevant information
                             commit("setProfileLatestCheckIO", payload)
                             console.log(`[checkinHistory collection] User is currently NOT active.`);
                         } else {
@@ -275,7 +286,21 @@ const store = new Vuex.Store({
 
         },
 
+        async courtActiveUserCheckin({state}) {
+            // Search for the courtID of the ACTIVE court of the current user
+            const activeUserInfo = db.collection('court').doc(state.profileActiveCourt.id).collection('currentUsers').doc(state.profileID)
+            await activeUserInfo.set({
+                profileID: state.profileID,
+                profileInitials: state.profileInitials,
+            }).then(() => {                    
+                console.log(`[courtActiveUserCheckin] User checked in to active court (${state.profileActiveCourt.id}) in firestore.`);
+            }).catch((error) => {
+                console.log(`[courtActiveUserCheckin] Error getting active court (${state.profileActiveCourt.id}) from firestore. Error: ${error}`);
+            })
+        },
+
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
+
         async updateUserSettings({state}){
             const dataBase = await db.collection('users').doc(state.profileID);
             await dataBase.update({
@@ -284,6 +309,15 @@ const store = new Vuex.Store({
                 favPlayer: state.profileFavPlayer,
                 favTeam: state.profileFavTeam,
                 experience: state.profileExperience,
+            })
+        },
+        
+        // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
+        async updateImg({state}){
+            const dataBase = await db.collection('users').doc(state.profileID);
+            await dataBase.update({
+                initialsURL: state.profileInitialsURL,
+                profileImg: state.profileImg,
             })
         },
         async getGroupID({state}){ 
@@ -315,8 +349,11 @@ const store = new Vuex.Store({
             
             await dataBase2.update({
 
-                groupID: compilation1,
+                groupID: compilation1
                 
+            })
+            .then(()=>{
+                console.log("GroupID successfully added to Users");
             })
 
             const dataBase3 = await db.collection('groups').doc(state.currentGroupID).get()
@@ -344,7 +381,10 @@ const store = new Vuex.Store({
 
                 memberID: compilation,
                 
-        })
+            })
+            .then(()=>{
+                console.log("Members list successfully updated in Groups");
+            })
             
         },
       
@@ -375,6 +415,9 @@ const store = new Vuex.Store({
                 groupID: compilation1,
                 
             })
+            .then(()=>{
+                console.log("GroupID successfully removed from Users");
+            })
 
             const dataBase3 = await db.collection('groups').doc(state.currentGroupID).get()
             
@@ -402,7 +445,10 @@ const store = new Vuex.Store({
 
                 memberID: compilation,
                 
-        })
+            })
+            .then(()=>{
+                console.log("GroupID successfully removed from Groups");
+            })
             
         },
         
@@ -411,8 +457,14 @@ const store = new Vuex.Store({
             const dataBase = await db.collection("groups").add({
                 groupName: state.newGroupName,
                 groupExp: state.newGroupExp,
-                memberID: [state.profileID]
-            });
+                memberID: [state.profileID],
+                groupImg: null,
+                groupImgDefault: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+            })
+
+                state.profileGroupID = compilation
+                console.log("New group successfully created");
+
 
             state.newGroupID = dataBase.id
 
@@ -436,9 +488,11 @@ const store = new Vuex.Store({
                 groupID: compilation,
                 
             })
+            .then(()=>{
+                state.profileGroupID = compilation
+                console.log("New group successfully added to Users");
+            })
 
-            state.profileGroupID = compilation
-            console.log("addnewgroup is completed");
             
         },    
 
@@ -615,6 +669,48 @@ const store = new Vuex.Store({
 
         },
 
+        async updateSelectedCourtCurrentUsers ({state, commit}) {
+            let payload = []
+            let currentTime = firebase.firestore.Timestamp.now()
+
+            // Get all currentUsers in court collection
+            const allCurrentUsersInfoDb = db.collection('court').doc(state.selectedCourt.id).collection('currentUsers')
+            
+            allCurrentUsersInfoDb.get()
+            .then((allCurrentUsersDocs) => {
+                // Look at each current user on the court
+                allCurrentUsersDocs.forEach((aCurrentUserInfoDoc) => {
+                    let aCurrentUserCheckinDb = db.collection('users').doc(aCurrentUserInfoDoc.data().profileID).collection('checkinHistory')
+                    
+                    // Check user's history to see if user is actually ACTIVE on court
+                    aCurrentUserCheckinDb.where('checkoutTime', '>', currentTime)
+                    .get()
+                    .then((validDocumentsSnapshot) => {validDocumentsSnapshot.forEach((validDoc) => {
+                        if(validDoc.data().checkinTime < currentTime) {
+                            // Add user info if check in valid to payload to commit to store to display on court
+                            payload.push(aCurrentUserInfoDoc.data())
+                        } else {
+                            // Delete user document if the user is no longer active at the court
+                            allCurrentUsersInfoDb.doc(aCurrentUserInfoDoc.id).delete().then(() => {
+                                console.log(`[updateSelectedCourtCurrentUsers] Deleted inactive user on selected court (${state.selectedCourt.id}) in firestore.`);
+                            }).catch((error) => {
+                                console.log(`[updateSelectedCourtCurrentUsers] Error deleting inactive user from selected court (${state.selectedCourt.id}) from firestore. Error: ${error}`);
+                            })
+                        }
+                    })
+                    })
+                })
+
+                // Commit payload to selectedCourtCurrentUsers state for client to view
+                commit("updateSelectedCourtCurrentUsers", payload)
+
+                console.log(`[updateSelectedCourtCurrentUsers] Retrieved current users on selected court (${state.selectedCourt.id}) in firestore.`);
+
+            }).catch((error) => {
+                console.log(`[updateSelectedCourtCurrentUsers] Error getting current users from selected court (${state.selectedCourt.id}) from firestore. Error: ${error}`);
+            })        
+        },
+
 
         async getCourt({commit}, payload) {
             // state.selectedCourt
@@ -629,18 +725,21 @@ const store = new Vuex.Store({
                 if (courtSnapshot.exists) {
                     commit("updateSelectedCourt", payload)
                 } else {
-                    courtCollection.add({
+                    courtCollection.doc(payload.id).set({
                         courtID: payload.id,
                         courtLocation: new firebase.firestore.GeoPoint(lat, lng),
                         courtName: payload.name,
                         courtVicinity: payload.vicinity,
+                    }).then(() => {                    
+                        console.log(`[getCourt] Added new court ${payload.name} to firestore`);
+                    }).catch((error) => {
+                        console.log("[getCourt] Error adding to firestore: ", error);
                     })
                     commit("updateSelectedCourt", payload)
-                    console.log(`[court collection] Added new court ${payload.name} to firestore`);
                     console.log('=== end of getCourt action dispatch ===')
                 }
             }).catch((error) => {
-                console.log("[court collection] Error adding to firestore: ", error);
+                console.log("[getCourt] Error pulling document from firestore: ", error);
                 console.log('=== end of getCourt action dispatch ===')
             })
             

@@ -54,7 +54,7 @@ export default {
       }
       
     },
-    emits: ['add'],
+    // emits: ['add'],
     components: {
 
         // TheProfileIcon,
@@ -83,7 +83,10 @@ export default {
           if (input){
             this.$store.commit("inputCurrentMember", this.$store.state.profileID)
             this.$store.commit("inputCurrentGroup", obj.id)
-            this.$store.dispatch("removeMember");
+            this.$store.dispatch("removeMember")
+            .then(()=>{
+              location.reload();
+            });
           }
 
 
@@ -110,6 +113,7 @@ export default {
       
       this.$store.dispatch("getGroupID")
 
+  
       
     }
 }
