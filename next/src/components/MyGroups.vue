@@ -42,9 +42,9 @@
                     <span class="secondary-white-title">{{groupExp.toUpperCase()}}</span>
                 </div>
 
-                <div class="flex flex-wrap justify-between my-6">
-                    <ol>
-                        <Members :member1 = member v-for="member in memberID" :key="member"/>                        
+                <div class="my-3">
+                    <ol class="grid md:grid-cols-3 gap-3">
+                        <Members :member1 = member v-for="member in memberID" :key="member"/>
                     </ol>
                 </div>
 
@@ -57,11 +57,18 @@
 
 
         </div>
-                <span class="secondary-white-title">TEAM NOTEBOARD:</span>
-                <textarea v-model="groupMsg"></textarea>
-                <the-button class="bg-yellow-500 hover:bg-yellow-700 text-white mt-3" buttonType="form-sm" @click="updateNoteboard">
-                        UPDATE NOTEBOARD
+
+        <div class="grid grid-cols-1 md:grid-cols-5 mt-3">
+            <div class="secondary-white-title col-span-1 mb-2">MESSAGE BOARD:</div>
+            <div class="col-span-1 md:col-span-4 flex-none md:flex gap-2 text-center">
+                <textarea class="w-full h-10 rounded p-2 mb-2" v-model="groupMsg"></textarea>
+                <the-button class="bg-blue-500 hover:bg-blue-700 text-white" buttonType="form-sm" @click="updateNoteboard">
+                        UPDATE
                 </the-button>
+            </div>
+        </div>
+
+
     </div> 
 
 </template>
