@@ -149,6 +149,14 @@ export default {
 
 
         })
+        .then(()=>{
+            console.log("testing");
+            console.log(this.groupImg);
+            console.log("Group information loaded successfully");
+
+        })
+
+
 
         },
 

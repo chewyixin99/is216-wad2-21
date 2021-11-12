@@ -1,26 +1,26 @@
 <template>
 <div>
-    <!-- Check in modal -->
+    <!-- Check in modal 
     <div v-if="$store.state.courtShowCheckinModal && !conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen pt-4 pb-20 text-center">
 
                 <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
     
-                <!-- This element is to trick the browser into centering the modal contents. -->
+                This element is to trick the browser into centering the modal contents. 
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
     
 
                 <div class="inline-block align-bottom bg-purple-900 rounded-lg overflow-hidden shadow-xl transform transition-all mx-6">
                         
-                        <!-- Check In Details Section -->
+                        Check In Details Section 
                         <div class="text-white text-center m-5">
-                            <!-- Check In Title -->
+                            < Check In Title 
                             <h3 class="text-xl font-bold text-white" id="modal-title">
                                 CHECK IN DETAILS
                             </h3>
 
-                            <!-- Check In Text -->
+                            <Check In Text 
                             <div class="m-2">
                                 <p class="text-sm text-white italic">
                                     Select the date and time that you would be heading down to the court!
@@ -28,7 +28,7 @@
                             </div>
 
                             <div class="grid grid-cols-2 sm:grid-cols-1 gap-4 mt-6">
-                            <!-- Check In Time -->
+                            <Check In Time 
                             <div class="grid grid-cols-1 sm:grid-cols-2 justify-items-center gap-2">
                                 <div class="col-span-1 text-xl font-bold text-white flex items-center justify-center">
                                     CHECK IN:
@@ -42,7 +42,7 @@
                             </div>
 
 
-                            <!-- Check Out Time -->
+                             Check Out Time 
                             <div class="grid grid-cols-1 sm:grid-cols-2 justify-items-center gap-2">
                                 <div class="text-xl font-bold text-white flex items-center justify-center">
                                     CHECK OUT:
@@ -55,7 +55,7 @@
                                 </div>
                             </div>
 
-                            <!-- Error Message -->
+                             Error Message 
                             <p v-if="clashingCheckIO" class="text-sm text-red-300 italic">
                                 Please check your inputs. Check ins should be smaller than check outs!
                             </p>
@@ -71,7 +71,7 @@
 
                         </div>
 
-                        <!-- Check In Buttons Section -->
+                         Check In Buttons Section 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
                             <the-button :onClick="clientCheckinValidations" class="bg-yellow-500 sm:order-last" buttonType="form-full">
                                 CHECK IN
@@ -86,23 +86,24 @@
             </div>
         </div>
     </div>
+    -->
 
-    <!-- Active conflict modal -->
+    <!--Active conflict modal 
     <div v-if="$store.state.courtShowCheckinModal && conflict">
         <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
             <div class="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
 
                 <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
     
-                <!-- This element is to trick the browser into centering the modal contents. -->
+                 This element is to trick the browser into centering the modal contents. 
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
     
 
                 <div class="inline-block align-bottom bg-purple-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
                         
-                    <!-- Conflict Details Section -->
+                     Conflict Details Section 
                     <div class="text-white text-center m-5">
-                        <!-- Location Title -->
+                         Location Title 
                         <h3 class="text-xl font-bold text-white italic" id="modal-title">
                             We noticed that you are already checked in at
                         </h3>
@@ -113,7 +114,7 @@
                             </div>
                         </div>
 
-                        <!-- Check In Time -->
+                         Check In Time 
                         <div class="my-5 grid grid-cols-2 justify-items-center">
                             <div class="text-xl font-bold text-white flex items-center justify-center">
                                 CHECK IN:
@@ -125,7 +126,7 @@
                         </div>
 
 
-                        <!-- Check Out Time -->
+                         Check Out Time 
                         <div class="my-5 grid grid-cols-2 justify-items-center">
                             <div class="text-xl font-bold text-white flex items-center justify-center">
                                 CHECK OUT:
@@ -147,7 +148,7 @@
                     </div>
 
 
-                    <!-- Check In Buttons Section -->
+                     Check In Buttons Section 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-5">
                         <the-button :onClick="checkinUserConflict" class="bg-yellow-500 sm:order-last" buttonType="form-full">
                             CONTINUE
@@ -162,17 +163,21 @@
             </div>
         </div>
     </div>
+    -->
 </div>
 </template>
 
 <script>
 import store from "../store/index"
-import TheButton from "./TheButton.vue"
+// import TheButton from "./TheButton.vue"
+import moment from "moment"
+
 
 export default {
     name: "CourtPopUp",
-    components: { TheButton },
-
+    components: { 
+        // TheButton 
+        },
     watch: {
         '$store.state.courtShowCheckinModal': function() {
             this.getTimeData()
@@ -223,10 +228,13 @@ export default {
         getTimeData() {
             // Formats current time for user select options
             let checkoutTime = new Date()
+            console.log(moment().format("MMM DD YY"));
             checkoutTime.setHours(this.currentDateTime.getHours() + 1)
             this.defaultDate = this.currentDateTime.toLocaleDateString([], {year: 'numeric', month: 'numeric', day: 'numeric'}).split("/")
-            this.defaultDate = `${this.defaultDate[1]}/${this.defaultDate[0]}/${this.defaultDate[2]}`
-            
+            // this.defaultDate = `${this.defaultDate[1]}/${this.defaultDate[0]}/${this.defaultDate[2]}`
+            this.defaultDate = `${this.defaultDate[2]}-${this.defaultDate[0]}-${this.defaultDate[1]}`
+            console.log(this.defaultDate);
+            console.log("xD");
             this.userCheckinTime = this.currentDateTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
             this.userCheckoutTime = checkoutTime.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
 
@@ -236,9 +244,18 @@ export default {
 
         clientCheckinValidations() {
             console.log(store.state.selectedCourt);
-            let dbCheckinTime = new Date(`${this.defaultDate} ${this.userCheckinTime}`)
-            let dbCheckoutTime = new Date(`${this.defaultDate} ${this.userCheckoutTime}`)
-            
+            console.log(this.userCheckinTime);
+            console.log((`${this.defaultDate} ${this.userCheckinTime}`));
+            console.log(this.defaultDate);
+            console.log(this.userCheckinTime);
+            // let dbCheckinTime = new Date(`${this.defaultDate} ${this.userCheckinTime}`)
+            // let dbCheckinTime = new Date(`${this.defaultDate}T${this.userCheckinTime}:00.000`)
+            let dbCheckinTime = moment().subtract(10, 'days').calendar()
+            console.log(dbCheckinTime);
+            console.log("hereeeeeeeee");
+            let dbCheckoutTime = new Date(`${this.defaultDate}T${this.userCheckoutTime}:00.000`)
+
+            console.log(`${this.defaultDate}T${this.userCheckinTime}:00.000`);
             // Validations
             // Check in smaller than check out vcalidation
             console.log(!(dbCheckinTime < dbCheckoutTime));
@@ -248,7 +265,7 @@ export default {
                 this.clashingCheckIO = false
             }
 
-            // Check in minmax time limitations
+            // // Check in minmax time limitations
             if (dbCheckinTime < this.minTime || dbCheckinTime >= this.maxTime) {
                 this.invalidCheckin = true
             } else {
@@ -262,6 +279,7 @@ export default {
             }
 
             // Do not permit checkins more than 5 mins before current time
+
             let pastInputDateCheck = new Date()
             pastInputDateCheck.setMinutes(this.currentDateTime.getMinutes() - 5)
 
@@ -293,7 +311,9 @@ export default {
         checkinUserConflict() {
             store.dispatch("addConflictedCheckinHistory", this.payload)
             this.closeModal()
-        }
+        },
+
+
 
 
     },

@@ -73,8 +73,8 @@ export default ({
             }
         })
         .then(()=>{
-            console.log(this.profileImg);
-            console.log(this.profileInitialsURL);
+            // console.log(this.profileImg);
+            // console.log(this.profileInitialsURL);
         }).catch(e => console.log(`members.vue error: ${e}`))
 
 

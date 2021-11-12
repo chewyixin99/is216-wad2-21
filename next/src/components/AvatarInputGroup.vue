@@ -14,7 +14,7 @@
                     stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
                 </button>
             </div>
-        </div>   
+        </div>  
     </div>
 </template>
 
@@ -42,7 +42,7 @@ export default {
         },
         remove(){
             this.file = null;
-            this.src = this.value
+            this.src = null,
             this.$emit('input', this.file)
             firebase.firestore().collection("groups").doc(this.groupID ).update({groupImg: null})
 
@@ -62,16 +62,39 @@ export default {
             upload.on('state_changed', (snapshot) => {console.log(snapshot);},
             (error) => {console.log(error);}, ()=> {
                 upload.snapshot.ref.getDownloadURL().then((downloadURL)=>{
-                    this.$store.commit("changeProfileImg",downloadURL)
                     console.log(downloadURL);
                     return firebase.firestore().collection("groups").doc(this.groupID).update({groupImg: downloadURL})
+                })
+                .then(()=>{
+                    console.log("Group image updated successfully in database");
                 })
                 
             })
         
+        },
     },
-    
+
+    created() {
+
+        // this.src = this.value
+
+        firebase
+        .firestore()
+        .collection("groups")
+        .doc(this.groupID)
+        .get()
+        .then((docRef) => {
+
+            this.src = docRef.data().groupImg
+
+        })
+        .then(()=>{
+            console.log(this.file);
+            console.log("Group image is loaded");
+        })
+
     },
+
 
 }
 </script>

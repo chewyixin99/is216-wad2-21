@@ -106,7 +106,7 @@ methods:{
           favTeam: ``,
           initialsURL: null,
           profileImg: null,
-
+          checkedInCourt: "",
         })
         .then(()=>{
           return this.$store.commit("setProfileInitials")
