@@ -198,7 +198,7 @@ const store = new Vuex.Store({
             dispatch("getProfileLatestIO")
         },
 
-        async getProfileLatestIO({state, commit}) {
+        async getProfileLatestIO({state, commit, dispatch}) {
             // Gets the most relevant history
             let currentTime = firebase.firestore.Timestamp.now()
             let payload = {}
@@ -218,7 +218,11 @@ const store = new Vuex.Store({
                         payload["mostRelevantCheckoutTime"] = possibleActiveTimeslotsDoc.data().checkoutTime.toDate()
                         
                         isActive = true
+                        // Commits the most relevant information
                         commit("setProfileLatestCheckIO", payload)
+                        // Dispatches to current court that user is active in
+                        dispatch("courtActiveUserCheckin")
+
                         console.log(`[checkinHistory collection] User is currently active.`);
                     }
                 })
@@ -238,6 +242,7 @@ const store = new Vuex.Store({
                             payload["mostRelevantCheckinTime"] = latestCheckoutDoc.docs[0].data().checkinTime.toDate()
                             payload["mostRelevantCheckoutTime"] = latestCheckoutDoc.docs[0].data().checkoutTime.toDate()
                             
+                            // Commits the most relevant information
                             commit("setProfileLatestCheckIO", payload)
                             console.log(`[checkinHistory collection] User is currently NOT active.`);
                         } else {
@@ -248,6 +253,22 @@ const store = new Vuex.Store({
                     })
             }
 
+        },
+
+        async courtActiveUserCheckin({state}) {
+            // Search for the courtID of the ACTIVE court of the current user
+            await db.collection('court').where('courtID', '==', state.profileActiveCourt.id)
+            .get().then(
+                (activeCourtDocSnapshot) =>{
+                    // Add current user into array if he isn't already inside
+                    activeCourtDocSnapshot.docs[0].ref.update({
+                        currentUser: firebase.firestore.FieldValue.arrayUnion(state.profileID)
+                    }) 
+                    console.log(`[courtActiveUserCheckin] User checked in to active court (${state.profileActiveCourt.id}) in firestore.`);
+
+            }).catch((error) => {
+                console.log(`[courtActiveUserCheckin] Error getting active court (${state.profileActiveCourt.id}) from firestore. Error: ${error}`);
+            })
         },
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
