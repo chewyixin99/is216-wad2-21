@@ -115,7 +115,7 @@ const store = new Vuex.Store({
         },
 
         setProfileInitialsURL(state){
-            state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials
+            state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials + "&background=FEB842&color=fff&bold=true"
         },
         
         setProfileLatestCheckIO(state, payload) {

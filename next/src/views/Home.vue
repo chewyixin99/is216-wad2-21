@@ -46,7 +46,7 @@
           </div>
         </div>
 
-        <div v-else class="bookmarks bg-gray-800 text-white rounded-md py-2 px-4">
+        <div v-else class="bookmarks bg-gray-800 text-white rounded-md h-64 py-2 px-4 overflow-auto">
 
           <ul v-for="b in currentBookmarks" :key="b">
             <li>
@@ -58,6 +58,7 @@
                   {{ b.vicinity }}
                 </div>
               </a>
+              <!-- <hr class="mt-2"> -->
             </li>
           </ul>
         </div>
@@ -152,23 +153,6 @@
 
 <style scoped>
 
-.primary-title {
-  color: #FEb842;
-  font-size: 24px;
-  font-weight: bold;
-  margin-left: 5px;
-  margin-bottom: 5px;
-  text-shadow: 2px 1px black;
-}
-
-.secondary-title {
-  color: white;
-  font-size: 16px;
-  margin-left: 5px;
-  margin-bottom: 5px;
-}
-
-
 .mapDiv {
   height: 400px;
   width: 100%;
@@ -193,14 +177,15 @@
   border-radius: 50%;
   width: 40px;
   height: 40px;
-  border: 1px solid black ;
+  /* border: 1px solid black ; */
   background-color: #FEb842;
+  color: white;
   margin: 10px 10px 5px 0px;
   font-weight: bold;
   font-size: 16px;
   text-align: center;
   padding-top: 6px;
-  box-shadow: 1px 2px;
+  box-shadow: 1px 2px black;
 }
 
 .bookmarks li {
