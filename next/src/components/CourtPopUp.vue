@@ -104,15 +104,11 @@
                     <div class="text-white text-center m-5">
                         <!-- Location Title -->
                         <h3 class="text-xl font-bold text-white italic" id="modal-title">
-                            We noticed that you are already checked in at...
+                            We noticed that you are already checked in at
                         </h3>
 
-                        <div class="my-5 grid grid-cols-2 justify-items-center">
-                            <div class="text-xl font-bold text-white flex items-center justify-center">
-                                LOCATION:
-                            </div>
-
-                            <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                        <div class="my-3 text-center">
+                            <div class="secondary-white-title font-bold">
                                 {{$store.state.profileActiveCourt.name}}
                             </div>
                         </div>
@@ -123,7 +119,7 @@
                                 CHECK IN:
                             </div>
 
-                            <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                            <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-3">
                                 {{$store.state.profileMostRelevantCheckin.toLocaleTimeString()}}
                             </div>
                         </div>
@@ -135,7 +131,7 @@
                                 CHECK OUT:
                             </div>
 
-                            <div class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
+                            <div class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-3">
                                 {{$store.state.profileMostRelevantCheckout.toLocaleTimeString()}}
                             </div>
                         </div>
