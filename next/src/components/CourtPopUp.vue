@@ -110,7 +110,7 @@
                             </div>
 
                             <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                {{$store.state.selectedCourt}}
+                                {{$store.state.profileActiveCourt.name}}
                             </div>
                         </div>
 
@@ -121,8 +121,7 @@
                             </div>
 
                             <div class="bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                hello
-
+                                {{$store.state.profileMostRelevantCheckin.toLocaleTimeString()}}
                             </div>
                         </div>
 
@@ -134,7 +133,7 @@
                             </div>
 
                             <div class=" bg-white text-xl font-bold text-black text-center rounded-lg shadow-xl p-5">
-                                hello
+                                {{$store.state.profileMostRelevantCheckout.toLocaleTimeString()}}
                             </div>
                         </div>
 
