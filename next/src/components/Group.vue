@@ -1,10 +1,10 @@
 <template>
 
-    <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6">
+    <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6" v-for="g in groups" :key="g">
         <div class="grid grid-cols-6 gap-4">
 
             <!-- GROUP PROFILE -->
-            <div class="col-span-6 md:col-span-1 text-center my-auto">
+            <div class="col-span-6 md:col-span-1 text-center my-auto" >
                 <div class="profile-image flex justify-center items-center">
                     <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
                 </div>
@@ -26,22 +26,22 @@
             </div>
             
             <!-- GROUP MEMBERS -->
-            <div class="col-span-6 md:col-span-5">
+            <div class="col-span-6 md:col-span-5" >
                 <!-- GROUP NAME -->
                 <div class="flex flex-wrap justify-between">
-                    <span class="secondary-gold-title">{{groupName.toUpperCase()}}</span>
-                    <span class="secondary-white-title">{{groupExp.toUpperCase()}}</span>
+                    <span class="secondary-gold-title">{{g.groupName.toUpperCase()}}</span>
+                    <span class="secondary-white-title">{{g.groupExp.toUpperCase()}}</span>
                     <!-- <div class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white">{{this.groupMembers.length}} P</div> -->
                 </div>
                 <!-- V-FOR GROUP MEMBERS -->
                 <div class="grid grid-cols-5 md:grid-cols-10 gap-4 mt-3 justify-items-center">
-                    <the-profile-icon 
-                    :onClick="toPublicUser" 
-                    v-for="(a_player, index) in this.groupMembers" 
-                    :initials="a_player.initials" 
-                    :imgSrc="a_player.profileImg"
-                    :key="index"
-                    class="font-bold" />
+                        <the-profile-icon 
+                        :onClick="toPublicUser" 
+                        v-for="(a_player, index) in g.memberObj" 
+                        :initials="a_player.initials" 
+                        :imgSrc="a_player.profileImg"
+                        :key="index"
+                        class="font-bold" />
                 </div>
             </div>
 
@@ -53,6 +53,7 @@
 <script>
 import TheProfileIcon from "./TheProfileIcon.vue"
 // import TheButton from "./TheButton.vue"
+import firebase from 'firebase/compat/app';
 
 export default {
     name: "Group",
@@ -60,95 +61,38 @@ export default {
         TheProfileIcon,
         // TheButton,
     },
-    props: {}, // Props should take in array of current players later on
+    props: [], // Props should take in array of current players later on
 
 
     data() {
         return {
-            groupName: "Support System",
-            groupExp: "Recreational",
-            groupMembers: [
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-                {
-                    initials: "BL",
-                    username: "Bitta Loong",
-                    profileImg: ``,
-                },
-        ]
+            groups: this.$store.state.publicUserGroupDetails,
+        }
+    },
+
+    created() {
+        console.log(`=== created Groups.vue ===`)
+        for (let i in this.groups) {
+            let memberID = this.groups[i].memberID
+            this.groups[i].memberObj = []
+            for (let id of memberID) {
+                // console.log(id)
+                firebase
+                .firestore()
+                .collection('users')
+                .doc(id)
+                .get()
+                .then(r => {
+                    // console.log(r)
+                    let singleMember = {
+                        initials: `${r.get('firstName').charAt(0)}${r.get('lastName').charAt(0)}`,
+                        username: `${r.get('firstName')} ${r.get('lastName')}`,
+                        profileImg: r.get('profileImg'),
+                    }
+                    if (this.groups[i].memberObj.indexOf(singleMember)) this.groups[i].memberObj.push(singleMember)
+                }).catch(e => console.log(e))
+            }
+            console.log(`end of group: ${this.groups[i].groupName}`)
         }
     },
 

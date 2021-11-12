@@ -39,7 +39,7 @@
       </div>
 
       <div class="bg-gray-800 rounded mx-6 p-6 text-center">
-        <activity-chart></activity-chart>
+        <!-- <activity-chart></activity-chart> -->
       </div>
 
 
@@ -62,25 +62,29 @@
 // import { getAuth, signOut } from 'firebase/auth'
 // import { useAuthState } from '../firebase/firebase'
 // import { useRouter } from 'vue-router'
-// import firebase from 'firebase/compat/app';
 // import db from "../firebase/firebaseInit";
+// import firebase from 'firebase/compat/app';
 import Group from "../components/Group.vue"
-import ActivityChart from '../components/ActivityChart.vue'
+// import ActivityChart from '../components/ActivityChart.vue'
 
 export default {
   name: 'PublicUser',
   components: {
       Group,
-      ActivityChart,
+      // ActivityChart,
   },
-    data(){
-      return{
-          groupID: [],
-          compiledgroupID: [],
-          str: "",
+      data(){
+        return{
+            groupID: [],
+            compiledgroupID: [],
+            str: "",
 
-      }
-    },
+        }
+      },
+
+      // created() {
+
+      // },
     
       methods:{
 
@@ -118,6 +122,12 @@ export default {
           get() {
             return this.$store.state.selectedProfile.favTeam
             },
+        },
+
+        email: {
+          get() {
+            return this.$store.state.selectedProfile.email
+          }
         },
 
         profilePicture: {

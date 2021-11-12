@@ -49,6 +49,9 @@ const store = new Vuex.Store({
         profileMostRelevantCheckin: ``,
         profileMostRelevantCheckout: ``,
 
+        // for Group component within publicUser
+        publicUserGroupDetails: [],
+
 
         // default profile avatar, yixin, to be removed after JL implemented default avatar
         // defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
@@ -213,7 +216,10 @@ const store = new Vuex.Store({
         updateSelectedCourtCurrentUsers(state, payload) {
             state.selectedCourtCurrentUsers = payload
         },
-        
+
+        populatePublicUserGroupDetails(state, payload) {
+            state.publicUserGroupDetails = payload
+        }
 
     },
 
@@ -558,6 +564,24 @@ const store = new Vuex.Store({
                 bookmarks.push(court)
             }
             commit('getBookmarks', bookmarks)
+        },
+
+        async populatePublicUserGroupDetails({commit}, payload) {
+            let groupDetails = []
+            for (let groupID of payload) {
+                const data = await db.collection('groups')
+                .doc(groupID)
+                .get()
+
+                groupDetails.push({
+                    groupName: data.get('groupName'),
+                    groupExp: data.get('groupExp'),
+                    memberID: data.get('memberID'),
+                    memberObj: [],
+                })
+            }   
+            
+            commit('populatePublicUserGroupDetails', groupDetails)
         },
 
 

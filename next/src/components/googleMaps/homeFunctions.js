@@ -35,7 +35,7 @@ export default {
         experience: `Beginner`,
         favPlayer: `Kobe Bryant`,
         favTeam: `LA Lakers`,
-        currentGroups: [],
+        groupID: [],
       },
       {
         firstName: "Chew",
@@ -45,7 +45,7 @@ export default {
         experience: `Expert`,
         favPlayer: `Lebron James`,
         favTeam: `Miami Heat`,
-        currentGroups: [],
+        groupID: [],
       },
       {
         firstName: "Loh",
@@ -55,7 +55,7 @@ export default {
         experience: `Beginner`,
         favPlayer: `Kobe Bryant`,
         favTeam: `LA Lakers`,
-        currentGroups: [],
+        groupID: [],
       },
       {
         firstName: "Loh",
@@ -65,7 +65,7 @@ export default {
         experience: `Expert`,
         favPlayer: `Lebron James`,
         favTeam: `Miami Heat`,
-        currentGroups: [],
+        groupID: [],
       },
       
       {
@@ -76,7 +76,7 @@ export default {
         experience: `Beginner`,
         favPlayer: `Kobe Bryant`,
         favTeam: `LA Lakers`,
-        currentGroups: [],
+        groupID: [],
       },
       {
         firstName: "Gan",
@@ -86,7 +86,7 @@ export default {
         experience: `Expert`,
         favPlayer: `Lebron James`,
         favTeam: `Miami Heat`,
-        currentGroups: [],
+        groupID: [],
       },
       
       {
@@ -97,7 +97,7 @@ export default {
         experience: `Beginner`,
         favPlayer: `Kobe Bryant`,
         favTeam: `LA Lakers`,
-        currentGroups: [],
+        groupID: [],
       },
       {
         firstName: "Lim",
@@ -107,7 +107,7 @@ export default {
         experience: `Expert`,
         favPlayer: `Lebron James`,
         favTeam: `Miami Heat`,
-        currentGroups: [],
+        groupID: [],
       },
       
       {
@@ -118,7 +118,7 @@ export default {
         experience: `Beginner`,
         favPlayer: `Kobe Bryant`,
         favTeam: `LA Lakers`,
-        currentGroups: [],
+        groupID: [],
       },
       {
         firstName: "Biondi",
@@ -128,7 +128,7 @@ export default {
         experience: `Expert`,
         favPlayer: `Lebron James`,
         favTeam: `Miami Heat`,
-        currentGroups: [],
+        groupID: [],
       },
       
     ]
