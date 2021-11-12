@@ -240,8 +240,8 @@ export default {
             let dbCheckinTime = new Date(`${this.defaultDate} ${this.userCheckinTime}`)
             let dbCheckoutTime = new Date(`${this.defaultDate} ${this.userCheckoutTime}`)
             
-            // // Validations
-            // Check in smaller than check out vcalidation
+            // Validations
+            Check in smaller than check out vcalidation
             console.log(!(dbCheckinTime < dbCheckoutTime));
             if (!(dbCheckinTime < dbCheckoutTime)) {
                 this.clashingCheckIO = true
@@ -249,28 +249,28 @@ export default {
                 this.clashingCheckIO = false
             }
 
-            // // Check in minmax time limitations
-            // if (dbCheckinTime < this.minTime || dbCheckinTime >= this.maxTime) {
-            //     this.invalidCheckin = true
-            // } else {
-            //     this.invalidCheckin = false
-            // }
+            // Check in minmax time limitations
+            if (dbCheckinTime < this.minTime || dbCheckinTime >= this.maxTime) {
+                this.invalidCheckin = true
+            } else {
+                this.invalidCheckin = false
+            }
             
-            // if (dbCheckoutTime < this.minTime || dbCheckoutTime >= this.maxTime) {
-            //     this.invalidCheckout = true
-            // } else {
-            //     this.invalidCheckout = false
-            // }
+            if (dbCheckoutTime < this.minTime || dbCheckoutTime >= this.maxTime) {
+                this.invalidCheckout = true
+            } else {
+                this.invalidCheckout = false
+            }
 
-            // // Do not permit checkins more than 5 mins before current time
-            // let pastInputDateCheck = new Date()
-            // pastInputDateCheck.setMinutes(this.currentDateTime.getMinutes() - 5)
+            // Do not permit checkins more than 5 mins before current time
+            let pastInputDateCheck = new Date()
+            pastInputDateCheck.setMinutes(this.currentDateTime.getMinutes() - 5)
 
-            // if (dbCheckinTime < pastInputDateCheck || dbCheckoutTime < pastInputDateCheck) {
-            //     this.pastInputError = true
-            // } else {
-            //     this.pastInputError = false
-            // }
+            if (dbCheckinTime < pastInputDateCheck || dbCheckoutTime < pastInputDateCheck) {
+                this.pastInputError = true
+            } else {
+                this.pastInputError = false
+            }
 
             // Firebase check in attempt
             if (!this.invalidCheckin && !this.invalidCheckout && !this.pastInputError && !this.clashingCheckIO) {
