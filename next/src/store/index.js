@@ -465,7 +465,7 @@ const store = new Vuex.Store({
             .then((possibleConflictSnapshots) => {
                 possibleConflictSnapshots.forEach((possibleConflictDoc) => {
                     // Conflict occurs where checkout of document is bigger than checkin of payload (ensures no delete of past check ins)
-                    if (possibleConflictDoc.checkoutTime.toDate() > payload.dbCheckinTime) {
+                    if (possibleConflictDoc.data().checkoutTime.toDate() > payload.dbCheckinTime) {
                         // Deletes any possible conflicts
                         possibleConflictDoc.ref.delete()
                         .then(
@@ -478,7 +478,7 @@ const store = new Vuex.Store({
                 
                 // Adds current check in attempt
                 checkinHistoryDbRef.add({
-                    courtID: state.selectedCourt.id,
+                    courtID: state.selectedCourt,
                     checkinTime: payload.dbCheckinTime,
                     checkoutTime: payload.dbCheckoutTime,
                 }).then((newCheckInDocRef) => {
@@ -513,7 +513,7 @@ const store = new Vuex.Store({
 
                 // Adds a new check in based on the current time of the user
                 checkinHistoryDbRef.add({
-                    courtID: state.selectedCourt.id,
+                    courtID: state.selectedCourt,
                     checkinTime: payload.dbCheckinTime,
                     checkoutTime: payload.dbCheckoutTime,
                 }).then((newCheckInDocRef) => {
