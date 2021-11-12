@@ -6,6 +6,14 @@
 
             <div class="col-span-5 md:col-span-1 text-center">
                 <div class="profile-image flex justify-center items-center">
+                    <!-- <div v-if="groupImg">
+                        <AvatarInputGroup :value="groupImg" />
+                    </div>
+                    <div v-else>
+                        <AvatarInputGroup :value="groupImgDefault"/>
+                    </div> -->
+                    
+                    
                     <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
                 </div>
 
@@ -34,9 +42,9 @@
                     <span class="secondary-white-title">{{groupExp.toUpperCase()}}</span>
                 </div>
 
-                <div class="flex flex-wrap justify-between my-6">
-                    <ol>
-                        <Members :member1 = member v-for="member in memberID" :key="member"/>                        
+                <div class="my-3">
+                    <ol class="grid md:grid-cols-3 gap-3">
+                        <Members :member1 = member v-for="member in memberID" :key="member"/>
                     </ol>
                 </div>
 
@@ -49,6 +57,17 @@
 
 
         </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-5 mt-3">
+            <div class="secondary-white-title col-span-1 mb-2">MESSAGE BOARD:</div>
+            <div class="col-span-1 md:col-span-4 flex-none md:flex gap-2 text-center">
+                <textarea class="w-full h-10 rounded p-2 mb-2" v-model="groupMsg"></textarea>
+                <the-button class="bg-blue-500 hover:bg-blue-700 text-white" buttonType="form-sm" @click="updateNoteboard">
+                        UPDATE
+                </the-button>
+            </div>
+        </div>
+
 
     </div> 
 
@@ -63,6 +82,7 @@ import 'firebase/compat/firestore';
 import Members from "./Members.vue"
 import firebase from 'firebase/compat/app';
 import TheButton from "./TheButton.vue"
+// import AvatarInputGroup from "./AvatarInputGroup.vue"
 
 export default {
 
@@ -73,20 +93,44 @@ export default {
 
         Members,
         TheButton, 
-
+        // AvatarInputGroup
 
     },
+
     data(){
         return{
+
             groupName: "",
             groupExp: "",
             memberID: "",
             newMemberID: "",
+            groupMsg: null,
+            groupImg: null,
+            groupImgDefault: null,
+
         }
     },
-    method:{
 
+    methods:{
 
+        updateNoteboard(){
+
+            firebase
+            .firestore()
+            .collection("groups")
+            .doc(this.info)
+            .update({
+
+                groupMsg: this.groupMsg
+
+            })
+            .then(()=>{
+                console.log("Group Message Update Successful");
+            })
+            
+        }
+
+        
     },
 
     created() {
@@ -102,8 +146,16 @@ export default {
             this.groupName = docRef.data().groupName
             this.groupExp = docRef.data().groupExp
             this.memberID = docRef.data().memberID
+            this.groupMsg = docRef.data().groupMsg
+            // this.groupImg = docRef.data().groupImg
+            this.groupImgDefault = docRef.data().groupImgDefault
 
         })
+        .then(()=>{        
+            console.log(this.groupImgDefault);
+            console.log(this.groupImg);
+        })
+
 
         },
 
