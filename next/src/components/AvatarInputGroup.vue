@@ -3,7 +3,7 @@
         <input type="file" accept="image/*" class="hidden" ref="file" @change="change"> 
         <div class="relative inline-block"> 
             <img v-if="src" :src="src" alt="Avatar" class="h-24 rounded-full object-cover">
-            {{this.src}}
+            <img v-else :src="groupImgDefault" alt="Avatar" class="h-24 rounded-full object-cover">
             <div class="absolute top-0 h-full w-full  bg-opacity-25 flex items-center justify-center">
                 <button @click.prevent="browse()" class="rounded-full hover:bg-white hover:bg-opacity-25 p-2 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" 
@@ -26,12 +26,13 @@ import firebase from 'firebase/compat/app';
 
 export default {
     name: 'AvatarInputGroup',
-    props: ["value"],
+    props: ["value","groupID"],
     data(){
         return{
             src: this.value,
-            file: this.$store.state.ProfileImg,
-            defaultSrc: this.$store.state.profileInitialsURL,
+            file: null,
+            groupImgDefault : "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+
         }
     },
 
@@ -41,12 +42,9 @@ export default {
         },
         remove(){
             this.file = null;
-            this.src = this.defaultSrc
+            this.src = this.value
             this.$emit('input', this.file)
-            const userID = this.$store.state.profileID
-
-            firebase.firestore().collection("users").doc(userID).update({profileImg: null})
-            this.$store.commit("changeProfileImg", null) 
+            firebase.firestore().collection("groups").doc(this.groupID ).update({groupImg: null})
 
         },
 
@@ -58,18 +56,15 @@ export default {
             reader.onload = (e) => {
                 this.src = e.target.result;
             }
-
-            const userID = this.$store.state.profileID
-            console.log(userID);
             const filename = this.file.name
             const ext = filename.slice(filename.lastIndexOf("."))
-            let upload = firebase.storage().ref("users/" + userID + "." + ext).put(this.file);
+            let upload = firebase.storage().ref("groups/" + this.groupID + ext).put(this.file);
             upload.on('state_changed', (snapshot) => {console.log(snapshot);},
             (error) => {console.log(error);}, ()=> {
                 upload.snapshot.ref.getDownloadURL().then((downloadURL)=>{
                     this.$store.commit("changeProfileImg",downloadURL)
                     console.log(downloadURL);
-                    return firebase.firestore().collection("users").doc(userID).update({profileImg: downloadURL})
+                    return firebase.firestore().collection("groups").doc(this.groupID).update({groupImg: downloadURL})
                 })
                 
             })

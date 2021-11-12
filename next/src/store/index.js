@@ -434,10 +434,10 @@ const store = new Vuex.Store({
                 groupImg: null,
                 groupImgDefault: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
             })
-            .then(()=>{
+
                 state.profileGroupID = compilation
                 console.log("New group successfully created");
-            })
+
 
             state.newGroupID = dataBase.id
 
