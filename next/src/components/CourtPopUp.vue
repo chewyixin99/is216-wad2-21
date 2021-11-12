@@ -241,7 +241,7 @@ export default {
                 this.invalidCheckin = false
             }
             
-            if (dbCheckoutTime > this.minTime || dbCheckoutTime < this.maxTime) {
+            if (dbCheckoutTime < this.minTime || dbCheckoutTime >= this.maxTime) {
                 this.invalidCheckout = true
             } else {
                 this.invalidCheckout = false
