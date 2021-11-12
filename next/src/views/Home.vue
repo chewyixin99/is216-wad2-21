@@ -33,7 +33,7 @@
           Bookmarks
         </div>
 
-        <div v-if="currentBookmarks.length < 0" class="text-center">
+        <div v-if="currentBookmarks.length < 1" class="text-center">
           <div class="bg-gray-800 rounded text-center py-20">
             <div class="text-white">You currently have no bookmarks!</div>
 

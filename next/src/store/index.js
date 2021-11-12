@@ -29,6 +29,7 @@ const store = new Vuex.Store({
         profileLoggedInTime: ``,
         profileInitialsURL: null,
         profileImg: null,
+
       
         newGroupExp: ``,
         newGroupName: ``,
@@ -175,6 +176,30 @@ const store = new Vuex.Store({
             state.selectedProfile = payload
             console.log(`From updateSelectedProfile mutation`)
             console.log(state.selectedProfile)
+        },
+
+        // == Update state: profileBookmarks
+
+        getBookmarks(state, payload) {
+            console.log(`=== getBookmarks mutation ===`)
+            state.profileBookmarks = payload
+            let profileBookmarksID = []
+            for( let b of payload) {
+                profileBookmarksID.push(b.id)
+            }
+            state.profileBookmarksID = profileBookmarksID
+        },
+
+        addBookmark(state, payload) {
+            state.profileBookmarks.push(payload)
+            state.profileBookmarksID.push(payload.id)
+        },
+
+        deleteBookmark(state, payload) {
+            const indexBookmark = state.profileBookmarks.indexOf(payload)
+            state.profileBookmarks.splice(indexBookmark, 1)
+            const indexBookmarkID = state.profileBookmarks.indexOf(payload)
+            state.profileBookmarksID.splice(indexBookmarkID, 1)
         },
         
 
@@ -417,6 +442,65 @@ const store = new Vuex.Store({
             
         },    
 
+        async bookmarkCourt({state, commit}, payload) {
+            console.log(`=== dispatch bookmarkCourt ===`)
+            // console.log(state.selectedCourt)
+            const data = await db.collection('users')
+                .doc(state.profileID)
+                .collection('bookmarkedCourts')
+                .where('courtID', '==', state.selectedCourt.id)
+                .get()
+
+            if (data.docs.length > 0) {
+                
+                commit("deleteBookmark", payload)
+                
+                data.docs[0].ref.delete()
+                console.log(`document deleted`)
+                
+            } else {
+                const lat = state.selectedCourt.location.lat
+                const lng = state.selectedCourt.location.lng
+
+                commit("addBookmark", payload)
+                
+                db.collection('users')
+                    .doc(state.profileID)
+                    .collection('bookmarkedCourts')
+                    .add({
+                        courtID: state.selectedCourt.id,
+                        name: state.selectedCourt.name,
+                        vicinity: state.selectedCourt.vicinity,
+                        location: new firebase.firestore.GeoPoint(lat, lng)
+                    })
+                
+                console.log('document created with the following attributes')
+                console.log(state.selectedCourt)
+            }
+        },
+
+        async getBookmarks({state, commit}) {
+            let bookmarks = []
+            const data = await db.collection('users')
+                .doc(state.profileID)
+                .collection('bookmarkedCourts')
+                .get()
+
+            for(let courtDoc of data.docs) {
+                const lat = courtDoc.get('location')._lat
+                const lng = courtDoc.get('location')._long
+                let court = {
+                    name: courtDoc.get('name'),
+                    id: courtDoc.get('courtID'),
+                    location: {'lat': lat, 'lng': lng},
+                    vicinity: courtDoc.get('vicinity'),
+                }
+                bookmarks.push(court)
+            }
+            commit('getBookmarks', bookmarks)
+        },
+
+
         // async updateUserGroupID({state}){
         //     db.collection('users').doc(state.profileID).get().then((docRef) =>
         //     {
@@ -550,7 +634,6 @@ const store = new Vuex.Store({
                         courtLocation: new firebase.firestore.GeoPoint(lat, lng),
                         courtName: payload.name,
                         courtVicinity: payload.vicinity,
-                        currentUsers: []
                     })
                     commit("updateSelectedCourt", payload)
                     console.log(`[court collection] Added new court ${payload.name} to firestore`);

@@ -12,9 +12,7 @@ export default {
     setup(props) {
 
         console.log(`props below, from courtMiniMap.js`)
-        console.log(props)
-        console.log(props.courtObj.location.lat)
-        console.log(props.courtObj.location.lng)
+        console.log(props.courtObj)
         
         const currPos = computed(() => ({
           lat: props.courtObj.location.lat,

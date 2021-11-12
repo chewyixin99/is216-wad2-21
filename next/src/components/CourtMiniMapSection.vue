@@ -23,8 +23,13 @@
 
         <!-- Bookmark -->
         <div class="my-4">
-            <the-button class="bg-gray-900 text-white" buttonType="form-full">
+            {{ $store.state.selectedCourt }}
+            {{ $store.state.profileID }}
+            <the-button v-if="showBookmark" class="bg-gray-900 text-white" buttonType="form-full" v-on:click="bookmarkCourt()" >
                 BOOKMARK
+            </the-button>
+            <the-button v-else class="bg-gray-900 text-white" buttonType="form-full" v-on:click="bookmarkCourt()" >
+                REMOVE BOOKMARK
             </the-button>
         </div>
     </div>
@@ -47,6 +52,20 @@ export default {
         }
     },
 
+    computed: {
+        showBookmark() {
+            console.log('=== computed bookmark, court mini map section ===')
+            let id_dict = this.$store.state.profileBookmarksID
+            let id = this.$store.state.selectedCourt.id
+            console.log(id_dict)
+            console.log(id)
+            if (Object.values(id_dict).indexOf(id) > -1) {
+                return false
+            } 
+            return true
+        },
+    },
+
     methods: {
         togglePopUp() {
             store.commit('courtToggleCheckinModal')
@@ -54,7 +73,7 @@ export default {
         
         
         getCourtData() {
-            console.log("====getCourtData====");
+            console.log("==== getCourtData ====");
             db.collection("court").get().then(
                 (docSnapshot) => {
                     docSnapshot.forEach((doc) => {
@@ -65,6 +84,11 @@ export default {
 
 
 
+        },
+
+        bookmarkCourt() {
+            console.log('=== bookmark court === ')
+            this.$store.dispatch('bookmarkCourt', this.$store.state.selectedCourt)
         }
 
     },

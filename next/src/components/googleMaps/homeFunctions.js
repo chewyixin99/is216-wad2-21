@@ -25,51 +25,7 @@ export default {
   // ################################################################################################################ CREATED ################################################################################################################
   created() {
     console.log(`=== created ===`)
-    this.currentBookmarks = [
-      {
-        name: "Singapore Basketball Court",
-        vicinity: "134 Pasir Ris Street 21",
-        location: {lat: 1.353, lng: 103.867},
-        currentUsers: [],
-        id: 1,
-      },
-      {
-        name: "Basketball Court",
-        vicinity: "Opp Unit 104",
-        location: {lat: 1.353, lng: 103.867},
-        currentUsers: [],
-        id: 2,
-      },
-      {
-        name: "Basketball Court",
-        vicinity: "495 Tampines Street 43",
-        location: {lat: 1.353, lng: 103.867},
-        currentUsers: [],
-        id: 3,
-      },
-      {
-        name: "Basketball Court",
-        vicinity: "604 Elias Rd, Block 604, Singapore",
-        location: {lat: 1.353, lng: 103.867},
-        currentUsers: [],
-        id: 4,
-      },
-      {
-        name: "Pasir Ris Block 230 Basketball Court",
-        vicinity: "Blk, 230 Pasir Ris Street 11",
-        location: {lat: 1.353, lng: 103.867},
-        currentUsers: [],
-        id: 5,
-      },
-      {
-        name: "Basketball court @ Sun Plaza Park",
-        vicinity: "407 Tampines Street 41, Singapore",
-        location: {lat: 1.353, lng: 103.867},
-        currentUsers: [],
-        id: 6,
-      },
-    ]
-
+    this.currentBookmarks =  this.getBookmarks
     this.recentlyPlayed = [
       {
         firstName: "Chew",
@@ -178,6 +134,14 @@ export default {
     ]
     const { coords } = useGeolocation()
     this.defaultPos = coords.value
+  },
+
+  computed: {
+    getBookmarks() {
+      console.log(`=== getBookmarks computed home ===`)
+      this.$store.dispatch('getBookmarks')
+      return this.$store.state.profileBookmarks
+    },
   },
   // ################################################################################################################ SETUP ################################################################################################################
   setup() {

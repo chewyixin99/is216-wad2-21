@@ -3,7 +3,6 @@
     <div class="container max-w-5xl mx-auto">
         <!-- TITLE -->
         <div class="text-center mx-6">
-            {{ $store.state.selectedCourt }}
             <div class="primary-gold-title mt-3">
                 <h1> {{court.name.toUpperCase()}} </h1>
             </div>
@@ -58,7 +57,6 @@ export default {
 
   created() {
     this.$store.commit('courtDefaultCheckinModal')
-
   },
 
   data() {
