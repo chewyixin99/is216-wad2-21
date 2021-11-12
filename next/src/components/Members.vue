@@ -1,16 +1,16 @@
 <template>
 
     <li>
-        <div class="grid grid-cols-3 gap-1">
+        <div class="flex flex-wrap">
             <div v-if="profileImg">
                 <img class="h-10 w-10 rounded-full object-cover" :src="profileImg">
             </div>
             <div v-else> 
                 <img class="h-10 w-10 rounded-full object-cover" :src="profileInitialsURL">
             </div>
-            <span class="secondary-white-title flex justify-center items-center">{{firstName}} {{lastName}}</span>
+            <span class="secondary-white-title ml-3 my-auto">{{firstName}} {{lastName}}</span>
         </div>
-        <hr>
+        <!-- <hr> -->
     </li>
 
 </template>
