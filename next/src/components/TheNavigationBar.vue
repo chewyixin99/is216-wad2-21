@@ -20,15 +20,15 @@
 
     <div :class="showMenu ? 'block' : 'hidden'" class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-md lg:flex-grow lg:flex justify-end items-center">
-        <router-link to="/" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">HOME</router-link>
+        <router-link to="/" active-class="active text-yellow-500" class="block font-bold my-4 lg:inline-block text-white lg:my-0 hover:text-yellow-500 mr-10">HOME</router-link>
 
-        <router-link to="/about" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">ABOUT</router-link> 
+        <router-link to="/about" active-class="active text-yellow-500" class="block font-bold my-4 lg:inline-block text-white lg:my-0 hover:text-yellow-500 mr-10">ABOUT</router-link> 
 
-        <router-link to="/groups" class="block my-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">MY GROUPS</router-link> 
+        <router-link to="/groups" active-class="active text-yellow-500" class="block font-bold my-4 lg:inline-block text-white lg:my-0 hover:text-yellow-500 mr-10">MY GROUPS</router-link> 
         
-        <router-link to="/profile" class="block mt-4 lg:hidden text-white lg:my-0 hover:text-gray-300 mr-10">PROFILE</router-link>
+        <router-link to="/profile" active-class="active text-yellow-500" class="block font-bold mt-4 lg:hidden text-white lg:my-0 hover:text-yellow-500 mr-10">PROFILE</router-link>
         
-        <router-link to="/profile" class="hidden mt-4 lg:inline-block text-white lg:my-0 hover:text-gray-300 mr-10">
+        <router-link to="/profile" class="hidden font-bold mt-4 lg:inline-block text-white lg:my-0 mr-10">
           <the-profile-icon 
           v-bind:initials="initials"
           v-bind:imgSrc="imgSrc"

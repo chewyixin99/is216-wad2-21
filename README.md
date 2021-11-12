@@ -4,7 +4,7 @@
 ## 🤓 IS216 - Group 38 - NEXT
 <!-- * Please update the above header. For example, it should look like this: **IS216 - Group 123 - Supreme Children**
 * Who are your group members? List everyone's full name, SMU email address, and other info you wish to put here. -->
-<!-- INSERT NEXT LOGO HERE -->
+![Next Logo](nextlogo3.png)
 * Chew Yi Xin (yixin.chew.2020@scis.smu.edu.sg)
 * Gan Jian Lin (jianlin.gan.2020@scis.smu.edu.sg)
 * Joel Lim (joel.lim.2020@scis.smu.edu.sg)
@@ -14,7 +14,8 @@
 ## 🤓 Project Overview ##
 * Describe your project. What is it called? What does it do? Why did you make this web application? Who will benefit from using your web application? Describe your users - who are they? (anyone? or specific target age group or gender? region? country?)
 * Feel free to use diagrams and images to describe. For example, if you have a system architecture diagram, please place it here and describe it. If you have a business process diagram, you can also place it here and describe it.
-
+* To be updated
+![Architecture Diagram](solution.png)
 
 ## 🤓 How to Install and Run Our Web Application (for Developers) ##
 * If a new developer were to have access to your IS216 project GitHub repo (and subsequently your source code files) and replicate your development environment on his development laptop computer, what are the steps he should take?
@@ -34,8 +35,20 @@
 * It would be wonderful if you could include **screenshot images** of web pages to demonsrate what the user/visitor can/should do.
 
 
-## 🤓 Other Things ##
-* FEEL FREE to **add more things** into this **README**
+## 🤓 Figma ##
+<!-- * FEEL FREE to **add more things** into this **README** -->
+* [Figma (Mobile)](https://www.figma.com/proto/O5EaYzT19cAZYyO9pd1L1d/NEXT?page-id=113%3A41&node-id=266%3A76&viewport=241%2C48%2C0.17&scaling=scale-down&starting-point-node-id=266%3A76&show-proto-sidebar=1)
+* [Figma (Web)](https://www.figma.com/proto/O5EaYzT19cAZYyO9pd1L1d/NEXT?page-id=113%3A41&node-id=339%3A1375&viewport=241%2C48%2C0.17&scaling=scale-down&starting-point-node-id=339%3A1375&show-proto-sidebar=1)
+* [Figma Overview](https://www.figma.com/file/O5EaYzT19cAZYyO9pd1L1d/NEXT?node-id=113%3A41)
+
+
+<!-- ## 🤓 Architecture Diagram ##
+* To be updated
+![Architecture Diagram](solution.png) -->
+
+
+## 🤓 User Accounts ##
+* Insert account
 
 
 ## 🤓 Useful Resources ##

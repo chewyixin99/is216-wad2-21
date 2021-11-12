@@ -1,18 +1,14 @@
 <template>
 
-
     <div class="container max-w-5xl mx-auto">
         <!-- TITLE -->
         <div class="text-center mx-6">
-             <!-- button to be removed -->
-            <!-- button above to be removed -->
+            {{ $store.state.selectedCourt }}
             <div class="primary-gold-title mt-3">
-                <!-- <h1>{{courtName.toUpperCase()}}</h1> -->
                 <h1> {{court.name.toUpperCase()}} </h1>
             </div>
     
             <div class="secondary-white-title italic font-bold">
-                <!-- <h1>{{courtAddress.toUpperCase()}}</h1> -->
                 <h1> {{court.vicinity.toUpperCase()}} </h1>
             </div>
         </div>
