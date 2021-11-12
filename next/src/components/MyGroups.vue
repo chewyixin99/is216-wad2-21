@@ -6,15 +6,13 @@
 
             <div class="col-span-5 md:col-span-1 text-center">
                 <div class="profile-image flex justify-center items-center">
-                    <!-- <div v-if="groupImg">
-                        <AvatarInputGroup :value="groupImg" />
+                    <div>
+                        <AvatarInputGroup :value="groupImg" :groupID="info"/>
                     </div>
-                    <div v-else>
-                        <AvatarInputGroup :value="groupImgDefault"/>
-                    </div> -->
+
                     
                     
-                    <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt="">
+                    <!-- <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt=""> -->
                 </div>
 
                 <div class="space-x-3 md:space-x-0">
@@ -82,7 +80,7 @@ import 'firebase/compat/firestore';
 import Members from "./Members.vue"
 import firebase from 'firebase/compat/app';
 import TheButton from "./TheButton.vue"
-// import AvatarInputGroup from "./AvatarInputGroup.vue"
+import AvatarInputGroup from "./AvatarInputGroup.vue"
 
 export default {
 
@@ -93,7 +91,7 @@ export default {
 
         Members,
         TheButton, 
-        // AvatarInputGroup
+        AvatarInputGroup
 
     },
 
@@ -147,15 +145,10 @@ export default {
             this.groupExp = docRef.data().groupExp
             this.memberID = docRef.data().memberID
             this.groupMsg = docRef.data().groupMsg
-            // this.groupImg = docRef.data().groupImg
-            this.groupImgDefault = docRef.data().groupImgDefault
+            this.groupImg = docRef.data().groupImg
+
 
         })
-        .then(()=>{        
-            console.log(this.groupImgDefault);
-            console.log(this.groupImg);
-        })
-
 
         },
 
