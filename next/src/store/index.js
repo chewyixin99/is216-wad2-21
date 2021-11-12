@@ -37,6 +37,7 @@ const store = new Vuex.Store({
         groupName: ``, // TBC
         groupEXP: ``, // TBC
         groupInfo: ``,
+        groupMsg: ``,
         currentMemberID: ``,
         currentGroupID: ``,
 
@@ -252,7 +253,6 @@ const store = new Vuex.Store({
 
         },
 
-        // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
         async updateUserSettings({state}){
             const dataBase = await db.collection('users').doc(state.profileID);
             await dataBase.update({
@@ -261,6 +261,15 @@ const store = new Vuex.Store({
                 favPlayer: state.profileFavPlayer,
                 favTeam: state.profileFavTeam,
                 experience: state.profileExperience,
+            })
+        },
+        
+        // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
+        async updateImg({state}){
+            const dataBase = await db.collection('users').doc(state.profileID);
+            await dataBase.update({
+                initialsURL: state.profileInitialsURL,
+                profileImg: state.profileImg,
             })
         },
         async getGroupID({state}){ 
@@ -292,8 +301,11 @@ const store = new Vuex.Store({
             
             await dataBase2.update({
 
-                groupID: compilation1,
+                groupID: compilation1
                 
+            })
+            .then(()=>{
+                console.log("GroupID successfully added to Users");
             })
 
             const dataBase3 = await db.collection('groups').doc(state.currentGroupID).get()
@@ -321,7 +333,10 @@ const store = new Vuex.Store({
 
                 memberID: compilation,
                 
-        })
+            })
+            .then(()=>{
+                console.log("Members list successfully updated in Groups");
+            })
             
         },
       
@@ -352,6 +367,9 @@ const store = new Vuex.Store({
                 groupID: compilation1,
                 
             })
+            .then(()=>{
+                console.log("GroupID successfully removed from Users");
+            })
 
             const dataBase3 = await db.collection('groups').doc(state.currentGroupID).get()
             
@@ -379,7 +397,10 @@ const store = new Vuex.Store({
 
                 memberID: compilation,
                 
-        })
+            })
+            .then(()=>{
+                console.log("GroupID successfully removed from Groups");
+            })
             
         },
         
@@ -388,8 +409,14 @@ const store = new Vuex.Store({
             const dataBase = await db.collection("groups").add({
                 groupName: state.newGroupName,
                 groupExp: state.newGroupExp,
-                memberID: [state.profileID]
-            });
+                memberID: [state.profileID],
+                groupImg: null,
+                groupImgDefault: "https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png",
+            })
+            .then(()=>{
+                state.profileGroupID = compilation
+                console.log("New group successfully created");
+            })
 
             state.newGroupID = dataBase.id
 
@@ -413,9 +440,11 @@ const store = new Vuex.Store({
                 groupID: compilation,
                 
             })
+            .then(()=>{
+                state.profileGroupID = compilation
+                console.log("New group successfully added to Users");
+            })
 
-            state.profileGroupID = compilation
-            console.log("addnewgroup is completed");
             
         },    
 

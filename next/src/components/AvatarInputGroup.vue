@@ -3,7 +3,7 @@
         <input type="file" accept="image/*" class="hidden" ref="file" @change="change"> 
         <div class="relative inline-block"> 
             <img v-if="src" :src="src" alt="Avatar" class="h-24 rounded-full object-cover">
-            <img v-else :src="defaultSrc" alt="Avatar" class="h-24 rounded-full object-cover">
+            {{this.src}}
             <div class="absolute top-0 h-full w-full  bg-opacity-25 flex items-center justify-center">
                 <button @click.prevent="browse()" class="rounded-full hover:bg-white hover:bg-opacity-25 p-2 focus:outline-none">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" 
@@ -25,7 +25,7 @@ import "firebase/compat/storage";
 import firebase from 'firebase/compat/app';
 
 export default {
-    name: 'AvatarInput',
+    name: 'AvatarInputGroup',
     props: ["value"],
     data(){
         return{
