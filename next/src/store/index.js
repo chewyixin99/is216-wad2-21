@@ -57,6 +57,7 @@ const store = new Vuex.Store({
 
         // == selectedCourt
         selectedCourt: `defaultValue`,
+        selectedCourtCurrentUsers: [],
 
         // == selectedProfle
         selectedProfile:`defaultValue`,
@@ -176,6 +177,10 @@ const store = new Vuex.Store({
             console.log(`From updateSelectedProfile mutation`)
             console.log(state.selectedProfile)
         },
+
+        updateSelectedCourtCurrentUsers(state, payload) {
+            state.selectedCourtCurrentUsers = payload
+        }
         
 
     },
@@ -257,15 +262,12 @@ const store = new Vuex.Store({
 
         async courtActiveUserCheckin({state}) {
             // Search for the courtID of the ACTIVE court of the current user
-            await db.collection('court').where('courtID', '==', state.profileActiveCourt.id)
-            .get().then(
-                (activeCourtDocSnapshot) =>{
-                    // Add current user into array if he isn't already inside
-                    activeCourtDocSnapshot.docs[0].ref.update({
-                        currentUser: firebase.firestore.FieldValue.arrayUnion(state.profileID)
-                    }) 
-                    console.log(`[courtActiveUserCheckin] User checked in to active court (${state.profileActiveCourt.id}) in firestore.`);
-
+            const activeUserInfo = db.collection('court').doc(state.profileActiveCourt.id).collection('currentUsers').doc(state.profileID)
+            await activeUserInfo.set({
+                profileID: state.profileID,
+                profileInitials: state.profileInitials,
+            }).then(() => {                    
+                console.log(`[courtActiveUserCheckin] User checked in to active court (${state.profileActiveCourt.id}) in firestore.`);
             }).catch((error) => {
                 console.log(`[courtActiveUserCheckin] Error getting active court (${state.profileActiveCourt.id}) from firestore. Error: ${error}`);
             })
@@ -552,6 +554,48 @@ const store = new Vuex.Store({
 
         },
 
+        async updateSelectedCourtCurrentUsers ({state, commit}) {
+            let payload = []
+            let currentTime = firebase.firestore.Timestamp.now()
+
+            // Get all currentUsers in court collection
+            const allCurrentUsersInfoDb = db.collection('court').doc(state.selectedCourt.id).collection('currentUsers')
+            
+            allCurrentUsersInfoDb.get()
+            .then((allCurrentUsersDocs) => {
+                // Look at each current user on the court
+                allCurrentUsersDocs.forEach((aCurrentUserInfoDoc) => {
+                    let aCurrentUserCheckinDb = db.collection('users').doc(aCurrentUserInfoDoc.data().profileID).collection('checkinHistory')
+                    
+                    // Check user's history to see if user is actually ACTIVE on court
+                    aCurrentUserCheckinDb.where('checkoutTime', '>', currentTime)
+                    .get()
+                    .then((validDocumentsSnapshot) => {validDocumentsSnapshot.forEach((validDoc) => {
+                        if(validDoc.data().checkinTime < currentTime) {
+                            // Add user info if check in valid to payload to commit to store to display on court
+                            payload.push(aCurrentUserInfoDoc.data())
+                        } else {
+                            // Delete user document if the user is no longer active at the court
+                            allCurrentUsersInfoDb.doc(aCurrentUserInfoDoc.id).delete().then(() => {
+                                console.log(`[updateSelectedCourtCurrentUsers] Deleted inactive user on selected court (${state.selectedCourt.id}) in firestore.`);
+                            }).catch((error) => {
+                                console.log(`[updateSelectedCourtCurrentUsers] Error deleting inactive user from selected court (${state.selectedCourt.id}) from firestore. Error: ${error}`);
+                            })
+                        }
+                    })
+                    })
+                })
+
+                // Commit payload to selectedCourtCurrentUsers state for client to view
+                commit("updateSelectedCourtCurrentUsers", payload)
+
+                console.log(`[updateSelectedCourtCurrentUsers] Retrieved current users on selected court (${state.selectedCourt.id}) in firestore.`);
+
+            }).catch((error) => {
+                console.log(`[updateSelectedCourtCurrentUsers] Error getting current users from selected court (${state.selectedCourt.id}) from firestore. Error: ${error}`);
+            })        
+        },
+
 
         async getCourt({commit}, payload) {
             // state.selectedCourt
@@ -566,19 +610,21 @@ const store = new Vuex.Store({
                 if (courtSnapshot.exists) {
                     commit("updateSelectedCourt", payload)
                 } else {
-                    courtCollection.add({
+                    courtCollection.doc(payload.id).set({
                         courtID: payload.id,
                         courtLocation: new firebase.firestore.GeoPoint(lat, lng),
                         courtName: payload.name,
                         courtVicinity: payload.vicinity,
-                        currentUsers: []
+                    }).then(() => {                    
+                        console.log(`[getCourt] Added new court ${payload.name} to firestore`);
+                    }).catch((error) => {
+                        console.log("[getCourt] Error adding to firestore: ", error);
                     })
                     commit("updateSelectedCourt", payload)
-                    console.log(`[court collection] Added new court ${payload.name} to firestore`);
                     console.log('=== end of getCourt action dispatch ===')
                 }
             }).catch((error) => {
-                console.log("[court collection] Error adding to firestore: ", error);
+                console.log("[getCourt] Error pulling document from firestore: ", error);
                 console.log('=== end of getCourt action dispatch ===')
             })
             
