@@ -2,7 +2,6 @@
 
     <li>
         <div class="flex flex-wrap" :onClick="toPublicUser">
-            {{this.member1}}
             <div v-if="profileImg">
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileImg">
             </div>
@@ -33,6 +32,7 @@ export default ({
             experience: null,
             profileImg: null,
             profileInitialsURL: null,
+            memberObj: null,
         }
 
     },
@@ -40,7 +40,7 @@ export default ({
     methods:{
         toPublicUser(){
           this.$router.replace({name: "PublicUser"});
-        //   this.$store.commit('updateSelectedProfile', this.member1)
+          this.$store.commit('updateSelectedProfile', this.memberObj)
         },
     },
 
@@ -56,6 +56,15 @@ export default ({
             this.experience = docRef.data().experience
             this.profileImg = docRef.data().profileImg
             this.profileInitialsURL = docRef.data().initialsURL
+            this.memberObj = {
+                firstName: docRef.data().firstName,
+                lastName: docRef.data().lastName,
+                experience: docRef.data().experience,
+                email: docRef.data().email,
+                favPlayer: docRef.data().favPlayer,
+                favTeam: docRef.data().favTeam,
+                profileImg: docRef.data().profileImg
+            }
         })
         .then(()=>{
             console.log(this.profileImg);
