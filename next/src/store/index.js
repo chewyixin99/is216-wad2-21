@@ -61,8 +61,9 @@ const store = new Vuex.Store({
         // == selectedProfle
         selectedProfile:`defaultValue`,
 
-
+        // Code below are added after changing of CICO direction
         checkedInCourtID: "",
+
 
 
 
@@ -227,7 +228,24 @@ const store = new Vuex.Store({
             
         },
 
-        // *****************************************************************
+        async addTeam({state}){ 
+
+            const numTeams = await db.collection('court').doc(state.selectedCourt.id).collection('courtTeams')
+            .get().then(snap=>{ 
+                return snap.size})
+
+            
+            await db.collection('court').doc(state.selectedCourt.id).collection('courtTeams')
+            .add({
+
+                teamName: "Team " + (numTeams + 1) ,
+                teamMembers: [state.profileID]
+
+            })
+                
+                            
+        },
+
         async addCurrentPlayer({state}){ 
 
             const courtDb = await db.collection('court').doc(state.checkedInCourtID)

@@ -2,14 +2,15 @@
 
     <li>
         <a href="/publicuser"><div class="flex flex-wrap" :onClick="toPublicUser">
-            <div v-if="profileImg">
+            <div v-if="profileImg" class="mb-3">
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileImg">
             </div>
-            <div v-else> 
+            <div v-else class="mb-3"> 
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileInitialsURL">
             </div>
             <span class="secondary-white-title ml-3 my-auto hover:text-yellow-500 cursor-pointer">{{firstName}} {{lastName}}</span>
-        </div></a>
+        </div ></a>
+
         <!-- <hr> -->
     </li>
 
@@ -58,9 +59,9 @@ export default ({
             this.profileImg = docRef.data().profileImg
             this.profileInitialsURL = docRef.data().initialsURL
             // console.log(docRef.data().firstName)
-            console.log(docRef.data().email)
+            // console.log(docRef.data().email)
             // console.log(docRef.data().groupID)
-            console.log(this.member1)
+            // console.log(this.member1)
             this.memberObj = {
                 firstName: docRef.data().firstName,
                 lastName: docRef.data().lastName,

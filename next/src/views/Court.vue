@@ -35,7 +35,7 @@
                     <div class="secondary-gold-title">
                         <h1>CURRENT TEAMS</h1>
                     </div>
-                    <court-team/>
+                    <court-team :courtID="court.id"/>
                 </div>
 
 
@@ -55,21 +55,21 @@ export default {
   
   components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
 
-  created() {
-  },
-
   data() {
     return {
-        court: this.$store.state.selectedCourt // this has id, loc, name, vicinity
+        court: this.$store.state.selectedCourt 
     };
   },
 
   methods: {
+
       logStatus(status){
           console.log(status);
       },
 
   },
+
+
 };
 </script>
 
