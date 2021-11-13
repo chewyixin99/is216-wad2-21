@@ -27,7 +27,7 @@
                     <div class="secondary-gold-title">
                         <h1>CURRENT PLAYERS</h1>
                     </div>
-                    <court-current-players :courtID="court.id"/>
+                    <court-current-players :courtID="court.id" :key="$store.state.reloadKeys"/>
                 </div>
         
                 <!-- Current Teams Section -->

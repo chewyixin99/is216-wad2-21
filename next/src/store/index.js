@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 import db from "../firebase/firebaseInit";
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
+import moment from "moment"
 
 
 const store = new Vuex.Store({
@@ -66,14 +67,16 @@ const store = new Vuex.Store({
         checkedInCourtID: "",
         checkInConflict: false,
 
-
+        reloadKeys: 0,
 
 
 
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
-
+        forceRerender(state) {
+            state.reloadKeys += 1
+        },
 
         inputCurrentMember(state, payload){
             state.currentMemberID = payload;
@@ -240,8 +243,8 @@ const store = new Vuex.Store({
             
         },
 
-        // *****************************************************************
-        async addCurrentPlayer({state}){ 
+        // Check in
+        async addCurrentPlayer({state, dispatch}){ 
 
             const courtDb = await db.collection('court').doc(state.checkedInCourtID)
             await courtDb.update({
@@ -258,6 +261,7 @@ const store = new Vuex.Store({
                 checkedInCourt: state.checkedInCourtID,                
             })
             .then(()=>{
+                dispatch('addCheckInHistory')
                 console.log(`User successfully checked in to court (${state.checkedInCourtID})`);
             }).catch((error) => {
                 console.log(`Failed to check in user to court (${state.checkedInCourtID}). Error: `, error);
@@ -265,7 +269,8 @@ const store = new Vuex.Store({
             
         },
 
-        async removeCurrentPlayer({state, commit}){
+        // Check out
+        async removeCurrentPlayer({state, commit, dispatch}){
             const courtDb = await db.collection('court').doc(state.checkedInCourtID);
             await courtDb.update({
                 currentPlayers: firebase.firestore.FieldValue.arrayRemove(state.profileID)
@@ -281,6 +286,7 @@ const store = new Vuex.Store({
                 checkedInCourt: "",
             })
             .then(()=>{
+                dispatch('addCheckOutHistory')
                 commit("updateCheckedInCourtId", "")
                 console.log(`User successfully checked out from court (${state.checkedInCourtID})`);
             }).catch((error) => {
@@ -288,6 +294,45 @@ const store = new Vuex.Store({
             })
         },
 
+        // Check in history
+        // Whenever the check in, input a check in history to the user's history
+        // include, checkintime = current time, check out time default 2 hrs
+        async addCheckInHistory({state}) {
+            let checkInTime = moment().toDate()
+            let checkOutTime = moment().add(2, 'hours').toDate()
+
+            const checkInDb = await db.collection('users').doc(state.profileID).collection('checkInHistory')
+            await checkInDb.add({
+                checkInTime: checkInTime,
+                checkOutTime: checkOutTime,
+                courtInfo: state.selectedCourt,
+            }).then(() => {
+                console.log(`Successfully added to user check in history.`);
+            }).catch((error) => {
+                console.log(`Failed to add check to user check in history. Error: ${error}`);
+            })
+        },
+
+        // Check out history
+        // when the user check out, go retrieve the latest check in from check in history and update checkout to current time
+        async addCheckOutHistory({state}) {
+            let checkOutTime = moment().toDate()
+
+            const checkInDb = await db.collection('users').doc(state.profileID).collection('checkInHistory')
+            // Retrieve the latest check in, should only have 1
+            await checkInDb.orderBy("checkInTime", "desc").limit(1)
+            .get()
+            .then((latestCheckIn) => {
+                latestCheckIn.docs[0].ref.update({
+                    checkOutTime: checkOutTime
+                }).then(() => {
+                    console.log(`Successfully checked out of user check in history.`);
+                }).catch((error) => {
+                    console.log(`Failed to check out of user check in history. Error: ${error}`);
+                })
+            })
+
+        },
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
 
