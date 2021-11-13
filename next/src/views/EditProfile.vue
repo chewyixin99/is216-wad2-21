@@ -27,7 +27,7 @@
 
                     <!-- EMAIL -->
                     <div class="mb-4">
-                        <label class="block text-white text-sm font-bold" for="email">
+                        <label class="block text-white text-sm font-bold mb-2" for="email">
                             EMAIL
                         </label>
                         <input disabled class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="text" name="email" v-model="email">
@@ -53,18 +53,21 @@
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer">
                     </div> -->
-                    <div class="block text-white text-sm font-bold mb-2" for="favPlayer">
-                        FAVOURITE PLAYER
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">  
-                        <div>     
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <label class="block text-white text-sm font-bold mb-2" for="favPlayer">
+                                FAVOURITE PLAYER
+                            </label> 
                             <FavPlayer/>
                         </div>
                         <div>
+                            <label class="block text-white text-sm font-bold mb-2" for="favTeam">
+                                FAVOURITE TEAM
+                            </label>
                             <FavTeam/>
                         </div>
                     </div>
+
                     <!-- FAVOURITE TEAM -->
                     <!-- <div class="mb-6">
                         <label class="block text-white text-sm font-bold mb-2" for="favTeam">
