@@ -53,7 +53,7 @@ const store = new Vuex.Store({
 
 
         // default profile avatar, yixin, to be removed after JL implemented default avatar
-        // defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
+        defaultProfileImg: `https://miro.medium.com/max/720/1*W35QUSvGpcLuxPo3SRTH4w.png`,
 
 
         // == selectedCourt
@@ -687,6 +687,8 @@ const store = new Vuex.Store({
                 groupDetails.push({
                     groupName: data.get('groupName'),
                     groupExp: data.get('groupExp'),
+                    groupImg: data.get('groupImg'),
+                    groupImgDefault: data.get('groupImgDefault'),
                     memberID: data.get('memberID'),
                     memberObj: [],
                 })
@@ -706,6 +708,14 @@ const store = new Vuex.Store({
                             initials: `${r.get('firstName').charAt(0)}${r.get('lastName').charAt(0)}`,
                             username: `${r.get('firstName')} ${r.get('lastName')}`,
                             profileImg: r.get('profileImg'),
+                            firstName: r.get('firstName'),
+                            lastName: r.get('lastName'),
+                            experience: r.get('experience'),
+                            email: r.get('email'),
+                            favPlayer: r.get('favPlayer'),
+                            favTeam: r.get('favTeam'),
+                            groupID: r.get('groupID'),
+                            docID: r.id,
                         }
                         if (groupDetails[i].memberObj.indexOf(singleMember)) groupDetails[i].memberObj.push(singleMember)
                     }).catch(e => console.log(e))

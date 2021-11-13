@@ -22,6 +22,7 @@
 <script>
 
 import Autocomplete from "./AutoComplete.vue"
+import axios from "axios"
 
 export default ({
 
@@ -57,6 +58,21 @@ export default ({
         }
     
     },
+
+    created(){
+        
+      let url = "https://www.balldontlie.io/api/v1/players";
+      axios
+      .get(url)
+      .then((response)=>{
+
+        console.log(response.data.data.length);
+        console.log("sdddddddd");
+
+
+      })
+    }
+
 
 })
 </script>

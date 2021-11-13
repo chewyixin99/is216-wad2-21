@@ -85,7 +85,7 @@ export default {
 
         leaveTeam(){
 
-            if (this.teamMembers.length > 2){
+            if (this.teamMembers.length > 1){
 
                 firebase
                 .firestore()
