@@ -1,11 +1,55 @@
-export const ActivityData = {
+import db from "../firebase/firebaseInit";
+import store from "../store/index"
+import moment from "moment"
+
+
+const ActivityData = {
+  // ====================== DATA RETRIEVAL ======================
+    dbData: {
+    },
+
+    async getCheckInHistory() {
+      let retrieveDate = moment().subtract(7, 'd').toDate()
+      const dataBase = await db.collection('users').doc(store.state.profileID).collection("checkInHistory")
+      await dataBase.where("checkInTime", ">=", retrieveDate)
+      .get()
+      .then((relevantCheckIns) => {
+        relevantCheckIns.forEach((doc) => {
+          let checkInTime = moment(doc.data().checkInTime.toDate())
+          let checkOutTime = moment(doc.data().checkOutTime.toDate())
+          let checkInDuration = moment.duration(checkOutTime.diff(checkInTime, 'h', true))
+          let dayOfWeek = Number(checkInTime.isoWeekday())
+        
+          if (dayOfWeek in this.dbData) {
+            this.dbData[dayOfWeek] = this.dbData[dayOfWeek].add(checkInDuration) 
+          } else {
+            this.dbData[dayOfWeek] = checkInDuration
+          }
+        })
+        console.log("Retrieved chart.js data from Firestore.");
+      })
+      
+      .then(() => {
+        for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
+          this.data.datasets[0].data[dayOfWeek] += this.dbData[dayOfWeek + 1]
+        }
+        console.log("Chart.js dataset updated.");
+      })
+
+      .catch((error) =>{
+        console.log("Unable to retrieve data from firestore for activity chart. Error: ", error);
+      })
+    },
+
+    // ====================== Chart.js ======================
     type: "bar",
+
     data: {
       labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
       datasets: [
         {
           label: "Activity Level (Hrs)",
-          data: [3, 0, 1, 2, 0, 0, 2],
+          data: [0, 0, 0, 0, 0, 0, 0],
           backgroundColor: "rgba(54,73,93,.5)",
           borderColor: "#36495d",
           borderWidth: 3,
@@ -53,7 +97,9 @@ export const ActivityData = {
       legend: {
         labels: {fontColor: "#fff"}
       },
-    }
+    },
+
+
 };
   
 export default ActivityData;

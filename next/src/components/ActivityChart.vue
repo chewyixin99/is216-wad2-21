@@ -16,8 +16,12 @@ export default {
     }
   },
   mounted() {
-    const ctx = document.getElementById('activity-chart');
-    new Chart(ctx, this.ActivityData);
+    ActivityData.getCheckInHistory()
+    .then(() => {
+      const ctx = document.getElementById('activity-chart');
+      new Chart(ctx, this.ActivityData);
+    })
+
   }
 }
 </script>
