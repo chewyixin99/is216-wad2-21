@@ -75,7 +75,10 @@ export default {
           this.addMemberID = prompt("Input UID of member to add")
           this.$store.commit("inputCurrentMember", this.addMemberID)
           this.$store.commit("inputCurrentGroup", groupID)
-          this.$store.dispatch("addNewMember");
+          this.$store.dispatch("addNewMember")
+          .then(()=>{
+            location.reload()
+          })
         },
         removeMembers(obj){
         

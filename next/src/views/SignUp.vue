@@ -35,8 +35,10 @@
       <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" name="password" v-model="password" placeholder="Password">
     </div>
 
+    <span class="text-white">By clicking sign up, I allow personal data to be retrieved by Next.</span>
+
     <!-- BUTTON -->
-    <div class="mb-4">
+    <div class="mb-4 mt-4">
       <div class="error text-center text-red-500 mb-2" v-show="error">
         {{this.errorMsg}}
       </div>
@@ -103,6 +105,10 @@ methods:{
           groupID: this.groupID,
           experience: ``,
           favPlayer: ``,
+          favPlayer1: ``,
+          favPlayer2: ``,
+          favTeam1: ``,
+          favTeam2: ``,
           favTeam: ``,
           initialsURL: null,
           profileImg: null,

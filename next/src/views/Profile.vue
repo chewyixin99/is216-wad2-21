@@ -58,6 +58,14 @@
               </div>
             </div>
 
+            <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
+              <div style="color: #FEB842" class="secondary-white-title">USER ID: </div>
+              <div>
+                <input size="25" type='text' class="secondary-white-title bg-gray-800" v-model="profileID">
+                <button @click="copyText"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" 
+                stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></button>
+              </div>
+            </div>
             
           </div>
 
@@ -80,11 +88,9 @@
 import { getAuth, signOut } from 'firebase/auth'
 import { useAuthState } from '../firebase/firebase'
 import { useRouter } from 'vue-router'
-// import firebase from 'firebase/compat/app';
-import db from "../firebase/firebaseInit";
 import TheButton from "../components/TheButton.vue"
 import ActivityChart from "../components/ActivityChart.vue"
-// import AvatarInput from '../components/AvatarInput.vue';
+
 
 export default {
   name: 'Profile',
@@ -98,6 +104,7 @@ export default {
       return{
 
           groupID: [],
+          profileID: this.$store.state.profileID,
 
       }
 
@@ -133,24 +140,11 @@ export default {
           this.$router.replace({name: "CreateGroup"});
         },
 
-        deleteGroup(id){
-            
-          db.collection("users").doc(id).get().then((docRef1) => {
-              const groupIDObj = docRef1.data().groupID
-              const compilation = [];
-              for (var i = 0; i < groupIDObj.length; i++){
-                  compilation.push(groupIDObj[i])
-              }
-              compilation.push(id)
-              db.collection("users").doc(id).update({
-                  groupID: compilation
-              });
-          });
-           
-
-        },
-
+        copyText(){
+          navigator.clipboard.writeText(this.profileID)
+        }
       },
+
       
       // GET DOCUMENT INFORMATION
       computed: {
