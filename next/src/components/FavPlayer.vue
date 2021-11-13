@@ -1,20 +1,10 @@
 <template>
     <div class="mb-4">
-        <div class="block text-white text-sm font-bold mb-2" for="favPlayer">
-            FAVOURITE PLAYERS
+ 
+        <div>
+            <Autocomplete @favInput="updateFavPlayer($event)" :inputs="players" :placeholder="playerPH" :fav="favPlayer"/>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">        
-
-            <div>
-                <Autocomplete @favInput="updateFavPlayer1($event)" :inputs="players" :placeholder="playerPH1" :fav="favPlayer1"/>
-            </div>
-
-            <div>
-                <Autocomplete @favInput="updateFavPlayer2($event)" :inputs="players" :placeholder="playerPH2" :fav="favPlayer2"/>
-            </div>
-
-        </div>
     </div>
 
 </template>
@@ -27,11 +17,11 @@ export default ({
 
     name: "FavPlayer",
     components: {Autocomplete},
-    props: [],
 
     data(){
 
         return{
+
             players: [],
             rawData: [
   {
@@ -3305,10 +3295,8 @@ export default ({
     "teamId": 1610612746
   }
             ],
-            playerPH1: "First Favourite Player",
-            playerPH2: "Second Favourite Player",
-            favPlayer1: this.$store.state.profileFavPlayer1,
-            favPlayer2: this.$store.state.profileFavPlayer2,
+            playerPH: "Who's your basketball idol?",
+            favPlayer: this.$store.state.profileFavPlayer,
 
         }
 
@@ -3316,22 +3304,11 @@ export default ({
 
     methods: {
 
-        updateFavPlayer1(input){
+        updateFavPlayer(input){
 
-            this.$store.commit("changeFavPlayer1", input)
-            .then(()=>{
-                console.log("fav1 committed for store");
-            })
+            this.$store.commit("changeFavPlayer", input)
+
         },
-
-        updateFavPlayer2(input){
-
-
-            this.$store.commit("changeFavPlayer2", input)
-            .then(()=>{
-                console.log("fav2 committed for store");
-            })
-        }
     
     },
 

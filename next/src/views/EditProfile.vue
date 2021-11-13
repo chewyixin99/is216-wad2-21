@@ -53,8 +53,18 @@
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer">
                     </div> -->
-                    <FavPlayer/>
+                    <div class="block text-white text-sm font-bold mb-2" for="favPlayer">
+                        FAVOURITE PLAYER
+                    </div>
 
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">  
+                        <div>     
+                            <FavPlayer/>
+                        </div>
+                        <div>
+                            <FavTeam/>
+                        </div>
+                    </div>
                     <!-- FAVOURITE TEAM -->
                     <!-- <div class="mb-6">
                         <label class="block text-white text-sm font-bold mb-2" for="favTeam">
@@ -62,7 +72,7 @@
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam">
                     </div> -->
-                    <FavTeam/>
+
 
                     <!-- BUTTONS -->
                     <div class="mt-3 text-center space-x-4">
@@ -110,10 +120,6 @@ export default {
             firstName: this.$store.state.profileFirstName,
             lastName: this.$store.state.profileLastName,
             experience: this.$store.state.profileExperience,
-            favPlayer1: this.$store.state.profileFavPlayer1,
-            favPlayer2: this.$store.state.profileFavPlayer2,
-            favTeam1: this.$store.state.profileFavTeam1,
-            favTeam2: this.$store.state.profileFavTeam2,
             email: this.$store.state.profileEmail,
         }
     },
@@ -125,8 +131,6 @@ export default {
             this.$store.state.profileFirstName = this.firstName
             this.$store.state.profileLastName = this.lastName
             this.$store.state.profileExperience = this.experience
-            // this.$store.state.profileFavPlayer = this.favPlayer
-            this.$store.state.profileFavTeam = this.favTeam
             this.$store.dispatch("updateUserSettings");
 
         },

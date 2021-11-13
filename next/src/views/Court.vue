@@ -32,7 +32,7 @@
         
                 <!-- Current Teams Section -->
                 <div>
-                    <div class="secondary-gold-title">
+                    <div class="secondary-gold-title mb-3">
                         <h1>CURRENT TEAMS</h1>
                     </div>
                     <court-team :courtID="court.id"/>

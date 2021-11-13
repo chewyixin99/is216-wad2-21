@@ -49,22 +49,26 @@
                         </div>
 
                         <!-- FAVOURITE PLAYER -->
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <label class="block text-white text-sm font-bold mb-2" for="favPlayer">
                                 FAVOURITE PLAYERS
                             </label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer" placeholder="Favourite Players">
 
-                        </div>
+                        </div> -->
+                        <fav-player/>
 
                         <!-- FAVOURITE TEAM -->
-                        <div class="mb-4">
+                        <fav-team/>
+                        <!--
+                            <div class="mb-4">
                             <label class="block text-white text-sm font-bold mb-2" for="favTeam">
                                 FAVOURITE TEAMS
                             </label>
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam" placeholder="Favourite Teams">
 
-                        </div>
+                        </div> 
+                        -->
 
                 </div>
 
@@ -88,6 +92,9 @@
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
 import AvatarInput from '../components/AvatarInput.vue';
+import FavPlayer from '../components/FavPlayer.vue';
+import FavTeam from '../components/FavTeam.vue';
+
 
 export default {
 
@@ -95,11 +102,12 @@ export default {
 
     components: {
         AvatarInput,
+        FavPlayer,
+        FavTeam,
     },
 
     data(){
         return{
-            // initialsURL: null,
         }
     },
 
@@ -155,27 +163,27 @@ export default {
             },
 
         },
-        favPlayer: {
+        // favPlayer: {
 
-          get() {
-            return this.$store.state.profileFavPlayer
-            },
+        //   get() {
+        //     return this.$store.state.profileFavPlayer
+        //     },
 
-          set(payload) {
-            this.$store.commit("changeFavPlayer", payload);
-            },
-        },
-        favTeam: {
+        //   set(payload) {
+        //     this.$store.commit("changeFavPlayer", payload);
+        //     },
+        // },
+        // favTeam: {
 
-          get() {
-            return this.$store.state.profileFavTeam
-            },
+        //   get() {
+        //     return this.$store.state.profileFavTeam
+        //     },
 
-          set(payload) {
-            this.$store.commit("changeFavTeam", payload);
-            },
+        //   set(payload) {
+        //     this.$store.commit("changeFavTeam", payload);
+        //     },
 
-        },  
+        // },  
 
         email: {
 

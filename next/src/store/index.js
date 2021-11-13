@@ -68,10 +68,10 @@ const getDefaultState = () => {
 
         reloadKeys: 0,
 
-        profileFavPlayer1: "",
-        profileFavPlayer2: "",
-        profileFavTeam1: "",
-        profileFavTeam2: "",
+        // profileFavPlayer1: "",
+        // profileFavPlayer2: "",
+        // profileFavTeam1: "",
+        // profileFavTeam2: "",
 
 
 
@@ -129,11 +129,11 @@ const store = new Vuex.Store({
             state.profileLastName = doc.data().lastName;
             state.profileExperience = doc.data().experience;
             state.profileFavPlayer = doc.data().favPlayer;
-            state.profileFavPlayer1 = doc.data().favPlayer1;
-            state.profileFavPlayer2 = doc.data().favPlayer2;
+            // state.profileFavPlayer1 = doc.data().favPlayer1;
+            // state.profileFavPlayer2 = doc.data().favPlayer2;
             state.profileFavTeam = doc.data().favTeam;
-            state.profileFavTeam1 = doc.data().favTeam1;
-            state.profileFavTeam2 = doc.data().favTeam2;
+            // state.profileFavTeam1 = doc.data().favTeam1;
+            // state.profileFavTeam2 = doc.data().favTeam2;
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
             state.profileImg = doc.data().profileImg;
@@ -161,24 +161,29 @@ const store = new Vuex.Store({
             state.profileLastName = payload;
         },
 
-        changeFavPlayer1(state, payload) {
-            state.profileFavPlayer1 = payload;
-        },
-        changeFavPlayer2(state, payload) {
-            state.profileFavPlayer2 = payload;
-        },
+        // changeFavPlayer1(state, payload) {
+        //     state.profileFavPlayer1 = payload;
+        // },
+        // changeFavPlayer2(state, payload) {
+        //     state.profileFavPlayer2 = payload;
+        // },
 
         changeFavPlayer(state, payload) {
             state.profileFavPlayer = payload;
         },
 
+        changeFavTeam(state, payload) {
+            state.profileFavTeam = payload;
+        },
 
-        changeFavTeam1(state, payload) {
-            state.profileFavTeam1 = payload;
-        },
-        changeFavTeam2(state, payload) {
-            state.profileFavTeam2 = payload;
-        },
+
+
+        // changeFavTeam1(state, payload) {
+        //     state.profileFavTeam1 = payload;
+        // },
+        // changeFavTeam2(state, payload) {
+        //     state.profileFavTeam2 = payload;
+        // },
 
 
         changeExperience(state, payload) {
@@ -479,10 +484,8 @@ const store = new Vuex.Store({
             await dataBase.update({
                 firstName: state.profileFirstName,
                 lastName: state.profileLastName,
-                favPlayer1: state.profileFavPlayer1,
-                favPlayer2: state.profileFavPlayer2,
-                favTeam1: state.profileFavTeam1,
-                favTeam2: state.profileFavTeam2,
+                favPlayer: state.profileFavPlayer,
+                favTeam: state.profileFavTeam,
                 experience: state.profileExperience,
             })
             .then(()=>{

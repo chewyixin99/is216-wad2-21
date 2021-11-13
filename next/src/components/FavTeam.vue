@@ -1,25 +1,16 @@
 <template>
     <div class="mb-4">
-        <div class="block text-white text-sm font-bold mb-2" for="favPlayer">
-            FAVOURITE TEAM
+
+        <div>
+            <Autocomplete @favInput="updateFavTeam($event)" :inputs="teams" :placeholder="teamPH" :fav="favTeam"/>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">        
-
-            <div>
-                <Autocomplete @favInput="updateFavTeam1($event)" :inputs="teams" :placeholder="teamPH1" :fav="favTeam1"/>
-            </div>
-
-            <div>
-                <Autocomplete @favInput="updateFavTeam2($event)" :inputs="teams" :placeholder="teamPH2" :fav="favTeam2"/>
-            </div>
-
-        </div>
     </div>
 
 </template>
 
 <script>
+
 import axios from "axios"
 import Autocomplete from "./AutoComplete.vue"
 
@@ -32,32 +23,19 @@ export default ({
 
         return{
             teams: [],
-            teamPH1: "First Favourite Team",
-            teamPH2: "Second Favourite Team",
-            favTeam1: this.$store.state.profileFavTeam1,
-            favTeam2: this.$store.state.profileFavTeam2,
+            teamPH: "What's your dream team?",
+            favTeam: this.$store.state.profileFavTeam,
         }
 
     },
 
     methods: {
 
-        updateFavTeam1(input){
+        updateFavTeam(input){
 
-            this.$store.commit("changeFavTeam1", input)
-            .then(()=>{
-                console.log("fav1 committed for store");
-            })
+            this.$store.commit("changeFavTeam", input)
+            
         },
-
-        updateFavTeam2(input){
-
-
-            this.$store.commit("changeFavTeam2", input)
-            .then(()=>{
-                console.log("fav2 committed for store");
-            })
-        }
     
     },
 
