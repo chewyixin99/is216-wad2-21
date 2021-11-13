@@ -36,13 +36,19 @@
                     </div>
                     <!-- V-FOR GROUP MEMBERS -->
                     <div class="grid grid-cols-5 md:grid-cols-10 gap-4 mt-3 justify-items-center">
-                            <the-profile-icon 
-                            :onClick="toPublicUser" 
-                            v-for="(a_player, index) in g.memberObj" 
-                            :initials="a_player.initials" 
-                            :imgSrc="a_player.profileImg"
-                            :key="index"
-                            class="font-bold" />
+                        <!-- <span v-for="(a_player, index) in g.memberObj" :key="index" > -->
+                            <ol class="grid md:grid-cols-3 gap-3" v-for="a_player in g.memberObj" :key="a_player">
+                                <Members :member1 = 'a_player.docID' />
+                            </ol>
+                        <!-- </span> -->
+
+                        <!-- Below to be removed after Joel style -->
+                            <!-- <span>
+                                <the-profile-icon 
+                                :initials="a_player.initials" 
+                                :imgSrc="a_player.profileImg"
+                                class="font-bold" />
+                            </span> -->
                     </div>
                 </div>
 
@@ -52,15 +58,16 @@
 </template>
 
 <script>
-import TheProfileIcon from "./TheProfileIcon.vue"
+// import TheProfileIcon from "./TheProfileIcon.vue"
 // import TheButton from "./TheButton.vue"
 // import firebase from 'firebase/compat/app';
-
+import Members from './Members.vue'
 export default {
     name: "Group",
     components: {
-        TheProfileIcon,
+        // TheProfileIcon,
         // TheButton,
+        Members,
     },
     props: [], // Props should take in array of current players later on
 
@@ -94,8 +101,11 @@ export default {
         leaveGroup(){
             alert ("Are you sure you want to leave this group?")
         },
-        toPublicUser(){
+        toPublicUser(memberObj){
           this.$router.replace({name: "PublicUser"});
+          this.$store.commit('setPublicUserUpdated', false)
+          this.$store.commit('updateSelectedProfile', memberObj)
+          this.$store.dispatch('populatePublicUserGroupDetails', memberObj.groupID)
         },
     },
 
