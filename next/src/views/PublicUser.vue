@@ -39,7 +39,7 @@
       </div>
 
       <div class="bg-gray-800 rounded mx-6 p-6 text-center">
-        <!-- <activity-chart></activity-chart> -->
+        <activity-chart></activity-chart>
       </div>
 
 
@@ -65,13 +65,13 @@
 // import db from "../firebase/firebaseInit";
 // import firebase from 'firebase/compat/app';
 import Group from "../components/Group.vue"
-// import ActivityChart from '../components/ActivityChart.vue'
+import ActivityChart from '../components/ActivityChart.vue'
 
 export default {
   name: 'PublicUser',
   components: {
       Group,
-      // ActivityChart,
+      ActivityChart,
   },
       data(){
         return{

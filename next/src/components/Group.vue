@@ -7,7 +7,7 @@
                     <div class="profile-image flex justify-center items-center">
                         <!-- <img src="https://t3.ftcdn.net/jpg/04/55/75/46/240_F_455754611_8eowWGUS88rIH74lyLaEgAHim7XPc2Os.jpg" alt=""> -->
                         <img v-if="g.groupImg" :src="g.groupImg" alt="" class="h-24 rounded-full object-cover">
-                        <img v-else :src="g.groupImgDefault" alt="" class="h-24 rounded-full object-cover">
+                        <img v-else :src="$store.state.defaultProfileImg" alt="" class="h-24 rounded-full object-cover">
                     </div>
                     <!-- DELETE BUTTON -->
                     <!-- <div class="sm:space-x-4 md:space-x-0"> -->
