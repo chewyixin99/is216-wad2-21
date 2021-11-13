@@ -89,9 +89,7 @@ const store = new Vuex.Store({
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
 
         resetState(state) {
-            console.log(state)
-            state = getDefaultState()
-            console.log(state)
+            Object.assign(state, getDefaultState())
         },
 
         forceRerender(state) {

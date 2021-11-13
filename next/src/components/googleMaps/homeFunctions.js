@@ -13,9 +13,7 @@ export default {
   name: 'app',
   data() {
     return {
-      // nearbyCourts: [],
-      // currentBookmarks: [],
-      // recentlyPlayed: [],
+      defaultPos: ``,
       searchInput: ``,
       map: ``,
     }
@@ -25,6 +23,8 @@ export default {
     console.log(`=== created ===`)
     this.$store.dispatch('getBookmarks')
     this.$store.dispatch('getRecentlyPlayed')
+    const { coords } = useGeolocation()
+    this.defaultPos = coords.value
   },
 
   computed: {
