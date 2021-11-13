@@ -132,9 +132,15 @@ export default {
 
         profilePicture: {
           get() {
-            return this.$store.state.selectedProfile.profileImg == ""
-              ? this.$store.state.defaultProfileImg
-              : this.$store.state.selectedProfile.profileImg
+            const img = this.$store.state.selectedProfile.profileImg
+            if (
+              this.$store.state.selectedProfile.profileImg == "" ||
+              (img) == null ||
+              (img) == 'undefined'
+            ) {
+              return this.$store.state.defaultProfileImg
+            }
+            return this.$store.state.selectedProfile.profileImg
           }
         }
 
