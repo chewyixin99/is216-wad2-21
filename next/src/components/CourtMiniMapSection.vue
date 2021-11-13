@@ -3,8 +3,7 @@
         <!-- Minimap -->
         <div>
             <court-mini-map 
-            v-bind:courtObj="this.$store.state.selectedCourt"
-            />
+            v-bind:courtObj="this.$store.state.selectedCourt" />
         </div>
 
         <!-- Check In -->

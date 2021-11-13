@@ -17,7 +17,7 @@
             <!-- [Non-Mobile] Left Section -->
             <!-- Maps and Check In Options -->
             <div class="col-span-1 mx-6">
-                <court-mini-map-section :courtID="court.id"/>/>  <!-- ************************************************************ -->
+                <court-mini-map-section :courtID="court.id"/>  <!-- ************************************************************ -->
             </div>
     
             <!-- [Non-Mobile] Right Section -->
