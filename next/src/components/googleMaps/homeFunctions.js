@@ -35,6 +35,7 @@ export default {
       return this.$store.state.profileBookmarks.length > 0
     },
     getRecentlyPlayed() {
+      console.log(`getRecentlyPlayed from home below ====`)
       console.log(this.$store.state.recentlyPlayed)
       return this.$store.state.recentlyPlayed
     },

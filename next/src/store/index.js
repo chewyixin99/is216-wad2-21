@@ -407,7 +407,6 @@ const store = new Vuex.Store({
             let recentlyPlayedIDs = []
             let allRecentlyPlayedInfo = []
             console.log(`=== getRecentlyPlayed mutation ===`)
-            console.log(state.profileID)
             
             await db.collection('users')
                 .doc(state.profileID)
@@ -419,11 +418,10 @@ const store = new Vuex.Store({
                 if (recentlyPlayedDocs.docs.length > 0) { 
                     recentlyPlayedIDs = recentlyPlayedDocs.docs[0].data().recentlyPlayed
                 } else {
+                    commit('getRecentlyPlayed', [])
                     console.log(`getRecentlyPlayed has no docs`)
                 }
             }) 
-            console.log(recentlyPlayedIDs)
-
 
             if (
                 recentlyPlayedIDs.length > 0) { 
