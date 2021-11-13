@@ -35,9 +35,9 @@
                         <!-- <div class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white">{{this.groupMembers.length}} P</div> -->
                     </div>
                     <!-- V-FOR GROUP MEMBERS -->
-                    <div class="grid grid-cols-5 md:grid-cols-10 gap-4 mt-3 justify-items-center">
+                    <div class="my-3 grid md:grid-cols-3 gap-3">
                         <!-- <span v-for="(a_player, index) in g.memberObj" :key="index" > -->
-                            <ol class="grid md:grid-cols-3 gap-3" v-for="a_player in g.memberObj" :key="a_player">
+                            <ol v-for="a_player in g.memberObj" :key="a_player">
                                 <Members :member1 = 'a_player.docID' />
                             </ol>
                         <!-- </span> -->
