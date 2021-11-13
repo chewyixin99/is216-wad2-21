@@ -3,8 +3,7 @@
         <!-- Minimap -->
         <div>
             <court-mini-map 
-            v-bind:courtObj="this.$store.state.selectedCourt"
-            />
+            v-bind:courtObj="this.$store.state.selectedCourt" />
         </div>
 
         <!-- Check In -->
@@ -26,8 +25,6 @@
 
         <!-- Bookmark -->
         <div class="my-4">
-            {{ $store.state.selectedCourt }}
-            {{ $store.state.profileID }}
             <the-button v-if="showBookmark" class="bg-gray-900 text-white" buttonType="form-full" v-on:click="bookmarkCourt()" >
                 BOOKMARK
             </the-button>
@@ -71,7 +68,9 @@ export default {
     },
 
     methods: {
-        
+        forceRerender() {
+            this.$store.commit("forceRerender")
+        },
         
         getCourtData() {
             console.log("==== getCourtData ====");
@@ -82,9 +81,6 @@ export default {
                     })
                 }
             )
-
-
-
         },
 
         bookmarkCourt() {
@@ -93,13 +89,16 @@ export default {
         },
         
         checkIn(){
-            this.$store.commit("updateCheckedInCourtId", this.courtID)
-            console.log(this.courtID);
-            console.log("court id");
-            this.$store.dispatch("addCurrentPlayer")
-            .then(()=>{
-                location.reload();
-            })
+            // Clashing checkin validation
+            if (this.$store.state.checkedInCourtID !== "" && this.$store.state.checkedInCourtID !== this.courtID) {
+                this.$store.commit("toggleCheckInConflict")
+            } else {
+                this.$store.commit("updateCheckedInCourtId", this.courtID)
+                this.$store.dispatch("addCurrentPlayer")
+                .then(()=>{
+                    this.forceRerender()
+                })
+            }
         },
 
         checkOut(){
@@ -110,7 +109,7 @@ export default {
             else{
                 this.$store.dispatch("removeCurrentPlayer")
                 .then(()=>{
-                    location.reload();
+                    this.forceRerender()
                 })
             }
             

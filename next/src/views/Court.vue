@@ -17,7 +17,7 @@
             <!-- [Non-Mobile] Left Section -->
             <!-- Maps and Check In Options -->
             <div class="col-span-1 mx-6">
-                <court-mini-map-section :courtID="court.id"/>/>  <!-- ************************************************************ -->
+                <court-mini-map-section :courtID="court.id"/>  <!-- ************************************************************ -->
             </div>
     
             <!-- [Non-Mobile] Right Section -->
@@ -27,7 +27,7 @@
                     <div class="secondary-gold-title">
                         <h1>CURRENT PLAYERS</h1>
                     </div>
-                    <court-current-players :courtID="court.id"/>
+                    <court-current-players :courtID="court.id" :key="$store.state.reloadKeys"/>
                 </div>
         
                 <!-- Current Teams Section -->
@@ -38,7 +38,7 @@
                     <court-team :courtID="court.id"/>
                 </div>
 
-
+            <court-conflict-modal :courtID="court.id" v-if="$store.state.checkInConflict"/>
 
             </div>
         </div>
@@ -49,11 +49,12 @@
 import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
+import CourtConflictModal from "../components/CourtConflictModal.vue"
 
 export default {
   name: "Court",
   
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtConflictModal},
 
   data() {
     return {

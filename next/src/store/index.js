@@ -6,6 +6,7 @@ import createPersistedState from 'vuex-persistedstate'
 import db from "../firebase/firebaseInit";
 import 'firebase/compat/auth';
 import firebase from 'firebase/compat/app';
+import moment from "moment"
 
 
 const store = new Vuex.Store({
@@ -44,10 +45,11 @@ const store = new Vuex.Store({
 
 
 
-        profileActiveCourt: ``,
 
         // for Group component within publicUser
         publicUserGroupDetails: [],
+        publicUserMemberObj: [],
+        publicUserUpdated: false,
 
 
         // default profile avatar, yixin, to be removed after JL implemented default avatar
@@ -63,7 +65,9 @@ const store = new Vuex.Store({
 
         // Code below are added after changing of CICO direction
         checkedInCourtID: "",
+        checkInConflict: false,
 
+        reloadKeys: 0,
 
 
 
@@ -71,7 +75,9 @@ const store = new Vuex.Store({
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
-
+        forceRerender(state) {
+            state.reloadKeys += 1
+        },
 
         inputCurrentMember(state, payload){
             state.currentMemberID = payload;
@@ -108,8 +114,8 @@ const store = new Vuex.Store({
             state.profileFavTeam = doc.data().favTeam;
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
-            state.profileActiveCourt = doc.data().activeCourt;
             state.profileImg = doc.data().profileImg;
+            state.checkedInCourtID = doc.data().checkedInCourt
         },
 
         setProfileInitials(state){
@@ -122,12 +128,6 @@ const store = new Vuex.Store({
             state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials + "&background=FEB842&color=fff&bold=true"
         },
         
-        setProfileLatestCheckIO(state, payload) {
-            state.profileActiveCourt = payload.activeCourt
-            state.profileMostRelevantCourtID = payload.mostRelevantCourtID
-            state.profileMostRelevantCheckin = payload.mostRelevantCheckinTime
-            state.profileMostRelevantCheckout = payload.mostRelevantCheckoutTime
-        },
 
         changeProfileImg(state, payload) {
             state.profileImg = payload;
@@ -201,12 +201,28 @@ const store = new Vuex.Store({
         },
 
         populatePublicUserGroupDetails(state, payload) {
+            console.log(`=== from populatePublicUserGroupDetails mutation ===`)
+            // console.log(state.publicUserGroupDetails)
             state.publicUserGroupDetails = payload
+            // console.log(state.publicUserGroupDetails)
+            state.publicUserUpdated = true
         },
+
+        setPublicUserUpdated(state, payload) {
+            state.publicUserUpdated = payload
+        }, 
 
 
         updateCheckedInCourtId(state, payload) {
             state.checkedInCourtID = payload
+        },
+
+        toggleCheckInConflict(state) {
+            if (state.checkInConflict) {
+                state.checkInConflict = false
+            } else {
+                state.checkInConflict = true
+            }
         }
 
     },
@@ -246,16 +262,17 @@ const store = new Vuex.Store({
                             
         },
 
-        async addCurrentPlayer({state}){ 
+        // Check in
+        async addCurrentPlayer({state, dispatch}){ 
 
             const courtDb = await db.collection('court').doc(state.checkedInCourtID)
             await courtDb.update({
                 currentPlayers: firebase.firestore.FieldValue.arrayUnion(state.profileID)
             })
             .then(()=>{
-                console.log("User successfully added to Current Players");
+                console.log(`User successfully added to Current Players in court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to add users to Current Players. Error: ", error);
+                console.log(`Failed to add users to Current Players in court (${state.checkedInCourtID}). Error: `, error);
             })
                 
             const userDb = await db.collection('users').doc(state.profileID);
@@ -263,22 +280,24 @@ const store = new Vuex.Store({
                 checkedInCourt: state.checkedInCourtID,                
             })
             .then(()=>{
-                console.log("User successfully checked in to court");
+                dispatch('addCheckInHistory')
+                console.log(`User successfully checked in to court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to check in user to court. Error: ", error);
+                console.log(`Failed to check in user to court (${state.checkedInCourtID}). Error: `, error);
             })
             
         },
 
-        async removeCurrentPlayer({state, commit}){
+        // Check out
+        async removeCurrentPlayer({state, commit, dispatch}){
             const courtDb = await db.collection('court').doc(state.checkedInCourtID);
             await courtDb.update({
                 currentPlayers: firebase.firestore.FieldValue.arrayRemove(state.profileID)
             })
             .then(()=>{
-                console.log("User successfully removed from current players in court");
+                console.log(`User successfully removed from current players in court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to add remove from current players in court. Error: ", error);
+                console.log(`Failed to add remove from current players in court (${state.checkedInCourtID}). Error: `, error);
             })            
 
             const userDb = await db.collection('users').doc(state.profileID);            
@@ -286,13 +305,53 @@ const store = new Vuex.Store({
                 checkedInCourt: "",
             })
             .then(()=>{
+                dispatch('addCheckOutHistory')
                 commit("updateCheckedInCourtId", "")
-                console.log("User successfully checked out from court");
+                console.log(`User successfully checked out from court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to check out user to court. Error: ", error);
+                console.log(`Failed to check out user to court (${state.checkedInCourtID}). Error: `, error);
             })
         },
 
+        // Check in history
+        // Whenever the check in, input a check in history to the user's history
+        // include, checkintime = current time, check out time default 2 hrs
+        async addCheckInHistory({state}) {
+            let checkInTime = moment().toDate()
+            let checkOutTime = moment().add(2, 'hours').toDate()
+
+            const checkInDb = await db.collection('users').doc(state.profileID).collection('checkInHistory')
+            await checkInDb.add({
+                checkInTime: checkInTime,
+                checkOutTime: checkOutTime,
+                courtInfo: state.selectedCourt,
+            }).then(() => {
+                console.log(`Successfully added to user check in history.`);
+            }).catch((error) => {
+                console.log(`Failed to add check to user check in history. Error: ${error}`);
+            })
+        },
+
+        // Check out history
+        // when the user check out, go retrieve the latest check in from check in history and update checkout to current time
+        async addCheckOutHistory({state}) {
+            let checkOutTime = moment().toDate()
+
+            const checkInDb = await db.collection('users').doc(state.profileID).collection('checkInHistory')
+            // Retrieve the latest check in, should only have 1
+            await checkInDb.orderBy("checkInTime", "desc").limit(1)
+            .get()
+            .then((latestCheckIn) => {
+                latestCheckIn.docs[0].ref.update({
+                    checkOutTime: checkOutTime
+                }).then(() => {
+                    console.log(`Successfully checked out of user check in history.`);
+                }).catch((error) => {
+                    console.log(`Failed to check out of user check in history. Error: ${error}`);
+                })
+            })
+
+        },
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
 
@@ -550,6 +609,7 @@ const store = new Vuex.Store({
         },
 
         async populatePublicUserGroupDetails({commit}, payload) {
+            console.log(` === from populatePublicUserGroupDetails dispatch === `)
             let groupDetails = []
             for (let groupID of payload) {
                 const data = await db.collection('groups')
@@ -562,12 +622,30 @@ const store = new Vuex.Store({
                     memberID: data.get('memberID'),
                     memberObj: [],
                 })
-            }   
+            }
+            // console.log(` 2nd for loop below `)
+            for (let i in groupDetails) {
+                let memberID = groupDetails[i].memberID
+                groupDetails[i].memberObj = []
+                for (let id of memberID) {
+                    await firebase
+                    .firestore()
+                    .collection('users')
+                    .doc(id)
+                    .get()
+                    .then(r => {
+                        let singleMember = {
+                            initials: `${r.get('firstName').charAt(0)}${r.get('lastName').charAt(0)}`,
+                            username: `${r.get('firstName')} ${r.get('lastName')}`,
+                            profileImg: r.get('profileImg'),
+                        }
+                        if (groupDetails[i].memberObj.indexOf(singleMember)) groupDetails[i].memberObj.push(singleMember)
+                    }).catch(e => console.log(e))
+                }
+            }
             
             commit('populatePublicUserGroupDetails', groupDetails)
         },
-
-
 
         async getCourt({commit}, payload) {
             // state.selectedCourt
