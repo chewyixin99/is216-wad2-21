@@ -6,9 +6,9 @@
         <div class="grid grid-cols-4 md:space-x-2">
           <!-- PROFILE IMAGE AND EDIT BUTTON -->
           <div class="col-span-4 md:col-span-1">
-            <div class="rounded-full text-center">
+            <div class="rounded-full ">
               <div class="profile-image flex justify-center items-center">
-                <img v-bind:src="profilePicture" alt="">
+                <img class="w-full h-full object-cover text-center" v-bind:src="profilePicture" alt="">
               </div>
             </div>
           </div>
@@ -132,9 +132,15 @@ export default {
 
         profilePicture: {
           get() {
-            return this.$store.state.selectedProfile.profileImg == ""
-              ? this.$store.state.defaultProfileImg
-              : this.$store.state.selectedProfile.profileImg
+            const img = this.$store.state.selectedProfile.profileImg
+            if (
+              this.$store.state.selectedProfile.profileImg == "" ||
+              (img) == null ||
+              (img) == 'undefined'
+            ) {
+              return this.$store.state.defaultProfileImg
+            }
+            return this.$store.state.selectedProfile.profileImg
           }
         }
 

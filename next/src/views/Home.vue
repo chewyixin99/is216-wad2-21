@@ -29,7 +29,7 @@
 
       <div class="col-span-1">
 
-        <div class="secondary-gold-title">
+        <div class="secondary-gold-title mb-3">
           Bookmarks
         </div>
 
@@ -69,7 +69,7 @@
       <div class="col-span-1 row-span-1 md:row-span-2" >
 
         <div class="flex justify-between">
-          <div class="secondary-gold-title">
+          <div class="secondary-gold-title mb-3">
             Near You
           </div>
           <button 
@@ -81,28 +81,11 @@
 
         <div id="mapDiv" class="mapDiv rounded" ref="mapDiv" ></div> 
 
-        <button 
-        class="search-button bg-yellow-500 hover:bg-yellow-700 text-white font-bold my-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
-        v-on:click="findNearbyCourts(currPos.lat, currPos.lng)">
-          COURTS NEAR ME
-        </button>
+
 
         
-         <div>
-          <h4>Your position</h4>
-          lat : {{ currPos.lat }}
-          lng: {{ currPos.lng }}
-        </div>
-        <div>
-          <h4>Clicked Position</h4>
-          <span v-if="otherPos">
-            lat: {{ otherPos.lat }}
-            lng: {{ otherPos.lng }}
-          </span>
-          <span v-else> 
-            Click the map to select a position
-          </span>
-        </div> 
+
+
       
       </div>
 
