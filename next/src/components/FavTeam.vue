@@ -20,7 +20,7 @@
 </template>
 
 <script>
-
+import axios from "axios"
 import Autocomplete from "./AutoComplete.vue"
 
 export default ({
@@ -31,9 +31,7 @@ export default ({
     data(){
 
         return{
-            teams:[
-                'Lakers', "Miami Heat", "Golden State Warriors"
-            ],
+            teams: [],
             test1: null,
             test2: null,
             team1: "First Favourite Team",
@@ -57,6 +55,20 @@ export default ({
         }
     
     },
+
+    created(){
+        
+      let url = "https://www.balldontlie.io/api/v1/teams";
+      axios
+      .get(url)
+      .then((response)=>{
+
+        let retrievedData = response.data.data
+        for (let i=0; i<retrievedData.length; i++){
+            this.teams.push(retrievedData[i].full_name);
+        }
+      })
+    }
 
 })
 </script>
