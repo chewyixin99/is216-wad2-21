@@ -31,11 +31,17 @@ export default {
 
         addTeam(){
 
+            if (this.$store.state.checkedInCourtID == this.courtID){
+                this.$store.dispatch("addTeam")
+                .then(()=>{
+                    location.reload();
+                })
+            }
+            else{
 
-            this.$store.dispatch("addTeam")
-            .then(()=>{
-                location.reload();
-            })
+                alert("You have to check in before you can create team!")
+
+            }
  
         }
 
