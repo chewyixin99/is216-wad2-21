@@ -1,10 +1,10 @@
 <template>
-    <div class="w-full bg-gray-700 rounded-lg border-dashed border-4 border-gray-900 p-10 flex flex-col justify-between items-center">
+    <div class="w-full bg-gray-700 rounded-lg border-dashed border-4 border-gray-900 p-10 flex flex-col justify-between items-center h-96">
         <div class="text-center mb-10">
             <p class="text-2xl text-yellow-500 font-bold">CREATE NEW TEAM</p>
         </div>
 
-        <div class="my-5">
+        <div>
             <the-button @click="addTeam" class="text-2xl text-center text-gray-700 bg-yellow-500 " button-type="add">
                 <slot>+</slot>
             </the-button>
