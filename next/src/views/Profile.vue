@@ -24,9 +24,11 @@
                 <the-button :onClick="toEditProfile" class="bg-yellow-500 hover:bg-yellow-700 text-white mt-3" buttonType="form-sm">
                   EDIT PROFILE
                 </the-button>
-                <the-button :onClick="signOutUser" class="bg-red-500 hover:bg-red-700 text-white mt-3" buttonType="form-sm">
-                  SIGN OUT
-                </the-button>
+                <span v-on:click="resetState()">
+                  <the-button :onClick="signOutUser" class="bg-red-500 hover:bg-red-700 text-white mt-3" buttonType="form-sm">
+                    SIGN OUT
+                  </the-button>
+                </span>
               </div>
             </div>
           </div>
@@ -125,7 +127,7 @@ export default {
             alert(e.message)
           }
         }
-        return { user, signOutUser}
+        return { user, signOutUser }
       },
     
       methods:{
@@ -142,6 +144,10 @@ export default {
 
         copyText(){
           navigator.clipboard.writeText(this.profileID)
+        },
+
+        resetState() {
+          this.$store.commit('resetState')
         }
       },
 

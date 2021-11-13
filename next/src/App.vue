@@ -2,7 +2,6 @@
   <div>
     <TheNavigationBar v-if="!navigation"/>
     <router-view/>
-
     <TheFooter/>
   </div>
 
@@ -35,12 +34,11 @@ export default {
       this.$store.commit("updateUser", user);
       if (user) {
         this.$store.dispatch("getCurrentUser");
-        console.log(this.$store.state.profileEmail);
-        console.log("user email");
       }
     })
     this.checkRoute();
   },
+
   methods: {
     checkRoute() {
       if (this.$route.name !== "Home" || this.$route.name !== "Profile" ||  this.$route.name !== "About"){

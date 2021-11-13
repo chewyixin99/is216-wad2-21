@@ -9,13 +9,8 @@ import firebase from 'firebase/compat/app';
 import moment from "moment"
 
 
-const store = new Vuex.Store({
-    plugins: [
-        createPersistedState({
-            storage: window.sessionStorage,
-        })
-    ],
-    state: {
+const getDefaultState = () => {
+    return {
         //=== User
         user: ``,
         profileEmail: ``,
@@ -30,6 +25,8 @@ const store = new Vuex.Store({
         profileInitialsURL: null,
         profileImg: null,
         profileFavPlayer: ``,
+        profileBookmarks: [],
+        profileBookmarksID: [],
       
         newGroupExp: ``,
         newGroupName: ``,
@@ -78,9 +75,25 @@ const store = new Vuex.Store({
 
 
 
-    },
+    }
+}
+
+const store = new Vuex.Store({
+    plugins: [
+        createPersistedState({
+            storage: window.sessionStorage,
+        })
+    ],
+    state: getDefaultState(),
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
+
+        resetState(state) {
+            console.log(state)
+            state = getDefaultState()
+            console.log(state)
+        },
+
         forceRerender(state) {
             state.reloadKeys += 1
         },
@@ -106,7 +119,6 @@ const store = new Vuex.Store({
 
         //=== User
         updateUser(state, payload){
-
             state.user = payload
         },
 
@@ -259,18 +271,20 @@ const store = new Vuex.Store({
     //INTERACTIONS BETWEEN STORE AND FIREBASE 
     actions: { 
 
-
+        // "4SieiMTSOSQzHeJy5i4rx3GESoC2"
         // RETRIEVE USER INFO
 
 
         async getCurrentUser({commit, dispatch}){
+            console.log(`on login getCurrentUser from store below`)
+            console.log(firebase.auth().currentUser.uid)
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
             const dbResults = await dataBase.get();
             commit("setProfileInfo", dbResults);
             commit("setProfileInitials");
             commit("setProfileInitialsURL")
-            console.log(dbResults);
             
+            dispatch("getBookmarks")
             dispatch('getRecentlyPlayed')
         },
 
@@ -383,19 +397,28 @@ const store = new Vuex.Store({
             })
         },
 
-        // Recently played
+        // Recently played BJwEi5mqhYPiXbZV2yuKTBVGZiY2
         async getRecentlyPlayed({state, commit}) {
             let recentlyPlayedIDs = []
             let allRecentlyPlayedInfo = []
+            console.log(`=== getRecentlyPlayed mutation ===`)
+            console.log(state.profileID)
             
-            const recentlyPlayedDb = await db.collection('users').doc(state.profileID).collection('recentlyPlayed')
-            await recentlyPlayedDb.orderBy('timePlayed', "desc").limit(1)
-            .get()
+            await db.collection('users')
+                .doc(state.profileID)
+                .collection('recentlyPlayed')
+                .orderBy('timePlayed', "desc")
+                .limit(1)
+                .get()
             .then((recentlyPlayedDocs) => {
                 if (recentlyPlayedDocs.docs.length > 0) { 
                     recentlyPlayedIDs = recentlyPlayedDocs.docs[0].data().recentlyPlayed
+                } else {
+                    console.log(`getRecentlyPlayed has no docs`)
                 }
             }) 
+            console.log(recentlyPlayedIDs)
+
 
             if (
                 recentlyPlayedIDs.length > 0) { 

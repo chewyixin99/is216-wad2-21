@@ -13,30 +13,35 @@ export default {
   name: 'app',
   data() {
     return {
-      defaultPos: '',
-      nearbyCourts: [],
-      currentBookmarks: [],
-      recentlyPlayed: [],
+      // nearbyCourts: [],
+      // currentBookmarks: [],
+      // recentlyPlayed: [],
       searchInput: ``,
       map: ``,
-
     }
   },
   // ################################################################################################################ CREATED ################################################################################################################
   created() {
     console.log(`=== created ===`)
-    this.currentBookmarks =  this.getBookmarks
-    this.recentlyPlayed = this.$store.state.recentlyPlayed
-    const { coords } = useGeolocation()
-    this.defaultPos = coords.value
+    this.$store.dispatch('getBookmarks')
+    this.$store.dispatch('getRecentlyPlayed')
   },
 
   computed: {
     getBookmarks() {
-      console.log(`=== getBookmarks computed home ===`)
-      this.$store.dispatch('getBookmarks')
       return this.$store.state.profileBookmarks
     },
+    showBookmarks() {
+      return this.$store.state.profileBookmarks.length > 0
+    },
+    getRecentlyPlayed() {
+      console.log(this.$store.state.recentlyPlayed)
+      return this.$store.state.recentlyPlayed
+    },
+    showRecentlyPlayed() {
+      return this.$store.state.recentlyPlayed.length > 0
+    }
+
   },
   // ################################################################################################################ SETUP ################################################################################################################
   setup() {

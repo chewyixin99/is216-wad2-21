@@ -4,7 +4,6 @@
 <template>
 
 <div class="container max-w-5xl mx-auto">
-
   <div class="m-6">
 
     <!-- Search  -->
@@ -33,7 +32,7 @@
           Bookmarks
         </div>
 
-        <div v-if="currentBookmarks.length < 1" class="text-center">
+        <div v-if="!showBookmarks" class="text-center">
           <div class="bg-gray-800 rounded text-center py-20">
             <div class="text-white">You currently have no bookmarks!</div>
 
@@ -48,7 +47,7 @@
 
         <div v-else class="bookmarks bg-gray-800 text-white rounded-md h-64 py-2 px-4 overflow-auto">
 
-          <ul v-for="b in currentBookmarks" :key="b">
+          <ul v-for="b in getBookmarks" :key="b">
             <li>
               <a href="/court" v-on:click="updateSelectedCourt(b)">
                 <div class="venue-name">
@@ -98,8 +97,8 @@
         <div class="recently-played">
 
           
-          <ul class="recently-played mr-4">
-            <li v-for="p in  recentlyPlayed" :key="p">
+          <ul v-if="showRecentlyPlayed" class="recently-played mr-4">
+            <li v-for="p in getRecentlyPlayed" :key="p">
               <a href="/publicuser" v-on:click="updateSelectedProfile(p)">
                 <span v-if="showProfileImg(p) > 0" >
                   <div class="player-image">
