@@ -392,30 +392,36 @@ const store = new Vuex.Store({
             await recentlyPlayedDb.orderBy('timePlayed', "desc").limit(1)
             .get()
             .then((recentlyPlayedDocs) => {
-                recentlyPlayedIDs = recentlyPlayedDocs.docs[0].data().recentlyPlayed
+                if (recentlyPlayedDocs.docs.length > 0) { 
+                    recentlyPlayedIDs = recentlyPlayedDocs.docs[0].data().recentlyPlayed
+                }
             }) 
 
-            const userDb = await db.collection('users')
-            await userDb.where(firebase.firestore.FieldPath.documentId(), 'in', recentlyPlayedIDs)
-            .get()
-            .then((recentlyPlayedInfo) => {
-                recentlyPlayedInfo.forEach((recentlyPlayedData) => {
-                    let userInfo = {
-                        firstName: recentlyPlayedData.data().firstName,
-                        lastName: recentlyPlayedData.data().lastName,
-                        profileImg: recentlyPlayedData.data().profileImg,
-                        email: recentlyPlayedData.data().email,
-                        experience: recentlyPlayedData.data().experience,
-                        favPlayer: recentlyPlayedData.data().favPlayer,
-                        favTeam: recentlyPlayedData.data().favTeam,
-                        groupID: recentlyPlayedData.data().groupID
-                    }
+            if (
+                recentlyPlayedIDs.length > 0) { 
+                const userDb = await db.collection('users')
+                await userDb.where(firebase.firestore.FieldPath.documentId(), 'in', recentlyPlayedIDs)
+                .get()
+                .then((recentlyPlayedInfo) => {
+                    recentlyPlayedInfo.forEach((recentlyPlayedData) => {
+                        let userInfo = {
+                            firstName: recentlyPlayedData.data().firstName,
+                            lastName: recentlyPlayedData.data().lastName,
+                            profileImg: recentlyPlayedData.data().profileImg,
+                            email: recentlyPlayedData.data().email,
+                            experience: recentlyPlayedData.data().experience,
+                            favPlayer: recentlyPlayedData.data().favPlayer,
+                            favTeam: recentlyPlayedData.data().favTeam,
+                            groupID: recentlyPlayedData.data().groupID
+                        }
 
-                    allRecentlyPlayedInfo.push(userInfo)
+                        allRecentlyPlayedInfo.push(userInfo)
+                    })
+
+                    commit('getRecentlyPlayed', allRecentlyPlayedInfo)
                 })
-
-                commit('getRecentlyPlayed', allRecentlyPlayedInfo)
-            })
+            }
+            
         },
 
 
