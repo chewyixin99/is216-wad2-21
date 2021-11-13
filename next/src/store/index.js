@@ -44,7 +44,6 @@ const store = new Vuex.Store({
 
 
 
-        profileActiveCourt: ``,
 
         // for Group component within publicUser
         publicUserGroupDetails: [],
@@ -63,6 +62,8 @@ const store = new Vuex.Store({
 
 
         checkedInCourtID: "",
+        checkInConflict: false,
+
 
 
 
@@ -107,7 +108,6 @@ const store = new Vuex.Store({
             state.profileFavTeam = doc.data().favTeam;
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
-            state.profileActiveCourt = doc.data().activeCourt;
             state.profileImg = doc.data().profileImg;
         },
 
@@ -121,12 +121,6 @@ const store = new Vuex.Store({
             state.profileInitialsURL = "https://ui-avatars.com/api/?name=" + state.profileInitials + "&background=FEB842&color=fff&bold=true"
         },
         
-        setProfileLatestCheckIO(state, payload) {
-            state.profileActiveCourt = payload.activeCourt
-            state.profileMostRelevantCourtID = payload.mostRelevantCourtID
-            state.profileMostRelevantCheckin = payload.mostRelevantCheckinTime
-            state.profileMostRelevantCheckout = payload.mostRelevantCheckoutTime
-        },
 
         changeProfileImg(state, payload) {
             state.profileImg = payload;
@@ -206,6 +200,14 @@ const store = new Vuex.Store({
 
         updateCheckedInCourtId(state, payload) {
             state.checkedInCourtID = payload
+        },
+
+        toggleCheckInConflict(state) {
+            if (state.checkInConflict) {
+                state.checkInConflict = false
+            } else {
+                state.checkInConflict = true
+            }
         }
 
     },
@@ -235,9 +237,9 @@ const store = new Vuex.Store({
                 currentPlayers: firebase.firestore.FieldValue.arrayUnion(state.profileID)
             })
             .then(()=>{
-                console.log("User successfully added to Current Players");
+                console.log(`User successfully added to Current Players in court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to add users to Current Players. Error: ", error);
+                console.log(`Failed to add users to Current Players in court (${state.checkedInCourtID}). Error: `, error);
             })
                 
             const userDb = await db.collection('users').doc(state.profileID);
@@ -245,9 +247,9 @@ const store = new Vuex.Store({
                 checkedInCourt: state.checkedInCourtID,                
             })
             .then(()=>{
-                console.log("User successfully checked in to court");
+                console.log(`User successfully checked in to court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to check in user to court. Error: ", error);
+                console.log(`Failed to check in user to court (${state.checkedInCourtID}). Error: `, error);
             })
             
         },
@@ -258,9 +260,9 @@ const store = new Vuex.Store({
                 currentPlayers: firebase.firestore.FieldValue.arrayRemove(state.profileID)
             })
             .then(()=>{
-                console.log("User successfully removed from current players in court");
+                console.log(`User successfully removed from current players in court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to add remove from current players in court. Error: ", error);
+                console.log(`Failed to add remove from current players in court (${state.checkedInCourtID}). Error: `, error);
             })            
 
             const userDb = await db.collection('users').doc(state.profileID);            
@@ -269,9 +271,9 @@ const store = new Vuex.Store({
             })
             .then(()=>{
                 commit("updateCheckedInCourtId", "")
-                console.log("User successfully checked out from court");
+                console.log(`User successfully checked out from court (${state.checkedInCourtID})`);
             }).catch((error) => {
-                console.log("Failed to check out user to court. Error: ", error);
+                console.log(`Failed to check out user to court (${state.checkedInCourtID}). Error: `, error);
             })
         },
 
