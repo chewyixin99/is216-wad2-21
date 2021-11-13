@@ -94,7 +94,6 @@ import AvatarInput from '../components/AvatarInput.vue';
 import FavPlayer from '../components/FavPlayer.vue';
 import FavTeam from '../components/FavTeam.vue';
 
-
 export default {
 
     name: "EditProfile",
@@ -111,8 +110,10 @@ export default {
             firstName: this.$store.state.profileFirstName,
             lastName: this.$store.state.profileLastName,
             experience: this.$store.state.profileExperience,
-            favPlayer: this.$store.state.profileFavPlayer,
-            favTeam: this.$store.state.profileFavTeam,
+            favPlayer1: this.$store.state.profileFavPlayer1,
+            favPlayer2: this.$store.state.profileFavPlayer2,
+            favTeam1: this.$store.state.profileFavTeam1,
+            favTeam2: this.$store.state.profileFavTeam2,
             email: this.$store.state.profileEmail,
         }
     },
@@ -124,7 +125,7 @@ export default {
             this.$store.state.profileFirstName = this.firstName
             this.$store.state.profileLastName = this.lastName
             this.$store.state.profileExperience = this.experience
-            this.$store.state.profileFavPlayer = this.favPlayer
+            // this.$store.state.profileFavPlayer = this.favPlayer
             this.$store.state.profileFavTeam = this.favTeam
             this.$store.dispatch("updateUserSettings");
 

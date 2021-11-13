@@ -7,11 +7,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">        
 
             <div>
-                <Autocomplete @favInput="updateFavTeam1($event)" :inputs="teams" :placeholder="team1"/>
+                <Autocomplete @favInput="updateFavTeam1($event)" :inputs="teams" :placeholder="teamPH1" :fav="favTeam1"/>
             </div>
 
             <div>
-                <Autocomplete @favInput="updateFavTeam2($event)" :inputs="teams" :placeholder="team2"/>
+                <Autocomplete @favInput="updateFavTeam2($event)" :inputs="teams" :placeholder="teamPH2" :fav="favTeam2"/>
             </div>
 
         </div>
@@ -32,10 +32,10 @@ export default ({
 
         return{
             teams: [],
-            test1: null,
-            test2: null,
-            team1: "First Favourite Team",
-            team2: "Second Favourite Team",
+            teamPH1: "First Favourite Team",
+            teamPH2: "Second Favourite Team",
+            favTeam1: this.$store.state.profileFavTeam1,
+            favTeam2: this.$store.state.profileFavTeam2,
         }
 
     },
@@ -44,14 +44,19 @@ export default ({
 
         updateFavTeam1(input){
 
-            this.test1 = input
-
+            this.$store.commit("changeFavTeam1", input)
+            .then(()=>{
+                console.log("fav1 committed for store");
+            })
         },
 
         updateFavTeam2(input){
 
-            this.test2 = input
 
+            this.$store.commit("changeFavTeam2", input)
+            .then(()=>{
+                console.log("fav2 committed for store");
+            })
         }
     
     },

@@ -64,28 +64,7 @@ export default {
 
         joinTeam(){
 
-            firebase
-            .firestore()
-            .collection("court")
-            .doc(this.courtID)
-            .collection('courtTeams')
-            .doc(this.teamID)
-            .update({
-
-                teamMembers: firebase.firestore.FieldValue.arrayUnion(this.$store.state.profileID)
-
-            })
-            .then(()=>{
-
-                location.reload()
-
-            })
-
-        },
-
-        leaveTeam(){
-
-            if (this.teamMembers.length > 1){
+            if (this.$store.state.checkedInCourtID == this.courtID){
 
                 firebase
                 .firestore()
@@ -95,7 +74,7 @@ export default {
                 .doc(this.teamID)
                 .update({
 
-                    teamMembers: firebase.firestore.FieldValue.arrayRemove(this.$store.state.profileID)
+                    teamMembers: firebase.firestore.FieldValue.arrayUnion(this.$store.state.profileID)
 
                 })
                 .then(()=>{
@@ -106,21 +85,62 @@ export default {
             }
             else{
 
-                firebase
-                .firestore()
-                .collection("court")
-                .doc(this.courtID)
-                .collection('courtTeams')
-                .doc(this.teamID)
-                .delete()
-                .then(()=>{
-
-                    location.reload()
-
-                })
+                alert("You have to check in before you can join team!")
 
             }
 
+            
+
+        },
+
+        leaveTeam(){
+
+            console.log(this.teamMembers);
+            console.log("jereeeeeeeeeeeeee");
+            console.log(this.teamMembers.includes(this.$store.state.profileID));
+
+            if (this.$store.state.checkedInCourtID == this.courtID && this.teamMembers.includes(this.$store.state.profileID)){
+
+            
+                if (this.teamMembers.length > 1){
+
+                    firebase
+                    .firestore()
+                    .collection("court")
+                    .doc(this.courtID)
+                    .collection('courtTeams')
+                    .doc(this.teamID)
+                    .update({
+
+                        teamMembers: firebase.firestore.FieldValue.arrayRemove(this.$store.state.profileID)
+
+                    })
+                    // .then(()=>{
+
+                    //     location.reload()
+
+                    // })
+                }
+                else{
+
+                    firebase
+                    .firestore()
+                    .collection("court")
+                    .doc(this.courtID)
+                    .collection('courtTeams')
+                    .doc(this.teamID)
+                    .delete()
+                    // .then(()=>{
+
+                    //     location.reload()
+
+                    // })
+
+                }
+            }
+            else{
+                alert("You cannot leave a team if you are not in it!")
+            }
         }
     },
 
