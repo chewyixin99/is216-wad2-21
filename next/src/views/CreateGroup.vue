@@ -12,7 +12,7 @@
                     <!-- GROUP NAME -->
                     <div class="mb-4">
                         <label class="block text-white text-sm font-bold mb-2" for="groupName">
-                            GROUP NAME (Max: 20 characters)
+                            GROUP NAME (Max: 15 characters)
                         </label>
                         <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="groupName" type="text" name="groupName" v-model="newGroupName" maxlength="15">
                     </div>

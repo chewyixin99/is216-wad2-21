@@ -124,11 +124,11 @@ export default {
             })
             .then(()=>{
                 console.log("Group Message Update Successful");
+                alert("You have updated message board successfully")
             })
             
         }
 
-        
     },
 
     created() {

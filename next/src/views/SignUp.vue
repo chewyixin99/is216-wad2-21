@@ -39,7 +39,7 @@
 
     <!-- BUTTON -->
     <div class="mb-4 mt-4">
-      <div class="error text-center text-red-500 mb-2" v-show="error">
+      <div class="error text-center text-red-500 mb-2">
         {{this.errorMsg}}
       </div>
 
@@ -80,58 +80,64 @@ data(){
         password: "",
         errorMsg : "",
         error: null,
+        emailErr: ["@","."]
     };
 },
 
 methods:{
   async signup() {
-      if (
-        this.email !== "" && 
-        this.password !== "" &&
-        this.firstName !== "" &&
-        this.lastName !== "" 
-      ) {
-        this.error = false;
-        this.errorMsg = "";
-        const firebaseAuth = await firebase.auth();
-        const createUser = await firebaseAuth.createUserWithEmailAndPassword(this.email, this.password);
-        const result = await createUser;
-        const dataBase = db.collection("users").doc(result.user.uid);
-        this.$router.replace({name: "Onboarding"});
-        await dataBase.set({
-          firstName: this.firstName,
-          lastName: this.lastName,
-          email: this.email,
-          groupID: this.groupID,
-          experience: ``,
-          favPlayer: ``,
-          favPlayer1: ``,
-          favPlayer2: ``,
-          favTeam1: ``,
-          favTeam2: ``,
-          favTeam: ``,
-          initialsURL: null,
-          profileImg: null,
-          checkedInCourt: "",
-        })
-        .then(()=>{
-          return this.$store.commit("setProfileInitials")
-        })
-        .then(()=>{
-          return this.$store.state.profileInitials
-        })
-        .then(()=>{
-          return this.$store.commit("setProfileInitialsURL")
-        })
-        .then(()=>{
-          return this.$store.dispatch("updateImg")
-        })
-              
-    }
 
-    this.error = true;
-    this.errorMsg = "Please fill out all the fields!";
-    }
+      if (this.email == "" || this.password == "" || this.firstName == "" || this.lastName == "" ){
+          this.error = true;
+          this.errorMsg = "Please fill out all the fields!";
+      }
+      else if (!(this.email.includes("@"))){
+          this.error = true;
+          this.errorMsg = "Please enter a valid email!";
+      }
+      else if (!(this.email.includes("."))){
+          this.error = true;
+          this.errorMsg = "Please enter a valid email!";
+      }
+      else if (this.password.length < 6){
+          this.error = true;
+          this.errorMsg = "Password must be more than 6 characters!";
+      }
+      else{
+          this.error = false;
+          this.errorMsg = "";
+          const firebaseAuth = await firebase.auth();
+          const createUser = await firebaseAuth.createUserWithEmailAndPassword(this.email, this.password)
+          const result = await createUser;
+          const dataBase = db.collection("users").doc(result.user.uid);
+          this.$router.replace({name: "Onboarding"});
+            await dataBase.set({
+            firstName: this.firstName,
+            lastName: this.lastName,
+            email: this.email,
+            groupID: this.groupID,
+            experience: ``,
+            favPlayer: ``,
+            favTeam: ``,
+            initialsURL: null,
+            profileImg: null,
+            checkedInCourt: "",
+          })
+            .then(()=>{
+              return this.$store.commit("setProfileInitials")
+            })
+            .then(()=>{
+              return this.$store.state.profileInitials
+            })
+            .then(()=>{
+              return this.$store.commit("setProfileInitialsURL")
+            })
+            .then(()=>{
+              return this.$store.dispatch("updateImg")
+            })
+        }    
+      }         
+    
 }
 };
 
