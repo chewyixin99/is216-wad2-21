@@ -39,7 +39,6 @@
 </template>
 
 <script>
-import store from "../store/index"
 import TheButton from "./TheButton.vue"
 import CourtMiniMap from "./CourtMiniMap.vue"
 import db from "../firebase/firebaseInit"
@@ -72,9 +71,6 @@ export default {
     },
 
     methods: {
-        togglePopUp() {
-            store.commit('courtToggleCheckinModal')
-        },
         
         
         getCourtData() {
@@ -97,8 +93,7 @@ export default {
         },
         
         checkIn(){
-
-            this.$store.state.checkedInCourtID = this.courtID
+            this.$store.commit("updateCheckedInCourtId", this.courtID)
             console.log(this.courtID);
             console.log("court id");
             this.$store.dispatch("addCurrentPlayer")

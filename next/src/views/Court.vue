@@ -38,7 +38,6 @@
                     <court-team/>
                 </div>
 
-                <court-pop-up/>
 
 
             </div>
@@ -50,15 +49,13 @@
 import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
-import CourtPopUp from "../components/CourtPopUp.vue"
 
 export default {
   name: "Court",
   
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtPopUp },
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
 
   created() {
-    this.$store.commit('courtDefaultCheckinModal')
   },
 
   data() {
