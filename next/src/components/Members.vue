@@ -1,7 +1,7 @@
 <template>
 
     <li>
-        <div class="flex flex-wrap" :onClick="toPublicUser">
+        <div class="flex flex-wrap mb-3" :onClick="toPublicUser">
             <div v-if="profileImg">
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileImg">
             </div>
