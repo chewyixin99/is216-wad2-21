@@ -179,6 +179,13 @@ export default {
   
   // ################################################################################################################ METHODS START ################################################################################################################
   methods: {
+    showProfileImg(p) {
+      const type = typeof p.profileImg
+      if (type ==  'undefined' || type == 'null' || p.profileImg == '') {
+        return false
+      }
+      return true
+    },
     // function for 'courtsNearMe' button ########################################################
     findNearbyCourts(lat, lng) {
       // Async Places API imported @index.html

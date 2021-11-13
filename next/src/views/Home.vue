@@ -112,14 +112,14 @@
       <div class="col-span-1">
         <div class="secondary-gold-title">
           Recently Played
-        </div>
+      </div>
         <div class="recently-played">
 
           
           <ul class="recently-played mr-4">
             <li v-for="p in  recentlyPlayed" :key="p">
               <a href="/publicuser" v-on:click="updateSelectedProfile(p)">
-                <span v-if="p.profileImg.length > 0" >
+                <span v-if="showProfileImg(p) > 0" >
                   <div class="player-image">
                     <img v-bind:src="p.profileImg" alt="">
                   </div>
