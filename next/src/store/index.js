@@ -67,6 +67,9 @@ const store = new Vuex.Store({
         checkedInCourtID: "",
         checkInConflict: false,
 
+
+        recentlyPlayed: [],
+
         reloadKeys: 0,
 
 
@@ -217,6 +220,10 @@ const store = new Vuex.Store({
             state.checkedInCourtID = payload
         },
 
+        getRecentlyPlayed(state, payload) {
+            state.recentlyPlayed = payload
+        },
+
         toggleCheckInConflict(state) {
             if (state.checkInConflict) {
                 state.checkInConflict = false
@@ -234,7 +241,7 @@ const store = new Vuex.Store({
         // RETRIEVE USER INFO
 
 
-        async getCurrentUser({commit}){
+        async getCurrentUser({commit, dispatch}){
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
             const dbResults = await dataBase.get();
             commit("setProfileInfo", dbResults);
@@ -242,6 +249,7 @@ const store = new Vuex.Store({
             commit("setProfileInitialsURL")
             console.log(dbResults);
             
+            dispatch('getRecentlyPlayed')
         },
 
         async addTeam({state}){ 
@@ -306,6 +314,7 @@ const store = new Vuex.Store({
             })
             .then(()=>{
                 dispatch('addCheckOutHistory')
+                dispatch('updateRecentlyPlayed', moment().toDate())
                 commit("updateCheckedInCourtId", "")
                 console.log(`User successfully checked out from court (${state.checkedInCourtID})`);
             }).catch((error) => {
@@ -350,8 +359,67 @@ const store = new Vuex.Store({
                     console.log(`Failed to check out of user check in history. Error: ${error}`);
                 })
             })
-
         },
+
+        // Recently played
+        async getRecentlyPlayed({state, commit}) {
+            let recentlyPlayedIDs = []
+            let allRecentlyPlayedInfo = []
+            
+            const recentlyPlayedDb = await db.collection('users').doc(state.profileID).collection('recentlyPlayed')
+            await recentlyPlayedDb.orderBy('timePlayed', "desc").limit(1)
+            .get()
+            .then((recentlyPlayedDocs) => {
+                recentlyPlayedIDs = recentlyPlayedDocs.docs[0].data().recentlyPlayed
+            }) 
+
+            const userDb = await db.collection('users')
+            await userDb.where(firebase.firestore.FieldPath.documentId(), 'in', recentlyPlayedIDs)
+            .get()
+            .then((recentlyPlayedInfo) => {
+                recentlyPlayedInfo.forEach((recentlyPlayedData) => {
+                    let userInfo = {
+                        firstName: recentlyPlayedData.data().firstName,
+                        lastName: recentlyPlayedData.data().lastName,
+                        profileImg: recentlyPlayedData.data().profileImg,
+                        email: recentlyPlayedData.data().email,
+                        experience: recentlyPlayedData.data().experience,
+                        favPlayer: recentlyPlayedData.data().favPlayer,
+                        favTeam: recentlyPlayedData.data().favTeam,
+                        groupID: recentlyPlayedData.data().groupID
+                    }
+
+                    allRecentlyPlayedInfo.push(userInfo)
+                })
+
+                commit('getRecentlyPlayed', allRecentlyPlayedInfo)
+            })
+        },
+
+
+        async updateRecentlyPlayed({state}, checkOutTime) {
+            let recentlyPlayed = []
+
+            const courtDoc = await db.collection('court').doc(state.checkedInCourtID)
+            await courtDoc.get()
+            .then((courtData) => {
+                recentlyPlayed = courtData.data().currentPlayers
+            })
+
+            if (recentlyPlayed.length > 0) {
+                const recentlyPlayedDb = await db.collection('users').doc(state.profileID).collection('recentlyPlayed')
+                await recentlyPlayedDb.add({
+                    timePlayed: checkOutTime,
+                    courtInfo: state.selectedCourt,
+                    recentlyPlayed: recentlyPlayed,
+                }).then(() => {
+                    console.log(`Successfully added users to recently played.`);
+                }).catch((error) => {
+                    console.log(`Failed to add users to recently played. Error: ${error}`);
+                })
+            }
+        },
+
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
 
