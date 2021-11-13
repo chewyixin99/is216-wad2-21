@@ -1,6 +1,6 @@
 <template>
     <div class="m-4">
-        <ol class="grid md:grid-cols-3 gap-3">
+        <ol class="grid grid-cols-5 sm:grid-cols-8 md:grid-cols-10 gap-4">
 
             <CourtCurrentPlayer :playerID = currentPlayer v-for="currentPlayer in currentPlayers" :key="currentPlayer" />
 

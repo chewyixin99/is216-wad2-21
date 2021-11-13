@@ -1,6 +1,6 @@
 <template>
     <li>
-        <div class="flex flex-wrap">
+        <div class="col-span-1 justify-items-center">
             <div v-if="profileImg">
                 <img class="h-10 w-10 rounded-full object-cover" :src="profileImg">
             </div>
