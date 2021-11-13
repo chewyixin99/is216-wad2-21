@@ -93,13 +93,16 @@ export default {
         },
         
         checkIn(){
-            this.$store.commit("updateCheckedInCourtId", this.courtID)
-            console.log(this.courtID);
-            console.log("court id");
-            this.$store.dispatch("addCurrentPlayer")
-            .then(()=>{
-                location.reload();
-            })
+            // Clashing checkin validation
+            if (this.$store.state.checkedInCourtID !== "" && this.$store.state.checkedInCourtID !== this.courtID) {
+                this.$store.commit("toggleCheckInConflict")
+            } else {
+                this.$store.commit("updateCheckedInCourtId", this.courtID)
+                this.$store.dispatch("addCurrentPlayer")
+                .then(()=>{
+                    location.reload();
+                })
+            }
         },
 
         checkOut(){

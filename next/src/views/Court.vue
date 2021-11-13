@@ -38,7 +38,7 @@
                     <court-team/>
                 </div>
 
-
+            <court-conflict-modal :courtID="court.id" v-if="$store.state.checkInConflict"/>
 
             </div>
         </div>
@@ -49,11 +49,12 @@
 import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
+import CourtConflictModal from "../components/CourtConflictModal.vue"
 
 export default {
   name: "Court",
   
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers },
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtConflictModal},
 
   created() {
   },
