@@ -41,34 +41,35 @@
                                 EXPERIENCE
                             </label>
 
-                            <select class="form-select mt-1 block w-full shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experience" name="experience" v-model="experience">
+                            <select class="form-select block w-full shadow border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="experience" name="experience" v-model="experience">
                                 <option>Recreational</option>
                                 <option>Intermediate</option>
                                 <option>Competitive</option>
                             </select>
                         </div>
 
-                        <!-- FAVOURITE PLAYER -->
-                        <!-- <div class="mb-4">
-                            <label class="block text-white text-sm font-bold mb-2" for="favPlayer">
-                                FAVOURITE PLAYERS
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer" placeholder="Favourite Players">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                            <!-- FAVOURITE PLAYER -->
+                            <div>
+                                <label class="block text-white text-sm font-bold mb-2" for="favPlayer">
+                                    FAVOURITE PLAYER
+                                </label>
+                                <!-- <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer" placeholder="Favourite Players"> -->
+                                <fav-player/>
+                            </div>
+                            <!-- <fav-player/> -->
 
-                        </div> -->
-                        <fav-player/>
-
-                        <!-- FAVOURITE TEAM -->
-                        <fav-team/>
-                        <!--
-                            <div class="mb-4">
-                            <label class="block text-white text-sm font-bold mb-2" for="favTeam">
-                                FAVOURITE TEAMS
-                            </label>
-                            <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam" placeholder="Favourite Teams">
-
-                        </div> 
-                        -->
+                            <!-- FAVOURITE TEAM -->                        
+                            <div>
+                                <label class="block text-white text-sm font-bold mb-2" for="favTeam">
+                                    FAVOURITE TEAM
+                                </label>
+                                <!-- <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam" placeholder="Favourite Teams"> -->
+                                <fav-team/>
+                            </div> 
+                            <!-- <fav-team/> -->
+                        </div>
+                       
 
                 </div>
 

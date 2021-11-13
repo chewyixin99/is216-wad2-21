@@ -1,5 +1,5 @@
 <template>
-    <label class="block text-white text-sm font-bold mb-2" for="fav">
+    <label class="block text-white text-sm font-bold" for="fav">
 
         <input name="fav" type="text" v-model="input" @focus="modal=true" :placeholder="placeholder" autocomplete="off" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" 
         @input="filterInput();clearFilteredInputs();$emit('favInput',this.input)">

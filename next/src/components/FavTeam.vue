@@ -1,5 +1,5 @@
 <template>
-    <div class="mb-4">
+    <div>
 
         <div>
             <Autocomplete @favInput="updateFavTeam($event)" :inputs="teams" :placeholder="teamPH" :fav="favTeam"/>
