@@ -62,7 +62,7 @@ const store = new Vuex.Store({
         selectedProfile:`defaultValue`,
 
 
-        checkedInCourtID: ""
+        checkedInCourtID: "",
 
 
 
@@ -569,6 +569,7 @@ const store = new Vuex.Store({
                         courtLocation: new firebase.firestore.GeoPoint(lat, lng),
                         courtName: payload.name,
                         courtVicinity: payload.vicinity,
+                        currentPlayers: "",
                     }).then(() => {                    
                         console.log(`[getCourt] Added new court ${payload.name} to firestore`);
                     }).catch((error) => {
