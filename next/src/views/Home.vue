@@ -24,9 +24,9 @@
       {{ $store.state.user }}
     </div> -->
 
+
     <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
 
-      <!-- Bookmarks -->
       <div class="col-span-1">
 
         <div class="secondary-gold-title">
@@ -58,7 +58,6 @@
                   {{ b.vicinity }}
                 </div>
               </a>
-              <!-- <hr class="mt-2"> -->
             </li>
           </ul>
         </div>
@@ -82,14 +81,14 @@
 
         <div id="mapDiv" class="mapDiv rounded" ref="mapDiv" ></div> 
 
-        <!-- <button 
+        <button 
         class="search-button bg-yellow-500 hover:bg-yellow-700 text-white font-bold my-3 py-2 px-4 rounded focus:outline-none focus:shadow-outline" 
         v-on:click="findNearbyCourts(currPos.lat, currPos.lng)">
           COURTS NEAR ME
-        </button> -->
+        </button>
 
         
-        <!-- <div>
+         <div>
           <h4>Your position</h4>
           lat : {{ currPos.lat }}
           lng: {{ currPos.lng }}
@@ -103,16 +102,16 @@
           <span v-else> 
             Click the map to select a position
           </span>
-        </div> -->
+        </div> 
       
       </div>
 
 
       <!-- Recently Played -->
-      <div class="col-span-1">
+        <div class="col-span-1"> 
         <div class="secondary-gold-title">
           Recently Played
-      </div>
+        </div>
         <div class="recently-played">
 
           
@@ -138,6 +137,7 @@
         </div>
 
       </div>
+
 
   </div> <!-- grid -->
 

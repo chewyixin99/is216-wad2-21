@@ -48,6 +48,8 @@ const store = new Vuex.Store({
 
         // for Group component within publicUser
         publicUserGroupDetails: [],
+        publicUserMemberObj: [],
+        publicUserUpdated: false,
 
 
         // default profile avatar, yixin, to be removed after JL implemented default avatar
@@ -61,11 +63,12 @@ const store = new Vuex.Store({
         // == selectedProfle
         selectedProfile:`defaultValue`,
 
-
+        // Code below are added after changing of CICO direction
         checkedInCourtID: "",
         checkInConflict: false,
 
         reloadKeys: 0,
+
 
 
 
@@ -198,8 +201,16 @@ const store = new Vuex.Store({
         },
 
         populatePublicUserGroupDetails(state, payload) {
+            console.log(`=== from populatePublicUserGroupDetails mutation ===`)
+            // console.log(state.publicUserGroupDetails)
             state.publicUserGroupDetails = payload
+            // console.log(state.publicUserGroupDetails)
+            state.publicUserUpdated = true
         },
+
+        setPublicUserUpdated(state, payload) {
+            state.publicUserUpdated = payload
+        }, 
 
 
         updateCheckedInCourtId(state, payload) {
@@ -231,6 +242,24 @@ const store = new Vuex.Store({
             commit("setProfileInitialsURL")
             console.log(dbResults);
             
+        },
+
+        async addTeam({state}){ 
+
+            const numTeams = await db.collection('court').doc(state.selectedCourt.id).collection('courtTeams')
+            .get().then(snap=>{ 
+                return snap.size})
+
+            
+            await db.collection('court').doc(state.selectedCourt.id).collection('courtTeams')
+            .add({
+
+                teamName: "Team " + (numTeams + 1) ,
+                teamMembers: [state.profileID]
+
+            })
+                
+                            
         },
 
         // Check in
@@ -580,6 +609,7 @@ const store = new Vuex.Store({
         },
 
         async populatePublicUserGroupDetails({commit}, payload) {
+            console.log(` === from populatePublicUserGroupDetails dispatch === `)
             let groupDetails = []
             for (let groupID of payload) {
                 const data = await db.collection('groups')
@@ -592,12 +622,30 @@ const store = new Vuex.Store({
                     memberID: data.get('memberID'),
                     memberObj: [],
                 })
-            }   
+            }
+            // console.log(` 2nd for loop below `)
+            for (let i in groupDetails) {
+                let memberID = groupDetails[i].memberID
+                groupDetails[i].memberObj = []
+                for (let id of memberID) {
+                    await firebase
+                    .firestore()
+                    .collection('users')
+                    .doc(id)
+                    .get()
+                    .then(r => {
+                        let singleMember = {
+                            initials: `${r.get('firstName').charAt(0)}${r.get('lastName').charAt(0)}`,
+                            username: `${r.get('firstName')} ${r.get('lastName')}`,
+                            profileImg: r.get('profileImg'),
+                        }
+                        if (groupDetails[i].memberObj.indexOf(singleMember)) groupDetails[i].memberObj.push(singleMember)
+                    }).catch(e => console.log(e))
+                }
+            }
             
             commit('populatePublicUserGroupDetails', groupDetails)
         },
-
-
 
         async getCourt({commit}, payload) {
             // state.selectedCourt

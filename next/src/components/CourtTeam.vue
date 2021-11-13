@@ -1,8 +1,8 @@
 <template>
     <div class="w-full p-4">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <court-team-card v-for="(a_team, index) in this.mockTeams" :teamMembers="a_team" :key="index"/>
-            <court-new-team-card/>
+            <court-team-card v-for="item in this.items" :key="item" :item="item" :courtID="courtID"/>
+            <court-new-team-card :courtID="courtID"/>
         </div>
     </div>
 </template>
@@ -10,50 +10,47 @@
 <script>
 import CourtTeamCard from "./CourtTeamCard.vue"
 import CourtNewTeamCard from "./CourtNewTeamCard.vue"
+import firebase from 'firebase/compat/app';
 
 export default {
+
     name: "CourtTeam",
     components: {
         CourtTeamCard,
         CourtNewTeamCard
     },
 
-    props: {}, // Props should take in court data later on
+    props: ["courtID"], // Props should take in court data later on
 
     data() {
         return {
-            mockTeams: [
-                // mockid : userinfo
-                [
-                    {
-                        initials: "BL",
-                        username: "Bitta Loong"
-                    },
-                    {
-                        initials: "BL",
-                        username: "Bitta Loong"
-                    },
-                    {
-                        initials: "BL",
-                        username: "Bitta Loong"
-                    }
-                ],
-                [
-                    {
-                        initials: "BL",
-                        username: "Bitta Loong"
-                    },
-                    {
-                        initials: "BL",
-                        username: "Bitta Loong"
-                    },
-                    {
-                        initials: "BL",
-                        username: "Bitta Loong"
-                    }
-                ]
-            ]
+           teamName: "",
+           teamMembers: "",
+           items: [],
         }
+    },
+    methods:{
+
+
+    },
+    created(){
+
+
+        firebase
+        .firestore()
+        .collection("court")
+        .doc(this.courtID)
+        .collection('courtTeams')
+        .get()
+        .then((doc)=>{
+
+            doc.docs.forEach((doc)=>{
+                this.items.push({id:doc.id,data: doc.data()})
+
+            })
+
+        })
+
     }
 
 }

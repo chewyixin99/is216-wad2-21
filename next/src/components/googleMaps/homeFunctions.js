@@ -307,6 +307,7 @@ export default {
 
     updateSelectedProfile(profile) {
       this.$store.commit('updateSelectedProfile', profile)
+      this.$store.dispatch('populatePublicUserGroupDetails', profile.groupID)
     },
 
     updateSelectedCourt(court) {

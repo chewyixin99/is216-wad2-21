@@ -1,15 +1,15 @@
 <template>
 
     <li>
-        <a href="/publicuser"><div class="flex flex-wrap" :onClick="toPublicUser">
+        <div class="flex flex-wrap" :onClick="toPublicUser">
             <div v-if="profileImg">
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileImg">
             </div>
-            <div v-else> 
+            <div v-else class="mb-3"> 
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileInitialsURL">
             </div>
-            <span class="secondary-white-title ml-3 my-auto hover:text-yellow-500 cursor-pointer">{{firstName}} {{lastName}}</span>
-        </div></a>
+            <span class="secondary-white-title ml-3 my-auto hover:text-yellow-500 cursor-pointer">{{firstName}} {{lastName}} </span> 
+        </div>
         <!-- <hr> -->
     </li>
 
@@ -39,7 +39,8 @@ export default ({
 
     methods:{
         toPublicUser(){
-        //   this.$router.replace({name: "PublicUser"});
+          this.$router.replace({name: "PublicUser"});
+          this.$store.commit('setPublicUserUpdated', false)
           this.$store.commit('updateSelectedProfile', this.memberObj)
           this.$store.dispatch('populatePublicUserGroupDetails', this.memberObj.groupID)
         },
@@ -57,10 +58,14 @@ export default ({
             this.experience = docRef.data().experience
             this.profileImg = docRef.data().profileImg
             this.profileInitialsURL = docRef.data().initialsURL
+            
             // console.log(docRef.data().firstName)
-            console.log(docRef.data().email)
+            // console.log(docRef.data().email)
             // console.log(docRef.data().groupID)
-            console.log(this.member1)
+            // console.log(this.member1)
+            // console.log(`${docRef.data().email}: ${this.member1}`)
+            // console.log(docRef.data().groupID)
+
             this.memberObj = {
                 firstName: docRef.data().firstName,
                 lastName: docRef.data().lastName,
@@ -78,6 +83,6 @@ export default ({
         }).catch(e => console.log(`members.vue error: ${e}`))
 
 
-        },
+    },
 })
 </script>
