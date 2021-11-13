@@ -619,6 +619,8 @@ const store = new Vuex.Store({
                 groupDetails.push({
                     groupName: data.get('groupName'),
                     groupExp: data.get('groupExp'),
+                    groupImg: data.get('groupImg'),
+                    groupImgDefault: data.get('groupImgDefault'),
                     memberID: data.get('memberID'),
                     memberObj: [],
                 })
