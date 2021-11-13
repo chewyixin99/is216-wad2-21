@@ -25,8 +25,6 @@
 
         <!-- Bookmark -->
         <div class="my-4">
-            {{ $store.state.selectedCourt }}
-            {{ $store.state.profileID }}
             <the-button v-if="showBookmark" class="bg-gray-900 text-white" buttonType="form-full" v-on:click="bookmarkCourt()" >
                 BOOKMARK
             </the-button>

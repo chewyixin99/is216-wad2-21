@@ -1,8 +1,6 @@
 <template>
-
-    <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6" v-for="g in groups" :key="g">
-        <div class="grid grid-cols-6 gap-4">
-
+    <div class="bg-gray-800 shadow-md rounded px-8 py-6 my-6 mx-6" v-for="g in getMembers" :key="g">
+        <div v-if="displayMembers"  class="grid grid-cols-6 gap-4">
             <!-- GROUP PROFILE -->
             <div class="col-span-6 md:col-span-1 text-center my-auto" >
                 <div class="profile-image flex justify-center items-center">
@@ -53,7 +51,7 @@
 <script>
 import TheProfileIcon from "./TheProfileIcon.vue"
 // import TheButton from "./TheButton.vue"
-import firebase from 'firebase/compat/app';
+// import firebase from 'firebase/compat/app';
 
 export default {
     name: "Group",
@@ -66,49 +64,37 @@ export default {
 
     data() {
         return {
-            groups: this.$store.state.publicUserGroupDetails,
+            groups: [],
         }
     },
 
-    created() {
-        console.log(`=== created Groups.vue ===`)
-        for (let i in this.groups) {
-            let memberID = this.groups[i].memberID
-            this.groups[i].memberObj = []
-            for (let id of memberID) {
-                // console.log(id)
-                firebase
-                .firestore()
-                .collection('users')
-                .doc(id)
-                .get()
-                .then(r => {
-                    // console.log(r)
-                    let singleMember = {
-                        initials: `${r.get('firstName').charAt(0)}${r.get('lastName').charAt(0)}`,
-                        username: `${r.get('firstName')} ${r.get('lastName')}`,
-                        profileImg: r.get('profileImg'),
-                    }
-                    if (this.groups[i].memberObj.indexOf(singleMember)) this.groups[i].memberObj.push(singleMember)
-                }).catch(e => console.log(e))
+    computed: {
+        displayMembers() {
+            // console.log(`displayMembers: ${this.$store.state.publicUserUpdated}`)
+            return this.$store.state.publicUserUpdated
+        },
+
+        getMembers() {
+            if (this.displayMembers) {
+                return this.$store.state.publicUserGroupDetails
             }
-            console.log(`end of group: ${this.groups[i].groupName}`)
-        }
+            return []
+        },
     },
 
     methods:{
 
-    addMembers(){
-        var member = prompt("Enter email")
-        return member
+        addMembers(){
+            var member = prompt("Enter email")
+            return member
+        },
+        leaveGroup(){
+            alert ("Are you sure you want to leave this group?")
+        },
+        toPublicUser(){
+          this.$router.replace({name: "PublicUser"});
+        },
     },
-    leaveGroup(){
-        alert ("Are you sure you want to leave this group?")
-    },
-    toPublicUser(){
-        this.$router.replace({name: "PublicUser"});
-      },
 
-    },
 }
 </script>
