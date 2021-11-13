@@ -93,9 +93,10 @@ export default {
                 this.$store.commit("updateCheckedInCourtId", this.courtID)
                 
                 // Add player to new court
-                this.$store.dispatch("addCurrentPlayer")
-                this.$store.commit("toggleCheckInConflict")
-                location.reload();           
+                this.$store.dispatch("addCurrentPlayer").then(() => {
+                    this.$store.commit("toggleCheckInConflict")
+                    location.reload();           
+                })
             })
 
         },

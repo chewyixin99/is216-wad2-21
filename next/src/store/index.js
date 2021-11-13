@@ -109,6 +109,7 @@ const store = new Vuex.Store({
             state.profileGroupID = doc.data().groupID; 
             state.profileLoggedInTime = doc.data().loggedInTime;
             state.profileImg = doc.data().profileImg;
+            state.checkedInCourtID = doc.data().checkedInCourt
         },
 
         setProfileInitials(state){

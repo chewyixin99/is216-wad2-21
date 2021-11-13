@@ -111,6 +111,7 @@ export default {
                 alert("You have not checked in!")
             }
             else{
+                this.$store.commit("updateCheckedInCourtId", "")
                 this.$store.dispatch("removeCurrentPlayer")
                 .then(()=>{
                     location.reload();
