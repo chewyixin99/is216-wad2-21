@@ -71,7 +71,9 @@ export default {
     },
 
     methods: {
-        
+        forceRerender() {
+            this.$store.commit("forceRerender")
+        },
         
         getCourtData() {
             console.log("==== getCourtData ====");
@@ -82,9 +84,6 @@ export default {
                     })
                 }
             )
-
-
-
         },
 
         bookmarkCourt() {
@@ -100,7 +99,7 @@ export default {
                 this.$store.commit("updateCheckedInCourtId", this.courtID)
                 this.$store.dispatch("addCurrentPlayer")
                 .then(()=>{
-                    location.reload();
+                    this.forceRerender()
                 })
             }
         },
@@ -111,10 +110,9 @@ export default {
                 alert("You have not checked in!")
             }
             else{
-                this.$store.commit("updateCheckedInCourtId", "")
                 this.$store.dispatch("removeCurrentPlayer")
                 .then(()=>{
-                    location.reload();
+                    this.forceRerender()
                 })
             }
             

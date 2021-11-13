@@ -84,6 +84,10 @@ export default {
     },
 
     methods: {
+        forceRerender() {
+            this.$store.commit("forceRerender")
+        },
+        
         checkIn(){
             // Upon continuing:
             // Remove user from current check in
@@ -95,7 +99,7 @@ export default {
                 // Add player to new court
                 this.$store.dispatch("addCurrentPlayer").then(() => {
                     this.$store.commit("toggleCheckInConflict")
-                    location.reload();           
+                    this.forceRerender()
                 })
             })
 

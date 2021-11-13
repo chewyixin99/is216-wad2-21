@@ -64,14 +64,16 @@ const store = new Vuex.Store({
         checkedInCourtID: "",
         checkInConflict: false,
 
-
+        reloadKeys: 0,
 
 
 
     },
 
     mutations: { //INTERACTIONS BETWEEN STORE AND VUE
-
+        forceRerender(state) {
+            state.reloadKeys += 1
+        },
 
         inputCurrentMember(state, payload){
             state.currentMemberID = payload;
@@ -230,7 +232,7 @@ const store = new Vuex.Store({
             
         },
 
-        // *****************************************************************
+        // Check in
         async addCurrentPlayer({state}){ 
 
             const courtDb = await db.collection('court').doc(state.checkedInCourtID)
@@ -255,6 +257,7 @@ const store = new Vuex.Store({
             
         },
 
+        // Check out
         async removeCurrentPlayer({state, commit}){
             const courtDb = await db.collection('court').doc(state.checkedInCourtID);
             await courtDb.update({
@@ -278,6 +281,37 @@ const store = new Vuex.Store({
             })
         },
 
+        // Check in history
+        // Whenever the check in, input a check in history to the user's history
+        // include, checkintime = current time, check out time default 2 hrs
+        async addCheckInHistory({state}) {
+            let currentTime = firebase.firestore.Timestamp.now().toDate()
+            let checkInTime = currentTime
+            let checkOutTime = currentTime.setHours(currentTime.getHours() + 2);
+
+            const checkInDb = await db.collection('user').doc(state.profileID).collection('checkInHistory')
+            await checkInDb.add({
+                checkInTime: checkInTime,
+                checkOutTime: checkOutTime,
+                courtInfo: state.selectedCourt,
+            }).then(() => {
+                console.log(`Successfully added check in history.`);
+            }).catch((error) => {
+                console.log(`Failed to add check in history. Error: ${error}`);
+            })
+        },
+
+        // Check out history
+        // when the user check out, go retrieve the latest check in from check in history and update checkout to current time
+        async addCheckOutHistory({state}) {
+            const checkInDb = await db.collection('user').doc(state.profileID).collection('checkInHistory')
+            // Retrieve the latest check in, should only have 1
+            await checkInDb.orderBy("checkInTime", "desc").limit(1)
+            .then((latestCheckIn) => {
+                console.log(latestCheckIn.docs[0].data())
+            })
+
+        },
 
         // UPDATE USER INFO FOR ONBOARDING, PROFILE PAGE
 
