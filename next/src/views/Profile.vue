@@ -42,13 +42,20 @@
             </div>
 
             <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
-              <span style="color: #FEB842">FAVOURITE PLAYER</span>
-              <span>{{favPlayer.toUpperCase()}}</span>
+              <span style="color: #FEB842">FAVOURITE PLAYERS</span>
+              <div>
+                <span>{{favPlayer1.toUpperCase()}}</span>
+                <span v-if="favPlayer2"> , {{favPlayer2.toUpperCase()}}</span>
+              </div>
+
             </div>
 
             <div class="secondary-white-title mb-4 flex flex-wrap justify-between">
-              <span style="color: #FEB842">FAVOURITE TEAM</span>
-              <span>{{favTeam.toUpperCase()}}</span>
+              <span style="color: #FEB842">FAVOURITE TEAMS</span>
+              <div>
+                <span>{{favTeam1.toUpperCase()}}</span>
+                <span v-if="favTeam2"> , {{favTeam2.toUpperCase()}}</span>
+              </div>
             </div>
 
             
@@ -172,18 +179,43 @@ export default {
 
         },
 
-        favPlayer: {
+        favPlayer1: {
 
           get() {
-            return this.$store.state.profileFavPlayer
+            return this.$store.state.profileFavPlayer1
             },
 
         },
+
+        favPlayer2: {
+
+          get() {
+            return this.$store.state.profileFavPlayer2
+            },
+
+        },
+
         
         favTeam: {
 
           get() {
             return this.$store.state.profileFavTeam
+            },
+
+        },
+
+        favTeam1: {
+
+          get() {
+            return this.$store.state.profileFavTeam1
+            },
+
+        },
+
+        favTeam2: {
+
+          get() {
+            return this.$store.state.profileFavTeam2
             },
 
         },

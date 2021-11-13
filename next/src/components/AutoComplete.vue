@@ -23,11 +23,11 @@
 export default ({
 
     name: "Autocomplete",
-    props: ["inputs","placeholder"],
+    props: ["inputs","placeholder","fav"],
     data(){
 
         return{
-            input: "",
+            input: this.fav,
             modal: false,
             filteredInputs: [],
         }
