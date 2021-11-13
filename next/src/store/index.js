@@ -71,10 +71,10 @@ const store = new Vuex.Store({
 
         reloadKeys: 0,
 
-        profileFavPlayer1: ``,
-        profileFavPlayer2: ``,
-        profileFavTeam1: ``,
-        profileFavTeam2: ``,
+        profileFavPlayer1: "",
+        profileFavPlayer2: "",
+        profileFavTeam1: "",
+        profileFavTeam2: "",
 
 
 
