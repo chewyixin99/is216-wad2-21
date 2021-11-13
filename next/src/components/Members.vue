@@ -5,7 +5,7 @@
             <div v-if="profileImg">
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileImg">
             </div>
-            <div v-else class="mb-3"> 
+            <div v-else class=""> 
                 <img class="h-10 w-10 rounded-full object-cover cursor-pointer" :src="profileInitialsURL">
             </div>
             <span class="secondary-white-title ml-3 my-auto hover:text-yellow-500 cursor-pointer">{{firstName}} {{lastName}} </span> 
