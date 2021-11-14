@@ -1,7 +1,7 @@
 <template>
 
     <div>
-        <div v-if="flag" class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
 
             <div class="flex items-center justify-center min-h-screen pt-4 pb-20 text-center">
 
@@ -42,7 +42,7 @@ export default ({
 
     name: "ModalNotify",
 
-    props: ["modalMessage", "flag"],
+    props: ["modalMessage"],
     
     components: {
 

@@ -13,7 +13,7 @@
       <div class="typical col-span-1 mt-3 h-48">
           <v-typical
             class="blink"
-            :steps="['Bringing your game to the NEXT level', 1000, 'Project NEXT', 500, 'It\'s game on', 1000]"
+            :steps="['Bring your game to the NEXT level.', 1000, 'Project NEXT.', 500, 'It\'s game on.', 1000]"
             :loop="Infinity"
             :wrapper="'h2'"
           ></v-typical>
