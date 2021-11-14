@@ -30,27 +30,16 @@
         SELECTED COURT <br/>
         {{ $store.state.selectedCourt }} -->
           
-          <div class="last-checked-in-text py-1">
-              <span class="leading-text"> Last checked in at </span>
-              <span class="text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
-          </div>
-
-          <div class="last-checked-in-button search-button bg-yellow-500 hover:bg-yellow-700 text-white mx-auto md:mx-0 py-1 px-4 text-right rounded focus:outline-none focus:shadow-outline ">
-            <button v-if="showCheckOut" v-on:click="$store.dispatch('removeCurrentPlayer')">
-              <strong>Check Out</strong>
-            </button>
-
-        <span class="last-checked-in-text py-1">
+        <div class="last-checked-in-text py-1">
             <span class="leading-text"> Last checked in at </span>
-            <a href="/court" :click="updateSelectedCourt($store.state.checkedInCourt)">
-              <span class="text-yellow-500 hover:underline">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
-            </a>
-        </span>
+            <span class="text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
+        </div>
+
         <span class="last-checked-in-button search-button bg-yellow-500 hover:bg-yellow-700 text-white  my-auto py-1 px-4 rounded focus:outline-none focus:shadow-outline">
           <button v-if="showCheckOut" v-on:click="$store.dispatch('removeCurrentPlayer')">
             <strong>Check Out</strong>
           </button>
-          <a href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)" v-else>
+          <a v-else href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)">
             <strong>View Court Status</strong>
           </a>
         </span>
