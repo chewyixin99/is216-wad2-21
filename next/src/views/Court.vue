@@ -29,7 +29,11 @@
                         <div class="secondary-gold-title">
                             <h1>CURRENT PLAYERS</h1>
                         </div>
-                        <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">1 P</span>
+                        <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{
+                            typeof $store.state.selectedCourtCurrentUsers.currentPlayers !== 'undefined' ? 
+                            $store.state.selectedCourtCurrentUsers.currentPlayers.length :
+                            '0'
+                        }} P</span>
                     </div>
 
                     <court-current-players :courtID="court.id" :key="$store.state.reloadKeys"/>

@@ -24,9 +24,6 @@ export default {
 
     props: ["courtID"],
     
-    // mounted() {
-    //     store.dispatch("updateSelectedCourtCurrentUsers")
-    // },
     data(){
         return {
             currentPlayers: null,
@@ -40,11 +37,10 @@ export default {
         .doc(this.courtID)
         .get()
         .then((docRef) => {
-            
             this.currentPlayers = docRef.data().currentPlayers
-
         })
         .then(()=>{
+            this.$store.commit('updateSelectedCourtCurrentUsers', this.currentPlayers)
             console.log("Current players successfully retrieved from court");
         })
 

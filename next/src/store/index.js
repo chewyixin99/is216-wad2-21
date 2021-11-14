@@ -238,7 +238,7 @@ const store = new Vuex.Store({
         },
         
         updateSelectedCourtCurrentUsers(state, payload) {
-            state.selectedCourtCurrentUsers = payload
+            state.selectedCourtCurrentUsers.currentPlayers = payload
         },
 
         populatePublicUserGroupDetails(state, payload) {
@@ -287,30 +287,15 @@ const store = new Vuex.Store({
             console.log(`on login getCurrentUser from store below`)
             console.log(firebase.auth().currentUser.uid)
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
-            const dbResults = await dataBase.get();
-            commit("setProfileInfo", dbResults);
-            commit("setProfileInitials");
-            commit("setProfileInitialsURL")
+            await dataBase.get()
+            .then((dbResults) => {
+                commit("setProfileInfo", dbResults);
+                commit("setProfileInitials");
+                commit("setProfileInitialsURL")
             
-            dispatch("getBookmarks")
-            dispatch('getRecentlyPlayed')
-            dispatch('getLastCheckedIn')
-            
-        },
-
-        async getLastCheckedIn({commit}) {
-            const data = await db.collection('users')
-                .doc(firebase.auth().currentUser.uid)
-                .collection("checkInHistory")
-                .orderBy("checkInTime", "desc")
-                .get()
-            
-            if( data.docs.length > 0) {
-                commit("updateCheckedInCourt", data.docs[0].get('courtInfo'))
-            } else {
-                console.log('No last checked in court available!')
-            }
-
+                dispatch("getBookmarks")
+                dispatch('getRecentlyPlayed')
+            })
         },
 
         async addTeam({state}){ 
@@ -459,6 +444,7 @@ const store = new Vuex.Store({
             let allRecentlyPlayedInfo = []
             console.log(`=== getRecentlyPlayed mutation ===`)
             
+            console.log(state.profileID);
             await db.collection('users')
                 .doc(state.profileID)
                 .collection('recentlyPlayed')
