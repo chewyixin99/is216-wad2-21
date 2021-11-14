@@ -110,7 +110,7 @@ export default {
             groupImg: null,
             groupImgDefault: null,
             modalActive: false,
-            modalMessage: "Message Board updated successfully",
+            modalMessage: "Message Board updated successfully.",
             flag: false,
 
         }

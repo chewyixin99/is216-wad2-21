@@ -22,10 +22,11 @@ export default ({
     data(){
 
         return{
+            
             teams: [],
             teamPH: "What's your dream team?",
             favTeam: this.$store.state.profileFavTeam,
-            input: "",
+
         }
 
     },
@@ -34,15 +35,10 @@ export default ({
 
         updateFavTeam(input){
 
-            this.input = input
-            
+
+            this.$emit("emitFavTeam", input)
+
         },
-
-        emitFavTeam(){
-
-            this.$emit("emitFavTeam", this.input)
-
-        }
     
     },
 
