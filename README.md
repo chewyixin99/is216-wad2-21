@@ -1,12 +1,12 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=453407&assignment_repo_type=GroupAssignmentRepo)
 
 # Table of Contents
-1. [ Project Overview ](#overview)
-2. [ How to Install and Run Our Web Application (for Developers) ](#installation)
-3. [ How to Deploy Our Web Application (for Developers) ](#deployment)
-4. [ How to Use Our Web Application ](#visitors)
-5. [ Figma ](#figma)
-6. [ The Team ](#team)
+1. [ The Team ](#team)
+2. [ Project Overview ](#overview)
+3. [ How to Install and Run Our Web Application (for Developers) ](#installation)
+4. [ How to Deploy Our Web Application (for Developers) ](#deployment)
+5. [ How to Use Our Web Application ](#visitors)
+6. [ Figma ](#figma)
 
 <a id="top"></a>
 # 🏀 IS216 - Group 38 - NEXT
