@@ -12,7 +12,7 @@
         </div>
 
         <!-- FOUNDERS -->
-        <div class="mt-5 px-6 text-center w-max mx-auto">
+        <div class="mt-5 px-6 text-center mx-auto">
             <div class="text-white">
                 <h1 class="text-center text-3xl font-extrabold">
                     ABOUT US
