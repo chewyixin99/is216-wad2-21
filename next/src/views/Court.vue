@@ -25,8 +25,8 @@
                 <!-- Current Players Section -->
                 <div class="mb-6">
 
-                    <div class="flex flex-wrap justify-between">
-                        <div class="secondary-gold-title">
+                    <div class="flex flex-wrap">
+                        <div class="secondary-gold-title mr-5">
                             <h1>CURRENT PLAYERS</h1>
                         </div>
                         <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">{{
@@ -48,6 +48,8 @@
                 </div>
 
             <court-conflict-modal :courtID="court.id" v-if="$store.state.checkInConflict"/>
+            <modal-notify v-if="modalActive" @closeModal="closeModal" :modalMessage="modalMessage" :flag="flag"></modal-notify>
+            
 
             </div>
         </div>
@@ -59,15 +61,18 @@ import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
 import CourtConflictModal from "../components/CourtConflictModal.vue"
+import modalNotify from "../components/modalNotify.vue"
 
 export default {
   name: "Court",
   
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtConflictModal},
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtConflictModal, modalNotify},
 
   data() {
     return {
-        court: this.$store.state.selectedCourt 
+        court: this.$store.state.selectedCourt,
+
+        
     };
   },
 
