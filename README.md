@@ -1,41 +1,44 @@
 [![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-f059dc9a6f8d3a56e377f745f24479a46679e63a5d9fe6f495e02850cd0d8118.svg)](https://classroom.github.com/online_ide?assignment_repo_id=453407&assignment_repo_type=GroupAssignmentRepo)
-# :wave: is216-project
 
-## 🤓 IS216 - Group 38 - NEXT
-<!-- * Please update the above header. For example, it should look like this: **IS216 - Group 123 - Supreme Children**
-* Who are your group members? List everyone's full name, SMU email address, and other info you wish to put here. -->
+# Table of Contents
+1. [ Project Overview ](#overview)
+2. [ How to Install and Run Our Web Application (for Developers) ](#installation)
+3. [ How to Deploy Our Web Application (for Developers) ](#deployment)
+4. [ How to Use Our Web Application ](#visitors)
+5. [ Figma ](#figma)
+6. [ The Team ](#team)
+
+<a id="top"></a>
+# 🤓 IS216 - Group 38 - NEXT
 ![Next Logo](nextlogo3.png)
-* Chew Yi Xin (yixin.chew.2020@scis.smu.edu.sg)
-* Gan Jian Lin (jianlin.gan.2020@scis.smu.edu.sg)
-* Joel Lim (joel.lim.2020@scis.smu.edu.sg)
-* Loh Kok Wee (kokwee.loh.2020@scis.smu.edu.sg)
+
+<a id="overview"></a>
+# 🤓 Project Overview #
+As there are a limited number of basketball courts, players will need to either share the courts or join a pickup game. However, there are currently no reliable avenues to facilitate this. As a result, it is a common sight to see players heading down to multiple basketball courts to check the availability of games and courts. Our project, Next, aims to organise this fragmented network of basketball games in Singapore to help users better visualise the availability of courts/games and reduce wasted time.
 
 
-## 🤓 Project Overview ##
-* Describe your project. What is it called? What does it do? Why did you make this web application? Who will benefit from using your web application? Describe your users - who are they? (anyone? or specific target age group or gender? region? country?)
-* Feel free to use diagrams and images to describe. For example, if you have a system architecture diagram, please place it here and describe it. If you have a business process diagram, you can also place it here and describe it.
-* To be updated
 ![Architecture Diagram](solution.png)
 
-## 🤓 How to Install and Run Our Web Application (for Developers) ##
-* If a new developer were to have access to your IS216 project GitHub repo (and subsequently your source code files) and replicate your development environment on his development laptop computer, what are the steps he should take?
-* What does he needs to install on his development laptop computer? How can he download your project files and run it on his own computer?
-* Provide a step-by-step description of how to get the development environment running. You can choose to do so for at least 1 Operating System (Windows 10 or Mac OS).
-* Feel free to use diagrams and images to describe.
+<a id="installation"></a>
+# 🤓 How to Install and Run Our Web Application (for Developers) ##
+In order to
 
 
-## 🤓 [OPTIONAL] How to Deploy Our Web Application (for Developers) ##
+<a id="deployment"></a>
+# 🤓 [OPTIONAL] How to Deploy Our Web Application (for Developers) ##
 * As an optional X-factor, did your group deploy your web application to cloud? (e.g. AWS, GCP, Azure, Heroku, Digital Ocean, or similar) If so, provide a step-by-step description of how a developer can deploy your web application
 * Feel free to use diagrams and images to describe.
 
 
-## 🤓 How to Use Our Web Application (for Visitors to our Website) ##
+<a id="visitors"></a>
+# 🤓 How to Use Our Web Application (for Visitors to our Website) ##
 * Yay! Your website is READY for visitors!
 * Provide a step-by-step description of what the user/visitor can/should do upon visiting your website for the first time.
 * It would be wonderful if you could include **screenshot images** of web pages to demonsrate what the user/visitor can/should do.
 
 
-## 🤓 Figma ##
+<a id="figma"></a>
+# 🤓 Figma ##
 <!-- * FEEL FREE to **add more things** into this **README** -->
 * [Figma (Mobile)](https://www.figma.com/proto/O5EaYzT19cAZYyO9pd1L1d/NEXT?page-id=113%3A41&node-id=266%3A76&viewport=241%2C48%2C0.17&scaling=scale-down&starting-point-node-id=266%3A76&show-proto-sidebar=1)
 * [Figma (Web)](https://www.figma.com/proto/O5EaYzT19cAZYyO9pd1L1d/NEXT?page-id=113%3A41&node-id=339%3A1375&viewport=241%2C48%2C0.17&scaling=scale-down&starting-point-node-id=339%3A1375&show-proto-sidebar=1)
@@ -47,11 +50,15 @@
 ![Architecture Diagram](solution.png) -->
 
 
-## 🤓 User Accounts ##
-* Insert account
+<a id="team"></a>
+# 🤓 The Team ##
+* Chew Yi Xin (yixin.chew.2020@scis.smu.edu.sg)
+* Gan Jian Lin (jianlin.gan.2020@scis.smu.edu.sg)
+* Joel Lim (joel.lim.2020@scis.smu.edu.sg)
+* Loh Kok Wee (kokwee.loh.2020@scis.smu.edu.sg)
 
 
-## 🤓 Useful Resources ##
+# 🤓 Useful Resources ##
 * [**Markdown** Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
 * [**GOOD** README Example 1](https://github.com/testing-library/cypress-testing-library)
 * [**GOOD** README Example 2](https://github.com/typeorm/typeorm)
