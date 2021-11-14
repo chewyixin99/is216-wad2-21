@@ -30,9 +30,9 @@
                     <div class="bg-yellow-400  font-medium p-3 text-center py-8 border-yellow-400 border-2 border-dashed rounded hover:text-white hover:bg-purple-900 hover:shadow-2xl transition-colors duration-200 ">
                         <div class="flex justify-center items-center">
                             <div>
-                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo[0])"> 
+                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['Kok Wee'])"> 
                                     <img 
-                                    :src="typeof accountInfo[0].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo[0].profileImg" 
+                                    :src="typeof accountInfo['Kok Wee'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['Kok Wee'].profileImg" 
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
@@ -57,9 +57,9 @@
                     <div class="bg-yellow-400  font-medium p-3 text-center py-8 border-yellow-400 border-2 border-dashed rounded hover:text-white hover:bg-purple-900 hover:shadow-2xl transition-colors duration-200 ">
                         <div class="flex justify-center items-center">
                             <div>
-                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo[1])"> 
+                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['Joel'])"> 
                                     <img 
-                                    :src="typeof accountInfo[1].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo[1].profileImg" 
+                                    :src="typeof accountInfo['Joel'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['Joel'].profileImg" 
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
@@ -84,9 +84,9 @@
                     <div class="bg-yellow-400  font-medium p-3 text-center py-8 border-yellow-400 border-2 border-dashed rounded hover:text-white hover:bg-purple-900 hover:shadow-2xl transition-colors duration-200 ">
                         <div class="flex justify-center items-center">
                             <div>
-                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo[2])"> 
+                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['firstcome'])"> 
                                     <img 
-                                    :src="typeof accountInfo[2].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo[2].profileImg" 
+                                    :src="typeof accountInfo['firstcome'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['firstcome'].profileImg" 
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
@@ -111,9 +111,9 @@
                     <div class="bg-yellow-400  font-medium p-3 text-center py-8 border-yellow-400 border-2 border-dashed rounded hover:text-white hover:bg-purple-900 hover:shadow-2xl transition-colors duration-200 ">
                         <div class="flex justify-center items-center">
                             <div>
-                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo[3])"> 
+                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['firstserve'])"> 
                                     <img 
-                                    :src="typeof accountInfo[3].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo[3].profileImg" 
+                                    :src="typeof accountInfo['firstserve'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['firstserve'].profileImg" 
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
@@ -163,7 +163,9 @@ export default {
     data () {
         return {
             // Our accounts
-            accountIDs: [ "yI7Mez9EfMdlG8lDyBviXM1pbEA3" 
+            accountIDs: [ 
+                "yI7Mez9EfMdlG8lDyBviXM1pbEA3",
+                "qN88jQOVmwTyi6LGzd6YtDoGJuw2"
                 // {
                 //     firstName: "Kok Wee",
                 //     lastName: "Loh",
@@ -177,7 +179,12 @@ export default {
                 // }
             ],
 
-            accountInfo : [{}, {}, {}, {}]
+            accountInfo : {
+                'Kok Wee': {},
+                'Joel': {},
+                'firstcome': {},
+                'firstserve': {}
+            }
 
 
         }
@@ -189,10 +196,8 @@ export default {
         .where(firebase.firestore.FieldPath.documentId(), 'in', this.accountIDs)
         .get()
         .then((userDocs) => {
-            let counter = 0
 
             userDocs.forEach((userDoc) => {
-
                 let memberObj = {
                     firstName: userDoc.data().firstName,
                     lastName: userDoc.data().lastName,
@@ -202,16 +207,11 @@ export default {
                     favTeam: userDoc.data().favTeam,
                     profileImg: userDoc.data().profileImg,
                     groupID: userDoc.data().groupID,
-                    profileID: this.accountIDs[counter]
+                    profileID: userDoc.ref.id()
 
                 }
-
-                console.log(memberObj.profileImg);
-
-                this.accountInfo[counter] = memberObj
+                this.accountInfo[memberObj.firstName] = memberObj
             })
-
-            counter += 1
 
 
         })
