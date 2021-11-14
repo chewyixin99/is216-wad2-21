@@ -3296,7 +3296,7 @@ export default ({
             ],
             playerPH: "Who's your basketball idol?",
             favPlayer: this.$store.state.profileFavPlayer,
-            input: "",
+
         }
 
     },
@@ -3305,15 +3305,9 @@ export default ({
 
         updateFavPlayer(input){
 
-            this.input = input
-            
+            this.$emit("emitFavPlayer", input)
+
         },
-
-        emitFavPlayer(){
-
-            this.$emit("emitFavPlayer", this.input)
-
-        }
     
     },
 
