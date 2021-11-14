@@ -4,9 +4,8 @@
 1. [ The Team ](#team)
 2. [ Project Overview ](#overview)
 3. [ How to Install and Run Our Web Application (for Developers) ](#installation)
-4. [ How to Deploy Our Web Application (for Developers) ](#deployment)
-5. [ How to Use Our Web Application ](#visitors)
-6. [ Figma ](#figma)
+4. [ How to Use Our Web Application ](#visitors)
+5. [ Figma ](#figma)
 
 <a id="top"></a>
 # 🏀 IS216 - Group 38 - NEXT
@@ -18,6 +17,7 @@
 * Gan Jian Lin (jianlin.gan.2020@scis.smu.edu.sg)
 * Joel Lim (joel.lim.2020@scis.smu.edu.sg)
 * Loh Kok Wee (kokwee.loh.2020@scis.smu.edu.sg)
+
 
 <a id="overview"></a>
 # 🏀 Project Overview #
@@ -46,11 +46,6 @@ npm run serve
 4. To end the application, simply press cmd/ctrl + c.
 
 
-<a id="deployment"></a>
-# 🏀 How to Deploy Our Web Application (for Developers) ##
-* As an optional X-factor, did your group deploy your web application to cloud? (e.g. AWS, GCP, Azure, Heroku, Digital Ocean, or similar) If so, provide a step-by-step description of how a developer can deploy your web application
-* Feel free to use diagrams and images to describe.
-
 
 <a id="visitors"></a>
 # 🏀 How to Use Our Web Application (for Visitors to our Website) ##
@@ -61,6 +56,11 @@ As the key purpose of our application is for any user to be able to view the cro
 This Gif provides you a quick overview on how to use our app!
 
 
+# 🏀 Test Accounts ##
+* ts@gmail.com | Password
+* sr@gmail.com | Password
+
+But feel free to create your own account!
 
 <a id="figma"></a>
 # 🏀 Figma ##
