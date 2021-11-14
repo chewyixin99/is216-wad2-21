@@ -19,6 +19,7 @@
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
     "vue": "^3.0.0",
+    "vue-responsive-video-background-player": "^2.2.0",
     "vue-router": "^4.0.0-0",
     "vuex": "^4.0.2",
     "vuex-persistedstate": "^4.1.0"
