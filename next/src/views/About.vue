@@ -12,7 +12,7 @@
         </div>
 
         <!-- FOUNDERS -->
-        <div class="mt-5 px-6 text-center w-max mx-auto">
+        <div class="mt-5 px-6 text-center mx-auto">
             <div class="text-white">
                 <h1 class="text-center text-3xl font-extrabold">
                     ABOUT US
@@ -36,7 +36,7 @@
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
-
+                    
                                 <h1 class="text-3xl mt-3">Loh Kok Wee</h1> 
                                 <p class="text-md">"BALL IS LIFE"</p>
 
