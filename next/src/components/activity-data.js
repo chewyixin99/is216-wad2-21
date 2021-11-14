@@ -5,12 +5,13 @@ import moment from "moment"
 
 const ActivityData = {
   // ====================== DATA RETRIEVAL ======================
-    dbData: {
-    },
+
 
     async getCheckInHistory() {
+      let dbData = {}
       let retrieveDate = moment().subtract(7, 'd').toDate()
-      const dataBase = await db.collection('users').doc(store.state.profileID).collection("checkInHistory")
+
+      const dataBase = await db.collection('users').doc(store.state.selectedProfile.profileID).collection("checkInHistory")
       await dataBase.where("checkInTime", ">=", retrieveDate)
       .get()
       .then((relevantCheckIns) => {
@@ -20,10 +21,10 @@ const ActivityData = {
           let checkInDuration = moment.duration(checkOutTime.diff(checkInTime, 'h', true))
           let dayOfWeek = Number(checkInTime.isoWeekday())
         
-          if (dayOfWeek in this.dbData) {
-            this.dbData[dayOfWeek] = this.dbData[dayOfWeek].add(checkInDuration) 
+          if (dayOfWeek in dbData) {
+            dbData[dayOfWeek] = dbData[dayOfWeek].add(checkInDuration) 
           } else {
-            this.dbData[dayOfWeek] = checkInDuration
+            dbData[dayOfWeek] = checkInDuration
           }
         })
         console.log("Retrieved chart.js data from Firestore.");
@@ -31,7 +32,7 @@ const ActivityData = {
       
       .then(() => {
         for (let dayOfWeek = 0; dayOfWeek < 7; dayOfWeek++) {
-          this.data.datasets[0].data[dayOfWeek] += this.dbData[dayOfWeek + 1]
+          this.data.datasets[0].data[dayOfWeek] = dbData[dayOfWeek + 1]
         }
         console.log("Chart.js dataset updated.");
       })

@@ -30,6 +30,7 @@
         
         <router-link to="/profile" class="hidden font-bold mt-4 lg:inline-block text-white lg:my-0 mr-10">
           <the-profile-icon 
+          @emit-click="updateSelectedUser"
           v-bind:initials="initials"
           v-bind:imgSrc="imgSrc"
           />
@@ -70,6 +71,14 @@ export default {
   methods : {
     toggleNavBar() {
       this.showMenu = !this.showMenu
+    },
+
+    updateSelectedUser() {
+      let payload = {
+        profileID: this.$store.state.profileID
+      }
+
+      this.$store.commit('updateSelectedProfile', payload)
     }
   }
 }

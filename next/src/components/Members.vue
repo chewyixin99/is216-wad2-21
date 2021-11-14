@@ -75,6 +75,7 @@ export default ({
                 favTeam: docRef.data().favTeam,
                 profileImg: docRef.data().profileImg,
                 groupID: docRef.data().groupID,
+                profileID: this.member1
             }
         })
         .then(()=>{
