@@ -142,7 +142,8 @@
               <a href="/publicuser" v-on:click="updateSelectedProfile(p)">
                 <span v-if="showProfileImg(p) > 0" >
                   <div class="player-image">
-                    <img v-bind:src="p.profileImg" alt="">
+                    <img v-if="p.profileImg == null" :src="p.initialsURL" alt="">
+                    <img v-else v-bind:src="p.profileImg" alt="">
                   </div>
                 </span>
 

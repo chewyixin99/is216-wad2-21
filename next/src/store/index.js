@@ -492,7 +492,8 @@ const store = new Vuex.Store({
                             experience: recentlyPlayedData.data().experience,
                             favPlayer: recentlyPlayedData.data().favPlayer,
                             favTeam: recentlyPlayedData.data().favTeam,
-                            groupID: recentlyPlayedData.data().groupID
+                            groupID: recentlyPlayedData.data().groupID,
+                            initialsURL: recentlyPlayedData.data().initialsURL,
                         }
 
                         allRecentlyPlayedInfo.push(userInfo)
