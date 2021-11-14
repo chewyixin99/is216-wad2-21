@@ -28,13 +28,16 @@ export default {
     },
     props: ["courtID"],
     methods: {
+        forceRerender() {
+            this.$store.commit('forceRerender')
+        },
 
         addTeam(){
 
             if (this.$store.state.checkedInCourtID == this.courtID){
                 this.$store.dispatch("addTeam")
                 .then(()=>{
-                    location.reload();
+                    this.forceRerender()
                 })
             }
             else{

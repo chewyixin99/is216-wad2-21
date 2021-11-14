@@ -24,9 +24,14 @@
             <div class="col-span-2 justify-center mx-6">
                 <!-- Current Players Section -->
                 <div class="mb-6">
-                    <div class="secondary-gold-title">
-                        <h1>CURRENT PLAYERS</h1>
+
+                    <div class="flex flex-wrap justify-between">
+                        <div class="secondary-gold-title">
+                            <h1>CURRENT PLAYERS</h1>
+                        </div>
+                        <span class="rounded-full bg-gray-700 py-2 px-5 font-bold text-white text-sm">1 P</span>
                     </div>
+
                     <court-current-players :courtID="court.id" :key="$store.state.reloadKeys"/>
                 </div>
         
@@ -35,7 +40,7 @@
                     <div class="secondary-gold-title mb-3">
                         <h1>CURRENT TEAMS</h1>
                     </div>
-                    <court-team :courtID="court.id"/>
+                    <court-team :courtID="court.id" :key="$store.state.reloadKeys"/>
                 </div>
 
             <court-conflict-modal :courtID="court.id" v-if="$store.state.checkInConflict"/>

@@ -30,12 +30,26 @@ export default {
         }
     },
     methods:{
-
-
     },
+
+    // watch: {
+    //     '$store.state.checkedInCourtID': function() {
+    //         console.log("===================================");
+    //         firebase
+    //         .firestore()
+    //         .collection("court")
+    //         .doc(this.courtID)
+    //         .collection('courtTeams')
+    //         .get()
+    //         .then((doc)=>{
+    //             doc.docs.forEach((doc)=>{
+    //                 this.items.push({id:doc.id,data: doc.data()})
+    //             })
+    //         })
+    //     }
+    // },
+
     created(){
-
-
         firebase
         .firestore()
         .collection("court")
@@ -43,14 +57,10 @@ export default {
         .collection('courtTeams')
         .get()
         .then((doc)=>{
-
             doc.docs.forEach((doc)=>{
                 this.items.push({id:doc.id,data: doc.data()})
-
             })
-
         })
-
     }
 
 }

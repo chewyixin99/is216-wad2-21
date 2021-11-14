@@ -17,14 +17,14 @@ Team card spans the entire width of its container, so it requries container divs
             </ol>
         </div>
 
-        <div class="absolute inset-x-4 bottom-4 grid grid-cols-2 gap-3">
-            <div class="col-span-1">
+        <div class="absolute inset-x-4 bottom-4  gap-3">
+            <div v-if="!checkJoin" class="" >
                 <the-button @click="leaveTeam" class="bg-red-500 text-white" button-type="form-full">
                     <slot>LEAVE</slot>
                 </the-button>
             </div>
 
-            <div class="col-span-1">
+            <div v-if="checkJoin" class="">
                 <the-button @click="joinTeam" class="bg-yellow-500 text-white" button-type="form-full">
                     <slot>JOIN</slot>
                 </the-button>
@@ -63,7 +63,21 @@ export default {
 
     },
 
+    computed: {
+        checkJoin() {
+            if (this.item.data.teamMembers.includes(this.$store.state.profileID)) {
+                console.log("dont Showwwwwweww");
+                return false
+            }
+
+            return true
+        }
+    },
+
     methods:{
+        forceRerender() {
+            this.$store.commit('forceRerender')
+        },
 
         joinTeam(){
 
@@ -81,9 +95,7 @@ export default {
 
                 })
                 .then(()=>{
-
-                    location.reload()
-
+                    this.forceRerender()
                 })
             }
             else{
@@ -118,11 +130,9 @@ export default {
                         teamMembers: firebase.firestore.FieldValue.arrayRemove(this.$store.state.profileID)
 
                     })
-                    // .then(()=>{
-
-                    //     location.reload()
-
-                    // })
+                    .then(()=>{
+                        this.forceRerender()
+                    })
                 }
                 else{
 
@@ -133,19 +143,20 @@ export default {
                     .collection('courtTeams')
                     .doc(this.teamID)
                     .delete()
-                    // .then(()=>{
-
-                    //     location.reload()
-
-                    // })
+                    .then(()=>{
+                        this.forceRerender()
+                    })
 
                 }
             }
-            else{
-                alert("You cannot leave a team if you are not in it!")
-            }
-        }
+
+        },
+
+
     },
+
+
+
 
     // created(){
 
