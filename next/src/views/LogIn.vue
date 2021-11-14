@@ -1,14 +1,26 @@
 <template>
 <div>
-  <video-background claass="videoheight"
+  <video-background
       :src="require(`@/assets/KobeBryantMix_C.mp4`)"
       style="height: 100vh; max-height: calc(100vh - 154px)"
-      overlay="linear-gradient(45deg,#2a4ae430,#000000)" 
+      overlay="linear-gradient(45deg,#2a4ae430,#000000)"
+      muted = "false"
   >
-    <div class="container max-w-md mx-auto">
+    <div class="container max-w-5xl mx-auto">
+      <!-- START OF GRID -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3 md:my-auto mx-6">
       
+      <div class="typical col-span-1 mt-3 h-48">
+          <v-typical
+            class="blink"
+            :steps="['Bringing your game to the NEXT level', 1000, 'Project NEXT', 500, 'It\'s game on', 1000]"
+            :loop="Infinity"
+            :wrapper="'h2'"
+          ></v-typical>
+      </div>
+
       <!-- LOG IN -->
-      <div class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 my-auto mx-6">
+      <div class="bg-gray-800 w-full md:w-96 shadow-md rounded px-8 pt-6 pb-8 my-auto mx-auto col-span-1">
         <form @submit.prevent="handleSubmit">
           <!-- LOGIN DETAILS -->
           <div class="mb-4">
@@ -47,6 +59,8 @@
       </div>
       <!-- END OF LOG IN -->
 
+      </div>
+      <!-- END OF GRID -->
     </div>
   </video-background>
 </div>
@@ -60,11 +74,13 @@
 // import { useRouter } from 'vue-router'
 import firebase from 'firebase/compat/app';
 import VideoBackground from 'vue-responsive-video-background-player'
+import VTypical from 'vue-typical';
 
 export default {
   name: 'LogIn',
   components:{
     VideoBackground,
+    VTypical,
   },
   data(){
     return{
@@ -130,3 +146,11 @@ export default {
 }
 </script>
 
+<style scoped>
+  .blink {
+    /* background: white; */
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+  }
+</style>
