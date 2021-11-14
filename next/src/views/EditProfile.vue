@@ -58,13 +58,13 @@
                             <label class="block text-white text-sm font-bold mb-2" for="favPlayer">
                                 FAVOURITE PLAYER
                             </label> 
-                            <FavPlayer/>
+                            <FavPlayer @emitFavPlayer="favPlayerUpdate($event)"/>
                         </div>
                         <div>
                             <label class="block text-white text-sm font-bold mb-2" for="favTeam">
                                 FAVOURITE TEAM
                             </label>
-                            <FavTeam/>
+                            <FavTeam @emitFavTeam="favTeamUpdate($event)"/>
                         </div>
                     </div>
 
@@ -130,7 +130,7 @@ export default {
         
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
-            console.log(this.favPlayer);
+
             this.$store.state.profileFirstName = this.firstName
             this.$store.state.profileLastName = this.lastName
             this.$store.state.profileExperience = this.experience
@@ -140,8 +140,28 @@ export default {
 
         // ROUTE BACK TO PROFILE
         toProfile(){
-          this.$router.replace({name: "Profile"});
+
+            this.$router.replace({name: "Profile"});
+
         },
+
+        favTeamUpdate(input){
+
+            console.log(input);
+            console.log("1212");
+
+            this.$store.commit("changeFavTeam", input)
+
+        },
+
+        favPlayerUpdate(input){
+
+            console.log(input);
+            console.log("2323");
+
+            this.$store.commit("changeFavPlayer", input)
+
+        }
 
     },
 }

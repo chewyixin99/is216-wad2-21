@@ -55,6 +55,8 @@
 
 
         </div>
+        
+        <ModalNotify v-if="modalActive" @closeModal="closeModal" :modalMessage="modalMessage" :flag="flag"/>
 
         <div class="grid grid-cols-1 md:grid-cols-5 mt-3">
             <div class="secondary-white-title col-span-1 mb-2">MESSAGE BOARD:</div>
@@ -81,6 +83,7 @@ import Members from "./Members.vue"
 import firebase from 'firebase/compat/app';
 import TheButton from "./TheButton.vue"
 import AvatarInputGroup from "./AvatarInputGroup.vue"
+import ModalNotify from "./modalNotify.vue"
 
 export default {
 
@@ -91,7 +94,8 @@ export default {
 
         Members,
         TheButton, 
-        AvatarInputGroup
+        AvatarInputGroup,
+        ModalNotify,
 
     },
 
@@ -105,6 +109,9 @@ export default {
             groupMsg: null,
             groupImg: null,
             groupImgDefault: null,
+            modalActive: false,
+            modalMessage: "Message Board updated successfully",
+            flag: false,
 
         }
     },
@@ -124,10 +131,18 @@ export default {
             })
             .then(()=>{
                 console.log("Group Message Update Successful");
-                alert("You have updated message board successfully")
+                this.modalActive = true;
+                this.flag = true;
             })
             
-        }
+        },
+
+        closeModal(){
+
+            this.modalActive = !this.modalActive;
+
+        },
+
 
     },
 

@@ -25,6 +25,7 @@ export default ({
             teams: [],
             teamPH: "What's your dream team?",
             favTeam: this.$store.state.profileFavTeam,
+            input: "",
         }
 
     },
@@ -33,9 +34,15 @@ export default ({
 
         updateFavTeam(input){
 
-            this.$store.commit("changeFavTeam", input)
+            this.input = input
             
         },
+
+        emitFavTeam(){
+
+            this.$emit("emitFavTeam", this.input)
+
+        }
     
     },
 

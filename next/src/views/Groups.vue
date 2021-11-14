@@ -28,10 +28,12 @@
         </div>
 
         <div v-else v-for="info in groupID" :key="info">
-            <MyGroups :info = info @add="addMembers($event)" @remove="removeMembers($event)"/>
+            <MyGroups :info = info @add="addMembers($event)" @remove="removeMembers($event)" :key="$store.state.reloadKeys"/>
 
         </div>
 
+        <ModalAddMembers v-if="modalActive1" @closeModal="closeModal" @prompt="prompt($event)" :modalMessage="modalMessage" :flag="flag1"/>
+        <ModalConfirmation v-if="modalActive2" @confirm="confirm" :modalMessage="modalMessage" :flag="flag2"/>
 
 
   </div>
@@ -42,14 +44,26 @@
 
 import MyGroups from "../components/MyGroups.vue"
 import TheButton from "../components/TheButton.vue"
-// import firebase from 'firebase/compat/app';
+import ModalAddMembers from "../components/modalAddMembers.vue"
+import ModalConfirmation from "../components/modalConfirmation.vue"
+
 
 export default {
     name: 'Groups',
+
     data(){
+
       return{
 
-        addMemberID: null,
+        modalActive1: false,
+        modalActive2: false,
+        modalMessage: "",
+        modalType: '',
+        flag1: false,
+        flag2: false,
+        input: "",
+        retrievedGroupID: "",
+        retrievedGroupObj: null,
 
       }
       
@@ -60,9 +74,15 @@ export default {
         // TheProfileIcon,
         MyGroups, 
         TheButton,
+        ModalAddMembers,
+        ModalConfirmation
 
     },
     methods: {
+
+        forceRerender() {
+            this.$store.commit("forceRerender")
+        },
               
         toCreateGroup(){
 
@@ -72,34 +92,64 @@ export default {
 
         addMembers(groupID){
         
-          this.addMemberID = prompt("Input UID of member to add")
-          if (this.addMemberID != null){
-            this.$store.commit("inputCurrentMember", this.addMemberID)
-            this.$store.commit("inputCurrentGroup", groupID)
-            this.$store.dispatch("addNewMember")
-            .then(()=>{
-              location.reload()
-            })
-          }
-
+          this.retrievedGroupID = groupID
+          this.modalActive1 = true;
+          this.flag1 = true;
 
         },
+
         removeMembers(obj){
-        
-          let input = confirm("Are you sure you want to leave '" + obj.name + "'")
-          if (input){
+
+          this.retrievedGroupObj = obj
+          this.modalActive2 = true;
+          this.flag2 = true;
+          this.modalMessage = "Are you sure you want to leave '" + obj.name + "'";
+
+        },
+
+        prompt(input){
+
+          this.input = input;
+          this.$store.commit("inputCurrentMember", this.input)
+          this.$store.commit("inputCurrentGroup", this.retrievedGroupID)
+          this.$store.dispatch("addNewMember")
+            .then(()=>{
+                this.forceRerender()
+            })
+
+        },
+
+        closeModal(){
+
+            this.modalActive1 = !this.modalActive1;
+
+        },
+
+        confirm(reply){
+
+          if (reply){
+            
+            this.modalActive2 = !this.modalActive2;
             this.$store.commit("inputCurrentMember", this.$store.state.profileID)
-            this.$store.commit("inputCurrentGroup", obj.id)
+            this.$store.commit("inputCurrentGroup", this.retrievedGroupObj.id)
             this.$store.dispatch("removeMember")
             .then(()=>{
-              location.reload();
-            });
+                  location.reload()
+            })
+
+          }
+
+          else{
+
+            this.modalActive2 = !this.modalActive2;
+
           }
 
 
         }
 
     },
+
       
     computed:{
 
