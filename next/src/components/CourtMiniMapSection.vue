@@ -68,6 +68,21 @@ export default {
             } 
             return true
         },
+
+        showCheckOut() {
+            const checkedInCourtID = this.$store.state.checkedInCourtID
+            const lastCheckedInCourtID = this.$store.state.checkedInCourt.id
+            const typeLastCheckedInCourtID = typeof lastCheckedInCourtID
+
+            if (typeLastCheckedInCourtID == 'null' || typeLastCheckedInCourtID == 'undefined' || lastCheckedInCourtID == '' || lastCheckedInCourtID == null || lastCheckedInCourtID == undefined ) {
+                return false
+            }
+
+            if (lastCheckedInCourtID == checkedInCourtID) {
+                return true
+            } 
+            return false
+        },
     },
 
     methods: {

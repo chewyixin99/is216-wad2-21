@@ -11,9 +11,9 @@
                 <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
     
 
-                <div class="inline-block align-bottom bg-purple-900 rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg mx-6 p-5">
+                <div class="inline-block align-bottom bg-purple-900 rounded-lg overflow-hidden shadow-xl transform transition-all w-80 mx-6 p-5">
                     
-                    <div class="text-center space-x-6">
+                    <div class="text-center">
 
                         <div>
                             <label class="block text-white text-sm font-bold mb-2" for="prompt">
@@ -22,13 +22,15 @@
                             <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="prompt" type="text" v-model="input">
                         </div>
 
-                        <the-button @click="$emit('prompt',this.input);$emit('closeModal')" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-sm">
-                            CONFIRM
-                        </the-button>
+                        <div class="flex mt-3 space-x-2">
+                            <the-button @click="$emit('closeModal')" class="bg-red-500 hover:bg-red-700 text-white" buttonType="form-full">
+                                CANCEL
+                            </the-button>
 
-                        <the-button @click="$emit('closeModal')" class="bg-red-500 hover:bg-red-700 text-white mt-3" buttonType="form-sm">
-                            CANCEL
-                        </the-button>
+                            <the-button @click="$emit('prompt',this.input);$emit('closeModal')" class="bg-green-500 hover:bg-green-700 text-white" buttonType="form-full">
+                                CONFIRM
+                            </the-button>
+                        </div>
 
                     </div>
                     
