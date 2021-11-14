@@ -280,7 +280,6 @@ const store = new Vuex.Store({
     //INTERACTIONS BETWEEN STORE AND FIREBASE 
     actions: { 
 
-        // "4SieiMTSOSQzHeJy5i4rx3GESoC2"
         // RETRIEVE USER INFO
 
 
@@ -295,6 +294,23 @@ const store = new Vuex.Store({
             
             dispatch("getBookmarks")
             dispatch('getRecentlyPlayed')
+            dispatch('getLastCheckedIn')
+            
+        },
+
+        async getLastCheckedIn({commit}) {
+            const data = await db.collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .collection("checkInHistory")
+                .orderBy("checkInTime", "desc")
+                .get()
+            
+            if( data.docs.length > 0) {
+                commit("updateCheckedInCourt", data.docs[0].get('courtInfo'))
+            } else {
+                console.log('No last checked in court available!')
+            }
+
         },
 
         async addTeam({state}){ 

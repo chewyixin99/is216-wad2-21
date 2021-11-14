@@ -19,17 +19,29 @@
 
     </div>
 
-      <div>
-        CURRENTLY CHECKED IN ID <br/>
+      <div class="lastCheckedIn bg-white">
+
+        <!-- UNCOMMENT THE BELOW CODE FOR BETTER VISUALS -->
+
+        <!-- CURRENTLY CHECKED IN ID <br/>
         {{ $store.state.checkedInCourtID }} <br/><br/>
         LAST CHECKED IN <br/>
         {{ $store.state.checkedInCourt }} <br/><br/>
         SELECTED COURT <br/>
-        {{ $store.state.selectedCourt }}
+        {{ $store.state.selectedCourt }} -->
+
+
+        <a href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)">
+          Last checked in at: {{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }} <br> <br>
+        </a>
+        <div v-if="showCheckOut">
+          Check Out here
+        </div>
+        <a href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)" v-else>
+          View Court Status
+        </a>
+        
       </div>
-    <!-- <div>
-      {{ $store.state.user }}
-    </div> -->
 
     <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
 
