@@ -112,34 +112,36 @@ export default {
   methods: {
 
     Login(){
-      // const auth = getAuth()
-      // const router = useRouter()
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(this.getEmail, this.getPassword)
-        .then(()=>{
-          this.$router.replace({name: "Home"});
-          this.error = false
-          this.errorMsg = ""
 
-        })
-        .catch((err)=>{
-          this.error = true
-          console.log(err.message);
-          if (err.message == "Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)."){
-            this.errorMsg = "Password is invalid"
-          }
-          else if (err.message == "Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."){
-            this.errorMsg = "User does not have an account"
-          }
-          else if (err.message == "Firebase: The email address is badly formatted. (auth/invalid-email)."){
-            this.errorMsg = "Email is invalid"
-          }
-          else if (err.message == "Firebase: An internal AuthError has occurred. (auth/internal-error)."){
-            this.errorMsg = "Password is invalid"
-          }
-        })
-      
+      if (this.getEmail == "" || this.getPassword == "" ){
+        this.error = true
+        this.errorMsg = "Please enter all fields!"
+      }
+      else{
+
+        firebase
+          .auth()
+          .signInWithEmailAndPassword(this.getEmail, this.getPassword)
+          .then(()=>{
+            this.$router.replace({name: "Home"});
+            this.error = false
+            this.errorMsg = ""
+
+          })
+          .catch((err)=>{
+            this.error = true
+            console.log(err.message);
+            if (err.message == "Firebase: The password is invalid or the user does not have a password. (auth/wrong-password)."){
+              this.errorMsg = "Password is invalid."
+            }
+            else if (err.message == "Firebase: There is no user record corresponding to this identifier. The user may have been deleted. (auth/user-not-found)."){
+              this.errorMsg = "User does not have an account!"
+            }
+            else if (err.message == "Firebase: The email address is badly formatted. (auth/invalid-email)."){
+              this.errorMsg = "Email is invalid."
+            }
+          })
+      }
     }
 
   }

@@ -19,7 +19,7 @@
 
     </div>
 
-      <div  v-if="showLastCheckedIn" class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex space-x-2 mx-auto">
+      <div  v-if="showLastCheckedIn" class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex flex-wrap mx-auto">
 
         <!-- UNCOMMENT THE BELOW CODE FOR BETTER VISUALS -->
 
@@ -29,9 +29,17 @@
         {{ $store.state.checkedInCourt }} <br/><br/>
         SELECTED COURT <br/>
         {{ $store.state.selectedCourt }} -->
+          
+          <div class="last-checked-in-text py-1">
+              <span class="leading-text"> Last checked in at </span>
+              <span class="text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
+          </div>
 
+          <div class="last-checked-in-button search-button bg-yellow-500 hover:bg-yellow-700 text-white mx-auto md:mx-0 py-1 px-4 text-right rounded focus:outline-none focus:shadow-outline ">
+            <button v-if="showCheckOut" v-on:click="$store.dispatch('removeCurrentPlayer')">
+              <strong>Check Out</strong>
+            </button>
 
-        
         <span class="last-checked-in-text py-1">
             <span class="leading-text"> Last checked in at </span>
             <a href="/court" :click="updateSelectedCourt($store.state.checkedInCourt)">
@@ -46,11 +54,11 @@
             <strong>View Court Status</strong>
           </a>
         </span>
-        
+
         
       </div>
 
-      <div  v-else class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex space-x-2 mx-auto">
+      <div  v-else class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex flex-wrap mx-auto">
 
         <!-- UNCOMMENT THE BELOW CODE FOR BETTER VISUALS -->
 
