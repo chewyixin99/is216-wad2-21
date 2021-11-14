@@ -60,6 +60,7 @@ const getDefaultState = () => {
         selectedProfile:`defaultValue`,
 
         // Code below are added after changing of CICO direction
+        checkedInCourt: ``,
         checkedInCourtID: "",
         checkInConflict: false,
 
@@ -257,6 +258,11 @@ const store = new Vuex.Store({
             state.checkedInCourtID = payload
         },
 
+        updateCheckedInCourt(state, payload) {
+            console.log(` === checkedInCourt mutation ===`)
+            state.checkedInCourt = payload
+        },
+
         getRecentlyPlayed(state, payload) {
             state.recentlyPlayed = payload
         },
@@ -274,7 +280,6 @@ const store = new Vuex.Store({
     //INTERACTIONS BETWEEN STORE AND FIREBASE 
     actions: { 
 
-        // "4SieiMTSOSQzHeJy5i4rx3GESoC2"
         // RETRIEVE USER INFO
 
 
