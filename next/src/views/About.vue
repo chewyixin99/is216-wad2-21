@@ -64,16 +64,16 @@
                                     >
                                 </div>
 
-                                <h1 class="text-3xl mt-3">Loh Kok Wee</h1> 
-                                <p class="text-md">"BALL IS LIFE"</p>
+                                <h1 class="text-3xl mt-3">Joel Lim</h1> 
+                                <p class="text-md">"Too short for bball"</p>
 
-                                <p class="text-md mt-3">Aspiring ML Engineer, hobbyist programmer and avid baller.</p>
+                                <p class="text-md mt-3">UI/UX designer,  and avid ping pong baller<br><br/></p>
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
+                                        <a href="https://www.linkedin.com/in/joelfz/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/joellim2020" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.instagram.com/joe_lfz/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
                             </div>
@@ -91,16 +91,16 @@
                                     >
                                 </div>
 
-                                <h1 class="text-3xl mt-3">Loh Kok Wee</h1> 
-                                <p class="text-md">"BALL IS LIFE"</p>
+                                <h1 class="text-3xl mt-3">Chew Yi Xin</h1> 
+                                <p class="text-md">"开心就好"</p>
 
-                                <p class="text-md mt-3">Aspiring ML Engineer, hobbyist programmer and avid baller.</p>
+                                <p class="text-md mt-3">Anything worth doing is worth overdoing<br><br/></p>
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
+                                        <a href="https://www.linkedin.com/in/chewyixin/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/chewyixin99" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.instagram.com/chewyixinn/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
                             </div>
@@ -118,16 +118,16 @@
                                     >
                                 </div>
 
-                                <h1 class="text-3xl mt-3">Loh Kok Wee</h1> 
-                                <p class="text-md">"BALL IS LIFE"</p>
+                                <h1 class="text-3xl mt-3">Gan Jian Lin</h1> 
+                                <p class="text-md">"Coding is more fun"</p>
 
-                                <p class="text-md mt-3">Aspiring ML Engineer, hobbyist programmer and avid baller.</p>
+                                <p class="text-md mt-3">Jack of all trades, master of none.<br><br/></p>
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
+                                        <a href="https://www.linkedin.com/in/jian-lin-gan-2b9189143/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/GanJL" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.instagram.com/gan_jl/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
                             </div>
