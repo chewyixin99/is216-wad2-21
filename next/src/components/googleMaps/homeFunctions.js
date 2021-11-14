@@ -44,7 +44,7 @@ export default {
     },
 
     showCheckOut() {
-      return this.$store.state.checkedInCourt.id == this.$store.state.checkedInCourtID
+      return this.$store.state.selectedCourt.id == this.$store.state.checkedInCourtID
     }
 
   },
