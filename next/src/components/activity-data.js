@@ -46,7 +46,7 @@ const ActivityData = {
     type: "bar",
 
     data: {
-      labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
       datasets: [
         {
           label: "Activity Level (Hrs)",
