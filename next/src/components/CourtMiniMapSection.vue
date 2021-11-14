@@ -33,22 +33,25 @@
             </the-button>
         </div>
     </div>
+    <modal-notify v-if="modalActive" @closeModal="closeModal" class="mb-10" :modalMessage="modalMessage"></modal-notify>
 </template>
 
 <script>
 import TheButton from "./TheButton.vue"
 import CourtMiniMap from "./CourtMiniMap.vue"
+import modalNotify from "./modalNotify.vue"
 import db from "../firebase/firebaseInit"
 
 
 export default {
     name: "CourtMiniMapSection",
-    components: { TheButton, CourtMiniMap },
+    components: { TheButton, CourtMiniMap, modalNotify },
 
     data() {
         return {
-            courtDatabase: null,
-            currentCourtId: "etpohlg3k66q0X5khU4W" // hardcoded
+            courtDatabase: null,            
+            modalActive: false,
+            modalMessage: "You have not checked in!"
         }
     },
     props: ["courtID"],
@@ -104,9 +107,8 @@ export default {
         },
 
         checkOut(){
-
             if (this.$store.state.checkedInCourtID == ""){
-                alert("You have not checked in!")
+                this.modalActive = true
             }
             else{
                 this.$store.dispatch("removeCurrentPlayer")
@@ -114,9 +116,12 @@ export default {
                     this.forceRerender()
                 })
             }
-            
-
         },
+
+
+        closeModal() {
+            this.modalActive = false
+        }
 
 
     },

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full">
+    <div class="w-full mb-10">
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <court-team-card v-for="item in this.items" :key="item" :item="item" :courtID="courtID"/>
             <court-new-team-card :courtID="courtID"/>

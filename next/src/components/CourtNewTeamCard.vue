@@ -10,23 +10,35 @@
             </the-button>
         </div>
 
-        <div class="mb-10">
+        <div >
             <!-- For flexbox's space between -->
             &nbsp;
         </div>
     </div>
+    <modal-notify v-if="modalActive" @closeModal="closeModal" class="mb-10" :modalMessage="modalMessage"></modal-notify>
 
 </template>
 
 <script>
 import TheButton from './TheButton.vue'
+import ModalNotify from './modalNotify.vue'
 
 export default {
     name: "CourtNewTeamCard",
     components: { 
-        TheButton    
+        TheButton,
+        ModalNotify
     },
+
+    data() {
+        return {
+            modalActive: false,
+            modalMessage: "You have to check in before you can create team!"
+        }
+    },
+
     props: ["courtID"],
+
     methods: {
         forceRerender() {
             this.$store.commit('forceRerender')
@@ -40,12 +52,13 @@ export default {
                     this.forceRerender()
                 })
             }
-            else{
-
-                alert("You have to check in before you can create team!")
-
+            else{               
+                this.modalActive = true
             }
- 
+        },
+
+        closeModal() {
+            this.modalActive = false
         }
 
     },

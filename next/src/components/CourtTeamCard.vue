@@ -33,12 +33,15 @@ Team card spans the entire width of its container, so it requries container divs
 
 
     </div>
+    <modal-notify v-if="modalActive" @closeModal="closeModal" class="mb-10" :modalMessage="modalMessage"></modal-notify>
+
 
 </template>
 
 <script>
 import Members from './Members.vue';
 import TheButton from './TheButton.vue'
+import modalNotify from './modalNotify.vue'
 import firebase from 'firebase/compat/app';
 // import TheProfileIcon from './TheProfileIcon.vue'
 
@@ -52,6 +55,9 @@ export default {
             teamMembers: this.item.data.teamMembers,
             teamID: this.item.id,
             disabled: null,
+
+            modalActive: false,
+            modalMessage: "You have to check in before you can join a team!"
         }
     },
     props: ["item","courtID"],
@@ -60,16 +66,14 @@ export default {
         // TheProfileIcon,
         TheButton,
         Members,
-
+        modalNotify
     },
 
     computed: {
         checkJoin() {
             if (this.item.data.teamMembers.includes(this.$store.state.profileID)) {
-                console.log("dont Showwwwwweww");
                 return false
             }
-
             return true
         }
     },
@@ -80,9 +84,7 @@ export default {
         },
 
         joinTeam(){
-
             if (this.$store.state.checkedInCourtID == this.courtID){
-
                 firebase
                 .firestore()
                 .collection("court")
@@ -90,22 +92,15 @@ export default {
                 .collection('courtTeams')
                 .doc(this.teamID)
                 .update({
-
                     teamMembers: firebase.firestore.FieldValue.arrayUnion(this.$store.state.profileID)
-
                 })
                 .then(()=>{
                     this.forceRerender()
                 })
             }
             else{
-
-                alert("You have to check in before you can join team!")
-
+                this.modalActive = true
             }
-
-            
-
         },
 
         leaveTeam(){
@@ -114,9 +109,7 @@ export default {
             console.log("jereeeeeeeeeeeeee");
             console.log(this.teamMembers.includes(this.$store.state.profileID));
 
-            if (this.$store.state.checkedInCourtID == this.courtID && this.teamMembers.includes(this.$store.state.profileID)){
-
-            
+            if (this.$store.state.checkedInCourtID == this.courtID && this.teamMembers.includes(this.$store.state.profileID)){           
                 if (this.teamMembers.length > 1){
 
                     firebase
@@ -151,6 +144,10 @@ export default {
             }
 
         },
+
+        closeModal() {
+            this.modalActive = false
+        }
 
 
     },

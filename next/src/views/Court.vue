@@ -48,7 +48,6 @@
                 </div>
 
             <court-conflict-modal :courtID="court.id" v-if="$store.state.checkInConflict"/>
-            <modal-notify v-if="modalActive" @closeModal="closeModal" :modalMessage="modalMessage" :flag="flag"></modal-notify>
             
 
             </div>
@@ -61,12 +60,11 @@ import CourtMiniMapSection from "../components/CourtMiniMapSection.vue"
 import CourtTeam from "../components/CourtTeam.vue";
 import CourtCurrentPlayers from "../components/CourtCurrentPlayers.vue"
 import CourtConflictModal from "../components/CourtConflictModal.vue"
-import modalNotify from "../components/modalNotify.vue"
 
 export default {
   name: "Court",
   
-  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtConflictModal, modalNotify},
+  components: { CourtMiniMapSection, CourtTeam, CourtCurrentPlayers, CourtConflictModal},
 
   data() {
     return {
