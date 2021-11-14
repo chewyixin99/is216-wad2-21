@@ -90,7 +90,7 @@ export default {
             .then(() => {
                 // Update player's new selected court
                 this.$store.commit("updateCheckedInCourtId", this.courtID)
-                
+                this.$store.commit("updateCheckedInCourt", this.$store.state.selectedCourt)
                 // Add player to new court
                 this.$store.dispatch("addCurrentPlayer").then(() => {
                     this.$store.commit("toggleCheckInConflict")

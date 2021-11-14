@@ -41,6 +41,10 @@ export default {
     },
     showRecentlyPlayed() {
       return this.$store.state.recentlyPlayed.length > 0
+    },
+
+    showCheckOut() {
+      return this.$store.state.selectedCourt.id == this.$store.state.checkedInCourtID
     }
 
   },

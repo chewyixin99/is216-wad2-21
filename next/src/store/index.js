@@ -60,6 +60,7 @@ const getDefaultState = () => {
         selectedProfile:`defaultValue`,
 
         // Code below are added after changing of CICO direction
+        checkedInCourt: ``,
         checkedInCourtID: "",
         checkInConflict: false,
 
@@ -237,7 +238,7 @@ const store = new Vuex.Store({
         },
         
         updateSelectedCourtCurrentUsers(state, payload) {
-            state.selectedCourtCurrentUsers = payload
+            state.selectedCourtCurrentUsers.currentPlayers = payload
         },
 
         populatePublicUserGroupDetails(state, payload) {
@@ -257,6 +258,11 @@ const store = new Vuex.Store({
             state.checkedInCourtID = payload
         },
 
+        updateCheckedInCourt(state, payload) {
+            console.log(` === checkedInCourt mutation ===`)
+            state.checkedInCourt = payload
+        },
+
         getRecentlyPlayed(state, payload) {
             state.recentlyPlayed = payload
         },
@@ -274,7 +280,6 @@ const store = new Vuex.Store({
     //INTERACTIONS BETWEEN STORE AND FIREBASE 
     actions: { 
 
-        // "4SieiMTSOSQzHeJy5i4rx3GESoC2"
         // RETRIEVE USER INFO
 
 
@@ -282,13 +287,15 @@ const store = new Vuex.Store({
             console.log(`on login getCurrentUser from store below`)
             console.log(firebase.auth().currentUser.uid)
             const dataBase = await db.collection('users').doc(firebase.auth().currentUser.uid)
-            const dbResults = await dataBase.get();
-            commit("setProfileInfo", dbResults);
-            commit("setProfileInitials");
-            commit("setProfileInitialsURL")
+            await dataBase.get()
+            .then((dbResults) => {
+                commit("setProfileInfo", dbResults);
+                commit("setProfileInitials");
+                commit("setProfileInitialsURL")
             
-            dispatch("getBookmarks")
-            dispatch('getRecentlyPlayed')
+                dispatch("getBookmarks")
+                dispatch('getRecentlyPlayed')
+            })
         },
 
         async addTeam({state}){ 
@@ -437,6 +444,7 @@ const store = new Vuex.Store({
             let allRecentlyPlayedInfo = []
             console.log(`=== getRecentlyPlayed mutation ===`)
             
+            console.log(state.profileID);
             await db.collection('users')
                 .doc(state.profileID)
                 .collection('recentlyPlayed')

@@ -89,10 +89,12 @@ export default {
         },
         
         checkIn(){
+            console.log(`=== CourtMiniMapSection checkIn function ===`)
             // Clashing checkin validation
             if (this.$store.state.checkedInCourtID !== "" && this.$store.state.checkedInCourtID !== this.courtID) {
                 this.$store.commit("toggleCheckInConflict")
             } else {
+                this.$store.commit('updateCheckedInCourt', this.$store.state.selectedCourt)
                 this.$store.commit("updateCheckedInCourtId", this.courtID)
                 this.$store.dispatch("addCurrentPlayer")
                 .then(()=>{
