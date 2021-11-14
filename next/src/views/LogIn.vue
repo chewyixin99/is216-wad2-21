@@ -90,24 +90,6 @@ export default {
       getPassword: "",
     }
   },
-  // setup() {
-  //   const auth = getAuth()
-  //   const router = useRouter()
-  // },
-
-  //   const handleSubmit = async e => {
-  //     const { email, password } = e.target.elements
-  //     try {
-  //       await signInWithEmailAndPassword(auth, email.value, password.value)
-  //       router.push('/')
-  //     } catch (e) {
-  //       this.error = true;
-  //       this.errorMsg = e.message
-  //     }
-  //   }
-
-  //   return { handleSubmit }
-  // },
 
   methods: {
 
@@ -150,7 +132,6 @@ export default {
 
 <style scoped>
   .blink {
-    /* background: white; */
     color: white;
     font-size: 40px;
     font-weight: bold;

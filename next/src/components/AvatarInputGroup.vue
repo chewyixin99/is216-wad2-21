@@ -45,7 +45,9 @@ export default {
             this.src = null,
             this.$emit('input', this.file)
             firebase.firestore().collection("groups").doc(this.groupID ).update({groupImg: null})
-
+            .then(()=>{
+                location.reload()
+            })
         },
 
         change(e) {
@@ -66,11 +68,12 @@ export default {
                     return firebase.firestore().collection("groups").doc(this.groupID).update({groupImg: downloadURL})
                 })
                 .then(()=>{
+                    location.reload()
                     console.log("Group image updated successfully in database");
                 })
                 
             })
-        
+
         },
     },
 

@@ -133,6 +133,7 @@ export default {
                 console.log("Group Message Update Successful");
                 this.modalActive = true;
                 this.flag = true;
+
             })
             
         },
@@ -142,7 +143,6 @@ export default {
             this.modalActive = !this.modalActive;
 
         },
-
 
     },
 
