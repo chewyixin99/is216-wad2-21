@@ -574,8 +574,10 @@ const store = new Vuex.Store({
                     }
                     
                 }
-                compilation1.push(state.currentGroupID)
-
+                if (!(compilation1.includes(state.currentGroupID))){
+                    compilation1.push(state.currentGroupID)
+                }
+                
                 console.log(compilation1);
 
 
@@ -603,7 +605,10 @@ const store = new Vuex.Store({
                     }
                     
                 }
-                compilation.push(state.currentMemberID)
+
+                if (!(compilation.includes(state.currentMemberID))){
+                    compilation.push(state.currentMemberID)
+                }
 
                 console.log(compilation);
                 console.log("^this is group com");
