@@ -35,7 +35,7 @@
                     <div class="secondary-gold-title mb-3">
                         <h1>CURRENT TEAMS</h1>
                     </div>
-                    <court-team :courtID="court.id"/>
+                    <court-team :courtID="court.id" :key="$store.state.reloadKeys"/>
                 </div>
 
             <court-conflict-modal :courtID="court.id" v-if="$store.state.checkInConflict"/>

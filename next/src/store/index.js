@@ -352,9 +352,11 @@ const store = new Vuex.Store({
                 checkedInCourt: "",
             })
             .then(()=>{
+                dispatch('removeCurrentTeam')
                 dispatch('addCheckOutHistory')
                 dispatch('updateRecentlyPlayed', moment().toDate())
                 commit("updateCheckedInCourtId", "")
+
                 console.log(`User successfully checked out from court (${state.checkedInCourtID})`);
             }).catch((error) => {
                 console.log(`Failed to check out user to court (${state.checkedInCourtID}). Error: `, error);
@@ -397,6 +399,35 @@ const store = new Vuex.Store({
                 }).catch((error) => {
                     console.log(`Failed to check out of user check in history. Error: ${error}`);
                 })
+            })
+        },
+
+        // Check out removes user from team
+        async removeCurrentTeam({state, commit}) {
+            const courtDb = await db.collection('court').doc(state.checkedInCourtID).collection('courtTeams')
+            await courtDb.get()
+            .then((allCourtTeams) => {
+                allCourtTeams.forEach((courtTeam) => {
+                    if (courtTeam.data().teamMembers.length > 1 && courtTeam.data().teamMembers.includes(state.profileID)) {
+                        courtTeam.ref.update({
+                            teamMembers: firebase.firestore.FieldValue.arrayRemove(state.profileID)
+                        }).then(() => {
+                            console.log("Successfully removed from existing court team in firestore.");
+                        }).catch((error) => {
+                            console.log("Failed to remove from existing court team in firestore. Error: ", error);
+                        })
+                    } else {
+                        courtTeam.ref.delete().then(() => {
+                            console.log("No one else in team. Successfully removed team from court team in firestore.");
+                        }).catch((error) => {
+                            console.log("Failed to remove team in firestore. Error: ", error);
+                        })
+                    }                    
+                })
+                console.log("Checked all current teams on court.");
+                commit("forceRerender")
+            }).catch((error) => {
+                console.log("Unable to check teams on court. Error: ", error);
             })
         },
 
