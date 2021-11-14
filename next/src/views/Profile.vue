@@ -67,7 +67,7 @@
               </div>
             </div>
 
-            <modal-notify v-if="modalActive" @closeModal="closeModal" :modalMessage="modalMessage" :flag="flag"/>
+            <modal-notify v-if="modalActive" @closeModal="closeModal" :modalMessage="modalMessage" />
             
           </div>
 
@@ -113,7 +113,6 @@ export default {
           favTeam: this.$store.state.profileFavTeam,
           modalActive: false,
           modalMessage: "User ID copied to clipboard!",
-          flag: false,
 
       }
 
@@ -153,7 +152,7 @@ export default {
           navigator.clipboard.writeText(this.profileID)
           .then(()=>{
           this.modalActive = true;
-          this.flag = true;
+
 
             })
         },

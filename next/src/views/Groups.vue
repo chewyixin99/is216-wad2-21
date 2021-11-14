@@ -102,8 +102,8 @@ export default {
 
           this.retrievedGroupObj = obj
           this.modalActive2 = true;
-          this.flag2 = true;
-          this.modalMessage = `Are you sure you want to leave '${obj.name}'`;
+          this.flag2 = true
+          this.modalMessage = "Are you sure you want to leave '" + obj.name + "'?";
 
         },
 

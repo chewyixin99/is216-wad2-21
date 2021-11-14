@@ -115,6 +115,7 @@ export default {
         AvatarInput,
         FavPlayer,
         FavTeam,
+
     },
 
     data(){
@@ -124,6 +125,8 @@ export default {
             lastName: this.$store.state.profileLastName,
             experience: this.$store.state.profileExperience,
             email: this.$store.state.profileEmail,
+            favPlayer: this.$store.state.profileFavPlayer,
+            favTeam: this.$store.state.profileFavTeam,
         }
     },
     methods:{
@@ -131,9 +134,12 @@ export default {
         // CHANGE FIRESTORE DOCUMENT INFORMATION 
         update(){
 
+            console.log();
             this.$store.state.profileFirstName = this.firstName
             this.$store.state.profileLastName = this.lastName
             this.$store.state.profileExperience = this.experience
+            this.$store.state.profileFavPlayer = this.favPlayer
+            this.$store.state.profileFavTeam = this.favTeam
             this.$store.dispatch("updateUserSettings");
 
         },
@@ -148,18 +154,17 @@ export default {
         favTeamUpdate(input){
 
             console.log(input);
-            console.log("1212");
+            console.log("editprof");
+            this.favTeam= input
 
-            this.$store.commit("changeFavTeam", input)
 
         },
 
         favPlayerUpdate(input){
 
             console.log(input);
-            console.log("2323");
-
-            this.$store.commit("changeFavPlayer", input)
+            console.log("editprof");
+            this.favPlayer = input
 
         }
 

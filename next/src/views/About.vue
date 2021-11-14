@@ -44,8 +44,8 @@
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
                                         <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
@@ -71,8 +71,8 @@
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
                                         <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
@@ -84,9 +84,9 @@
                     <div class="bg-yellow-400  font-medium p-3 text-center py-8 border-yellow-400 border-2 border-dashed rounded hover:text-white hover:bg-purple-900 hover:shadow-2xl transition-colors duration-200 ">
                         <div class="flex justify-center items-center">
                             <div>
-                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['firstcome'])"> 
+                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['yixin'])"> 
                                     <img 
-                                    :src="typeof accountInfo['firstcome'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['firstcome'].profileImg" 
+                                    :src="typeof accountInfo['yixin'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['yixin'].profileImg" 
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
@@ -98,8 +98,8 @@
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
                                         <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
@@ -111,9 +111,9 @@
                     <div class="bg-yellow-400  font-medium p-3 text-center py-8 border-yellow-400 border-2 border-dashed rounded hover:text-white hover:bg-purple-900 hover:shadow-2xl transition-colors duration-200 ">
                         <div class="flex justify-center items-center">
                             <div>
-                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['firstserve'])"> 
+                                <div class="flex justify-center mb-2 cursor-pointer" @click="toPublicUser(accountInfo['Jian Lin'])"> 
                                     <img 
-                                    :src="typeof accountInfo['firstserve'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['firstserve'].profileImg" 
+                                    :src="typeof accountInfo['Jian Lin'].profileImg === 'undefined' ? $store.state.defaultProfileImg : accountInfo['Jian Lin'].profileImg" 
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
@@ -125,8 +125,8 @@
 
                                 <div class="mt-3"> 
                               <div class="grid grid-cols-3 gap-3">
-                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
-                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://www.linkedin.com/in/loh-kok-wee-59a698142/" target="_blank"><img src="../assets/linkedin.svg" class="w-10 mx-auto" alt=""></a>
+                                        <a href="https://github.com/lohkokwee" target="_blank"><img src="../assets/github.svg" class="w-10 mx-auto" alt=""></a>
                                         <a href="https://www.instagram.com/koksterrr/" target="_blank"><img src="../assets/instagram.svg" class="w-10 mx-auto" alt=""></a> 
                               </div>
                                 </div>
@@ -136,13 +136,6 @@
                 </div>
 
                 
-
-
-
-
-
-
-
 
             </div>
         </div>
@@ -165,25 +158,16 @@ export default {
             // Our accounts
             accountIDs: [ 
                 "yI7Mez9EfMdlG8lDyBviXM1pbEA3",
-                "qN88jQOVmwTyi6LGzd6YtDoGJuw2"
-                // {
-                //     firstName: "Kok Wee",
-                //     lastName: "Loh",
-                //     experience: "Recreational",
-                //     email: "lohkokwee@gmail.com",
-                //     favPlayer: "Zach LaVine",
-                //     favTeam: "",
-                //     profileImg: docRef.data().profileImg,
-                //     groupID: docRef.data().groupID,
-                //     profileID: "yI7Mez9EfMdlG8lDyBviXM1pbEA3" 
-                // }
+                "qN88jQOVmwTyi6LGzd6YtDoGJuw2",
+                "4SieiMTSOSQzHeJy5i4rx3GESoC2",
+                "KpOIdH6FceT22SXz1bvyroihYZZ2"
             ],
 
             accountInfo : {
                 'Kok Wee': {},
                 'Joel': {},
-                'firstcome': {},
-                'firstserve': {}
+                'yixin': {},
+                'Jian Lin': {}
             }
 
 
@@ -207,7 +191,7 @@ export default {
                     favTeam: userDoc.data().favTeam,
                     profileImg: userDoc.data().profileImg,
                     groupID: userDoc.data().groupID,
-                    profileID: userDoc.ref.id()
+                    profileID: userDoc.ref.id
 
                 }
                 this.accountInfo[memberObj.firstName] = memberObj
