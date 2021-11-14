@@ -25,6 +25,8 @@ export default {
     this.$store.dispatch('getRecentlyPlayed')
     const { coords } = useGeolocation()
     this.defaultPos = coords.value
+    console.log(`checkedInCourts below`)
+    console.log(this.$store.state.checkedInCourt)
   },
 
   computed: {

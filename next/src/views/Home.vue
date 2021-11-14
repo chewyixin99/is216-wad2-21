@@ -19,10 +19,17 @@
 
     </div>
 
+      <div>
+        CURRENTLY CHECKED IN ID <br/>
+        {{ $store.state.checkedInCourtID }} <br/><br/>
+        LAST CHECKED IN <br/>
+        {{ $store.state.checkedInCourt }} <br/><br/>
+        SELECTED COURT <br/>
+        {{ $store.state.selectedCourt }}
+      </div>
     <!-- <div>
       {{ $store.state.user }}
     </div> -->
-
 
     <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
 
