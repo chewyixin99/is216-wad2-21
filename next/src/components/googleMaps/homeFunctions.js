@@ -46,11 +46,6 @@ export default {
     showCheckOut() {
       const checkedInCourtID = this.$store.state.checkedInCourtID
       const lastCheckedInCourtID = this.$store.state.checkedInCourt.id
-      const typeLastCheckedInCourtID = typeof lastCheckedInCourtID
-
-      if (typeLastCheckedInCourtID == 'null' || typeLastCheckedInCourtID == 'undefined' || lastCheckedInCourtID == '' || lastCheckedInCourtID == null || lastCheckedInCourtID == undefined ) {
-        return false
-      }
 
       if (lastCheckedInCourtID == checkedInCourtID) {
         return true
@@ -58,7 +53,16 @@ export default {
       return false
     },
 
-  },
+    showLastCheckedIn() {
+      const lastCheckedInCourtID = this.$store.state.checkedInCourt.id
+      const typeLastCheckedInCourtID = typeof lastCheckedInCourtID
+
+      if (typeLastCheckedInCourtID == 'null' || typeLastCheckedInCourtID == 'undefined' || lastCheckedInCourtID == '' || lastCheckedInCourtID == null || lastCheckedInCourtID == undefined ) {
+        return false
+      }
+      return true
+      } 
+    },
   // ################################################################################################################ SETUP ################################################################################################################
   setup() {
     console.log(`=== setup ===`)
