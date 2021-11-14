@@ -8,20 +8,20 @@
 
         <!-- Check In -->
         <div class="my-4">
-            <!-- <the-button :onClick="togglePopUp" class="bg-yellow-500 text-white" buttonType="form-full">
-                CHECK IN
-            </the-button> -->
-            <the-button :onClick="checkIn" class="bg-yellow-500 text-white" buttonType="form-full"> <!--*********************************************************-->
+            <the-button v-if="showCheckOut" :onClick="checkOut" class="bg-white" buttonType="form-full">
+                CHECK OUT
+            </the-button>
+            <the-button v-else :onClick="checkIn" class="bg-yellow-500 text-white" buttonType="form-full"> <!--*********************************************************-->
                 CHECK IN
             </the-button>
         </div>
 
         <!-- Check Out -->
-        <div class="my-4">
+        <!-- <div class="my-4">
             <the-button :onClick="checkOut" class="bg-white" buttonType="form-full">
                 CHECK OUT
             </the-button>
-        </div>
+        </div> -->
 
         <!-- Bookmark -->
         <div class="my-4">
@@ -72,15 +72,13 @@ export default {
         showCheckOut() {
             const checkedInCourtID = this.$store.state.checkedInCourtID
             const lastCheckedInCourtID = this.$store.state.checkedInCourt.id
-            const typeLastCheckedInCourtID = typeof lastCheckedInCourtID
+            const selectedCourtID = this.$store.state.selectedCourt.id
 
-            if (typeLastCheckedInCourtID == 'null' || typeLastCheckedInCourtID == 'undefined' || lastCheckedInCourtID == '' || lastCheckedInCourtID == null || lastCheckedInCourtID == undefined ) {
-                return false
+            if (checkedInCourtID.length > 0) {
+                if (lastCheckedInCourtID == checkedInCourtID && selectedCourtID == lastCheckedInCourtID) {
+                    return true
+                } 
             }
-
-            if (lastCheckedInCourtID == checkedInCourtID) {
-                return true
-            } 
             return false
         },
     },
