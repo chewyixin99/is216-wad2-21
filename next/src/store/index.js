@@ -63,6 +63,7 @@ const getDefaultState = () => {
         checkedInCourt: ``,
         checkedInCourtID: "",
         checkInConflict: false,
+        invalidAddTeam: false,
 
 
         recentlyPlayed: [],
@@ -295,7 +296,23 @@ const store = new Vuex.Store({
             
                 dispatch("getBookmarks")
                 dispatch('getRecentlyPlayed')
+                dispatch('getLastCheckedIn')
             })
+        },
+
+        async getLastCheckedIn({commit}) {
+            const data = await db.collection('users')
+                .doc(firebase.auth().currentUser.uid)
+                .collection("checkInHistory")
+                .orderBy("checkInTime", "desc")
+                .get()
+
+            if( data.docs.length > 0) {
+                commit("updateCheckedInCourt", data.docs[0].get('courtInfo'))
+            } else {
+                console.log('No last checked in court available!')
+            }
+
         },
 
         async addTeam({state}){ 
