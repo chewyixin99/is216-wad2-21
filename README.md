@@ -21,7 +21,22 @@ As there are a limited number of basketball courts, players will need to either 
 
 <a id="installation"></a>
 # 🤓 How to Install and Run Our Web Application (for Developers) ##
-In order to
+To install our web application on your local host, simply clone this repository.
+
+After cloning the repository, simply run the follow code blocks.
+1. Firstly install Vue CLI.
+```
+npm install -g @vue/cli
+```
+2. Install any dependencies required to run NEXT.
+```
+npm i
+```
+3. Run NEXT.
+```
+npm run serve
+```
+4. To end the application, simply press cmd/ctrl + c.
 
 
 <a id="deployment"></a>
@@ -32,9 +47,12 @@ In order to
 
 <a id="visitors"></a>
 # 🤓 How to Use Our Web Application (for Visitors to our Website) ##
-* Yay! Your website is READY for visitors!
-* Provide a step-by-step description of what the user/visitor can/should do upon visiting your website for the first time.
-* It would be wonderful if you could include **screenshot images** of web pages to demonsrate what the user/visitor can/should do.
+As the key purpose of our application is for any user to be able to view the crowd at courts, we've made it as intuitive to use the app as possible. 
+
+![image description](./READMEassets/walkthrough.gif)
+
+This Gif provides you a quick overview on how to use our app!
+
 
 
 <a id="figma"></a>

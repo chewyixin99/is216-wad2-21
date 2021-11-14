@@ -36,7 +36,7 @@
                                     class="rounded-full object-cover h-24 w-24 flex items-center justify-center"
                                     >
                                 </div>
-
+                    
                                 <h1 class="text-3xl mt-3">Loh Kok Wee</h1> 
                                 <p class="text-md">"BALL IS LIFE"</p>
 
