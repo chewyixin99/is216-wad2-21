@@ -19,7 +19,7 @@
 
     </div>
 
-      <div class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex space-x-2 mx-auto">
+      <div  v-if="showLastCheckedIn" class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex flex-wrap mx-auto">
 
         <!-- UNCOMMENT THE BELOW CODE FOR BETTER VISUALS -->
 
@@ -29,23 +29,39 @@
         {{ $store.state.checkedInCourt }} <br/><br/>
         SELECTED COURT <br/>
         {{ $store.state.selectedCourt }} -->
+          
+        <div class="last-checked-in-text py-1">
 
-
-        
-        <span class="last-checked-in-text py-1">
             <span class="leading-text"> Last checked in at </span>
-            <span class="text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
-        </span>
+            <a href="/court">
+              <span v-on:click="updateSelectedCourt($store.state.checkedInCourt)" class="hover:underline text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
+            </a>
+
+        </div>
+
         <span class="last-checked-in-button search-button bg-yellow-500 hover:bg-yellow-700 text-white  my-auto py-1 px-4 rounded focus:outline-none focus:shadow-outline">
           <button v-if="showCheckOut" v-on:click="$store.dispatch('removeCurrentPlayer')">
             <strong>Check Out</strong>
           </button>
-          <a href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)" v-else>
+          <a v-else href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)">
             <strong>View Court Status</strong>
           </a>
         </span>
+
         
-        
+      </div>
+
+      <div  v-else class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex flex-wrap mx-auto">
+
+        <span class="last-checked-in-text py-1">
+            <span class="leading-text">Welcome! Start by selecting a 
+              <span class="text-yellow-500">
+                <strong>court </strong> 
+              </span>, followed by clicking on 
+            </span>
+            <span class="text-yellow-500"><strong>check in</strong></span>!
+        </span>
+
       </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">

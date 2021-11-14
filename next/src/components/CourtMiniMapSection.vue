@@ -8,20 +8,20 @@
 
         <!-- Check In -->
         <div class="my-4">
-            <!-- <the-button :onClick="togglePopUp" class="bg-yellow-500 text-white" buttonType="form-full">
-                CHECK IN
-            </the-button> -->
-            <the-button :onClick="checkIn" class="bg-yellow-500 text-white" buttonType="form-full"> <!--*********************************************************-->
+            <the-button v-if="showCheckOut" :onClick="checkOut" class="bg-white" buttonType="form-full">
+                CHECK OUT
+            </the-button>
+            <the-button v-else :onClick="checkIn" class="bg-yellow-500 text-white" buttonType="form-full"> <!--*********************************************************-->
                 CHECK IN
             </the-button>
         </div>
 
         <!-- Check Out -->
-        <div class="my-4">
+        <!-- <div class="my-4">
             <the-button :onClick="checkOut" class="bg-white" buttonType="form-full">
                 CHECK OUT
             </the-button>
-        </div>
+        </div> -->
 
         <!-- Bookmark -->
         <div class="my-4">
@@ -33,22 +33,25 @@
             </the-button>
         </div>
     </div>
+    <modal-notify v-if="modalActive" @closeModal="closeModal" class="mb-10" :modalMessage="modalMessage"></modal-notify>
 </template>
 
 <script>
 import TheButton from "./TheButton.vue"
 import CourtMiniMap from "./CourtMiniMap.vue"
+import modalNotify from "./modalNotify.vue"
 import db from "../firebase/firebaseInit"
 
 
 export default {
     name: "CourtMiniMapSection",
-    components: { TheButton, CourtMiniMap },
+    components: { TheButton, CourtMiniMap, modalNotify },
 
     data() {
         return {
-            courtDatabase: null,
-            currentCourtId: "etpohlg3k66q0X5khU4W" // hardcoded
+            courtDatabase: null,            
+            modalActive: false,
+            modalMessage: "You have not checked in!"
         }
     },
     props: ["courtID"],
@@ -69,15 +72,13 @@ export default {
         showCheckOut() {
             const checkedInCourtID = this.$store.state.checkedInCourtID
             const lastCheckedInCourtID = this.$store.state.checkedInCourt.id
-            const typeLastCheckedInCourtID = typeof lastCheckedInCourtID
+            const selectedCourtID = this.$store.state.selectedCourt.id
 
-            if (typeLastCheckedInCourtID == 'null' || typeLastCheckedInCourtID == 'undefined' || lastCheckedInCourtID == '' || lastCheckedInCourtID == null || lastCheckedInCourtID == undefined ) {
-                return false
+            if (checkedInCourtID.length > 0) {
+                if (lastCheckedInCourtID == checkedInCourtID && selectedCourtID == lastCheckedInCourtID) {
+                    return true
+                } 
             }
-
-            if (lastCheckedInCourtID == checkedInCourtID) {
-                return true
-            } 
             return false
         },
     },
@@ -119,9 +120,8 @@ export default {
         },
 
         checkOut(){
-
             if (this.$store.state.checkedInCourtID == ""){
-                alert("You have not checked in!")
+                this.modalActive = true
             }
             else{
                 this.$store.dispatch("removeCurrentPlayer")
@@ -129,9 +129,12 @@ export default {
                     this.forceRerender()
                 })
             }
-            
-
         },
+
+
+        closeModal() {
+            this.modalActive = false
+        }
 
 
     },
