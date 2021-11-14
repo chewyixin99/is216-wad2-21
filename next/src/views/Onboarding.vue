@@ -55,7 +55,7 @@
                                     FAVOURITE PLAYER
                                 </label>
                                 <!-- <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favPlayer" type="text" name="favPlayer" v-model="favPlayer" placeholder="Favourite Players"> -->
-                                <fav-player/>
+                                <fav-player @emitFavPlayer="favPlayerUpdate($event)"/>
                             </div>
                             <!-- <fav-player/> -->
 
@@ -65,7 +65,7 @@
                                     FAVOURITE TEAM
                                 </label>
                                 <!-- <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="favTeam" type="text" name="favTeam" v-model="favTeam" placeholder="Favourite Teams"> -->
-                                <fav-team/>
+                                <fav-team @emitFavTeam="favTeamUpdate($event)"/>
                             </div> 
                             <!-- <fav-team/> -->
                         </div>
@@ -108,7 +108,12 @@ export default {
     },
 
     data(){
+
         return{
+            
+            favPlayer: "",
+            favTeam: "",
+
         }
     },
 
@@ -116,6 +121,8 @@ export default {
 
         update(){
 
+            this.$store.state.profileFavPlayer = this.favPlayer
+            this.$store.state.profileFavTeam = this.favTeam
             this.$store.dispatch("updateUserSettings");
 
         },
@@ -125,6 +132,19 @@ export default {
             this.$router.replace({name: "Home"});
 
         },
+
+        favTeamUpdate(input){
+
+            this.favTeam= input
+
+
+        },
+
+        favPlayerUpdate(input){
+
+            this.favPlayer = input
+
+        }
      
     },
 
@@ -164,28 +184,7 @@ export default {
             },
 
         },
-        // favPlayer: {
-
-        //   get() {
-        //     return this.$store.state.profileFavPlayer
-        //     },
-
-        //   set(payload) {
-        //     this.$store.commit("changeFavPlayer", payload);
-        //     },
-        // },
-        // favTeam: {
-
-        //   get() {
-        //     return this.$store.state.profileFavTeam
-        //     },
-
-        //   set(payload) {
-        //     this.$store.commit("changeFavTeam", payload);
-        //     },
-
-        // },  
-
+ 
         email: {
 
           get() {
@@ -200,34 +199,17 @@ export default {
             },
 
         },
-
-        // initials: {
-
-        //     set() {
-        //         if (firstName != "" && lastName != ""){
-        //             this.$store.commit("setProfileInitials");
-        //         }
-        //     },
-
-        // },
-
-        // initialsURL: {
-
-        //     get() {
-        //         return this.$store.state.profileInitialsURL
-        //     },
-
-        //     set() {
-        //         if (initials){
-        //             this.$store.commit("setProfileInitialsURL");
-        //         }
-        //     },
-
-        // },
-
-      
-        
+         
     },
+
+    mounted() {
+        if (localStorage.getItem('reloaded')) {
+            localStorage.removeItem('reloaded');
+        } else {
+            localStorage.setItem('reloaded', '1');
+            location.reload();
+        }
+    }
    
 
 }
