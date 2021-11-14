@@ -31,8 +31,12 @@
         {{ $store.state.selectedCourt }} -->
           
         <div class="last-checked-in-text py-1">
+
             <span class="leading-text"> Last checked in at </span>
-            <span class="text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
+            <a href="/court">
+              <span v-on:click="updateSelectedCourt($store.state.checkedInCourt)" class="hover:underline text-yellow-500">{{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }}</span>
+            </a>
+
         </div>
 
         <span class="last-checked-in-button search-button bg-yellow-500 hover:bg-yellow-700 text-white  my-auto py-1 px-4 rounded focus:outline-none focus:shadow-outline">
@@ -49,19 +53,15 @@
 
       <div  v-else class="last-checked-in justify-between mt-5 px-5 py-3 bg-gray-800 rounded text-white w-full flex flex-wrap mx-auto">
 
-        <!-- UNCOMMENT THE BELOW CODE FOR BETTER VISUALS -->
-
-        <!-- CURRENTLY CHECKED IN ID <br/>
-        {{ $store.state.checkedInCourtID }} <br/><br/>
-        LAST CHECKED IN <br/>
-        {{ $store.state.checkedInCourt }} <br/><br/>
-        SELECTED COURT <br/>
-        {{ $store.state.selectedCourt }} -->
-        
         <span class="last-checked-in-text py-1">
-            <span class="leading-text">Welcome! Start by selecting a <span class="text-yellow-500"><strong>court </strong> </span>, followed by clicking on </span>
+            <span class="leading-text">Welcome! Start by selecting a 
+              <span class="text-yellow-500">
+                <strong>court </strong> 
+              </span>, followed by clicking on 
+            </span>
             <span class="text-yellow-500"><strong>check in</strong></span>!
         </span>
+
       </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 mt-4 gap-4">
