@@ -34,7 +34,7 @@
         <a href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)">
           Last checked in at: {{ $store.state.checkedInCourt.name }}, {{ $store.state.checkedInCourt.vicinity }} <br> <br>
         </a>
-        <div v-if="showCheckOut">
+        <div v-if="showCheckOut" v-on:click="$store.dispatch('removeCurrentPlayer')">
           Check Out here
         </div>
         <a href="/court" v-on:click="updateSelectedCourt($store.state.checkedInCourt)" v-else>
