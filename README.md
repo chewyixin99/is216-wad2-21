@@ -55,6 +55,8 @@ As the key purpose of our application is for any user to be able to view the cro
 
 This Gif provides you a quick overview on how to use our app!
 
+# 🏀 Deployment
+* https://wad2-d251f.web.app/
 
 # 🏀 Test Accounts ##
 * ts@gmail.com | Password
