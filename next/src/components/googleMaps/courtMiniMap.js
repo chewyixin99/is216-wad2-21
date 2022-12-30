@@ -3,7 +3,7 @@
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { Loader } from '@googlemaps/js-api-loader'
 
-const GOOGLE_MAPS_API_KEY = 'AIzaSyB0y4bi5X2uc_EZGF8yE-GIc_09jd9rwRg'
+const GOOGLE_MAPS_API_KEY = '<YOUR_API_KEY_HERE>'
 
 export default {
     name: "CourtMiniMap",

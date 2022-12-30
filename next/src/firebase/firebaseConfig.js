@@ -1,5 +1,5 @@
 export default {
-    apiKey: "AIzaSyD6rvc9Ffil4fZ6J9a81pLJP0_AIQleg5s",
+    apiKey: "<YOUR_API_KEY_HERE>",
     authDomain: "wad2-d251f.firebaseapp.com",
     databaseURL: "https://wad2-d251f-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "wad2-d251f",
